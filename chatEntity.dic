@@ -1,72 +1,88 @@
-はい	h a i
-はい	h a a i
-いいえ	n o o
-いいえ	i i e
-いいえ	ch i g a i m a s u
-終了	o sh i m a i
-終了	o w a r i
+名前を聞く	n a m a e h a
+名前を聞く	o n a m a e w a
+名前を聞く	a n a t a n o n a m a e h a
+名前を聞く	k i m i h a d a r e
+調子を聞く	g u a i h a d o u
+調子を聞く	g e N k i d e s u k a
+調子を聞く	o g e N k i d e s u k a
+時間を聞く	i m a n a N j i
+時間を聞く	n a N j i
+天気を聞く	t e N k i
+天気を聞く	ky o u n o t e N k i
+朝の挨拶	o h a y o u
+朝の挨拶	o q h a
+朝の挨拶	o h a y o u g o z a i m a s u
+朝の挨拶	m o: n i N g u
+昼の挨拶	h a r o:
+昼の挨拶	o q s u
+昼の挨拶	k o N n i ch i w a
+昼の挨拶	k o N ch i w a
+夜の挨拶	k o N b a N w a
+寝る挨拶	o y a s u m i
+寝る挨拶	o y a s u m i n a s a i
+話しかける	b e z e r i i
+話しかける	b e z e r i:
+話しかける	m o sh i m o sh i
+話しかける	d o u m o
+話しかける	h a: i
+話しかける	y o r o sh i k u
+話しかける	y o r o sh i k u d e s u
+話しかける	y o r o sh i k u o n e g a i sh i m a s u
+ねぎらう	o ts u k a r e
+ねぎらう	o ts u k a r e s a m a
+ねぎらう	o ts u k a r e s a m a d e s u
+ねぎらう	g o k u r o u
+ねぎらう	g o k u r o u s a m a
+うらやむ	g e N k i d e s u n e
+うらやむ	g e N k i d a n e
+お願いする	n a n i k a i q t e
+お願いする	n a n i k a h a n a sh i t e
+お願いする	o n e g a i k i i t e
+お願いする	o n e g a i d e s u
+お願いする	o d o q t e
+お願いする	h i k a q t e
+同意する	h a i
+同意する	h a a i
+同意する	i e s u
+同意する	s o u d e s u
+拒否する	n o o
+拒否する	i i e
+拒否する	ch i g a i m a s u
+拒否する	a r i e n a i
+感謝する	a r i g a t o u
+感謝する	a r i g a t o u g o z a i m a s u
+感謝する	s a N ky u:
+褒める	s u g o i n e
+褒める	s u g o i
+褒める	s u g o i j a N
+褒める	o m o sh i r o i
+褒める	y o k u sh i q t e r u n e
+突っ込む	k o w a r e t e r u
+突っ込む	b a g u q t e r u
+突っ込む	o k a sh i i
+突っ込む	h e N d e sh o
+突っ込む	ch i g a u y o
+突っ込む	ch i g a u n e
+突っ込む	ch i g a u
+突っ込む	ch i g a q t e r u
+突っ込む	ch i g a u sh i
+突っ込む	d a m e j a N
+突っ込む	d a m e d a n e
+突っ込む	d a m e d e s u
+愚痴る	ts u k a r e t a
+愚痴る	k a n a sh i i
+愚痴る	m o u y a d a
+愚痴る	sh i n i t a i
+愚痴る	h a r a h e q t a
+愚痴る	s a i a k u
+終わる	o sh i m a i
+終わる	o w a r i
 テスト	t e s u t o d e s u
 テスト	t e s u t o
-おはよう	o h a y o u
-おはよう	o q h a
-ベゼリー	b e z e r i i
-時間	i m a n a N j i
-時間	n a N j i
-聞こえる	k i k o e m a s u k a
-聞こえる	k i k o e r u
-おはよう	o h a y o u g o z a i m a s u
-こんにちは	k o N n i ch i w a
-こんにちは	k o N ch i w a
-こんばんは	k o N b a N w a
-おやすみ	o y a s u m i
-おやすみ	o y a s u m i n a s a i
-ありがとう	a r i g a t o u
-ありがとう	a r i g a t o u g o z a i m a s u
-お疲れ様	o ts u k a r e
-お疲れ様	o ts u k a r e s a m a
-お疲れ様	o ts u k a r e s a m a d e s u
-名前	n a m a e h a
-名前	a n a t a n o n a m a e h a
-名前	k i m i h a d a r e
-名前	o n a m a e w a
-元気	g e N k i
-元気	g e N k i d e s u n e
-元気	g e N k i d a n e
-元気	g e N k i d e s u k a
-元気	o g e N k i d e s u k a
-間違い	ch i g a u y o
-間違い	ch i g a u n e
-間違い	ch i g a u
-間違い	ch i g a q t e r u
-間違い	ch i g a u sh i
-凄い	s u g o i n e
-凄い	s u g o i
-凄い	s u g o i j a N
-雑談	n a n i k a i q t e
-雑談	n a n i k a h a n a sh i t e
-なぐさめ	ts u k a r e t a
-なぐさめ	k a n a sh i i
-なぐさめ	m o u y a d a
-天気	t e N k i
-天気	ky o u n o t e N k i
-天気	d o N t e N
-大丈夫ですか	d a i j o u b u
-大丈夫ですか	k o w a r e t e r u
-大丈夫ですか	b a g u q t e r u
-大丈夫ですか	o k a sh i i
-大丈夫ですか	h e N d e sh o
-おはよう	m o: n i N g u
-不一致	b a k a
-不一致	sh i n e
-不一致	k u s o
-不一致	u N k o
-不一致	s a i a k u
-間違い	d a m e j a N
-間違い	d a m e d a n e
-間違い	d a m e d e s u
-お願い	o n e g a i k i i t e
-お願い	o n e g a i d e s u
-ありがとう	h a r o u
-こんにちは	o q s u
-お願い	o d o q t e
-お願い	h i k a q t e
+テスト	k i k o e m a s u k a
+その他	b a k a
+その他	sh i n e
+その他	k u s o
+その他	u N k o
+その他	k o r o s u
+うらやむ	u r a y a m a sh i i

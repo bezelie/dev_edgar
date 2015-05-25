@@ -369,6 +369,13 @@ function routing(req, res){ // requestイベントが発生したら実行され
                 fs.writeFile(file_data_chat, JSON.stringify(obj_config), function (err) {
                 });
                 pageWrite(res);
+                yearNow=obj_config.data1[0].nowYear;
+                timeNow=obj_config.data1[0].nowTime;
+                console.log(yearNow);
+                console.log(timeNow);
+                var COMMAND = "sudo date -s '"+yearNow+" "+timeNow+"'";
+                exec(COMMAND, function(error, stdout, stderr) {
+                });
             } else { // 該当せず
                 res.writeHead(200, {'Content-Type': 'text/html; charset=UTF-8'});
                 res.write("NO-POST!!");

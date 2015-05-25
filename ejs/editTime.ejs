@@ -1,4 +1,23 @@
 <!-- editTime -->
+
+<script>
+var addZero = function(num) {
+  num += "";
+  if (num.length === 1) {
+    num = "0" + num;
+  }
+ return num;     
+};
+var dateNow = new Date();
+var yearNow = dateNow.getFullYear();
+var monthNow = addZero(dateNow.getMonth()+1);
+var dayNow = addZero(dateNow.getDate());
+var yearNow = yearNow+"-"+monthNow+"-"+dayNow;
+var hourNow = addZero(dateNow.getHours());
+var minuteNow = addZero(dateNow.getMinutes());
+var secondNow = addZero(dateNow.getSeconds());
+var timeNow = hourNow+":"+minuteNow+":"+secondNow;
+</script>
 <%
 var alarmOn0 = '', alarmOn1 = '', alarmKind0 = '', alarmKind1 = ''
 var checked = "checked = 'checked'";
@@ -12,6 +31,24 @@ if (obj_config.data1[0].alarmKind == 'mild'){alarmKind0 = selected}else{alarmKin
 <form method="post" action="/setTime" id="form">
 <table border="1">
     <tr align="center">
+        <th rowspan=2>時計合わせ</th>
+        <td align=center">日付</td>
+        <td align=center">
+          <input id="yearInput" type="date" name="nowYear" size="10">
+          <script>document.getElementById("yearInput").value=yearNow;
+          </script>
+        </td>
+    </tr>
+    <tr align="center">
+        <td align=center">時刻</td>
+        <td align=center">
+          <input id="timeInput" type="time" name="nowTime" size="8" step="1">
+          <script>
+            document.getElementById("timeInput").value=timeNow;
+          </script>
+        </td>
+    </tr>
+    <tr align="center">
         <th rowspan=3>アラーム</th>
         <td>有無</td>
         <td>
@@ -20,7 +57,7 @@ if (obj_config.data1[0].alarmKind == 'mild'){alarmKind0 = selected}else{alarmKin
         </td>
     </tr>
     <tr align="center">
-        <td>時刻</td><td  align="right"><input type="time" min="00:00" max="12:00" step="300" name="alarmTime" 
+        <td>時刻</td><td  align="center"><input type="time" min="00:00" max="12:00" step="300" name="alarmTime" 
         value=<%= obj_config.data1[0].alarmTime %>></td>
     </tr>
     <tr align="center">
@@ -37,20 +74,20 @@ if (obj_config.data1[0].alarmKind == 'mild'){alarmKind0 = selected}else{alarmKin
 -->
     <tr align="center">
         <th rowspan=2>活動時間１</th>
-        <td>開始</td><td align="right"><input type="time" min="00:00" max="23:30" step="600" name="awake1Start" 
+        <td>開始</td><td align="center"><input type="time" min="00:00" max="23:30" step="600" name="awake1Start" 
         value=<%= obj_config.data1[0].awake1Start %>></td>
     </tr>
     <tr align="center">
-        <td>終了</td><td align="right"><input type="time" min="00:30" max="24:00" step="600" name="awake1End" 
+        <td>終了</td><td align="center"><input type="time" min="00:30" max="24:00" step="600" name="awake1End" 
         value=<%= obj_config.data1[0].awake1End %>></td>
     </tr>
     <tr align="center">
         <th rowspan=2>活動時間２</th>
-        <td>開始</td><td align="right"><input type="time" min="00:30" max="23:00" step="600" name="awake2Start" 
+        <td>開始</td><td align="center"><input type="time" min="00:30" max="23:00" step="600" name="awake2Start" 
         value=<%= obj_config.data1[0].awake2Start %>></td>
     </tr>
     <tr align="center">
-        <td>終了</td><td align="right"><input type="time" min="00:00" max="24:00" step="600" name="awake2End" 
+        <td>終了</td><td align="center"><input type="time" min="00:00" max="24:00" step="600" name="awake2End" 
         value=<%= obj_config.data1[0].awake2End %>></td>
     </tr>
     <tr align="center">
