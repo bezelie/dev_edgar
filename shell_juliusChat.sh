@@ -1,5 +1,5 @@
 # Julius 起動スクリプト
-julius -w chatEntity.dic -C julius.jconf -module > /dev/null &
+julius -w chatEntity.dic -C ../julius.jconf -module > /dev/null &
 echo $!
 sleep 4
 # -moduleオプション= Juliusをモジュールモードで起動

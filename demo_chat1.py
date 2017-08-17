@@ -1,20 +1,24 @@
 # -*- coding: utf-8 -*-
-# Bezelie demo Code for Raspberry Pi : Simple Conversation
+# 音声対話デモ
+# for Bezelie Edgar
+# for Raspberry Pi
+# by Jun Toyoda (Team Bezelie)
+# from Aug15th2017
 
 from datetime import datetime      # 現在時刻取得
 from random import randint         # 乱数の発生
 from time import sleep             # ウェイト処理
+from .. import bezelie             # べゼリー専用モジュール
 import xml.etree.ElementTree as ET # XMLエレメンタルツリー変換モジュール
 import subprocess                  #
 import threading                   # マルチスレッド処理
-import bezelie                     # べゼリー専用モジュール
 import socket                      # ソケット通信モジュール
 import json                        #
 import csv                         #
 
 csvFile = "chatDialog.csv"           # 対話リスト
 jsonFile = "data_chat.json"          # 設定ファイル
-openJTalkFile = "shell_openJTalk.sh" #
+openJTalkFile = "../shell_openJTalk.sh" #
 juliusFile = "shell_juliusChat.sh"   #
 sensitivity = 50                     # マイク感度の設定。62が最大値。
 
