@@ -18,8 +18,8 @@ import csv                         #
 
 csvFile = "chatDialog.csv"           # 対話リスト
 jsonFile = "data_chat.json"          # 設定ファイル
-openJTalkFile = "shell_openJTalk.sh" #
-juliusFile = "shell_juliusChat.sh"   #
+openJTalkFile = "exec_openJTalk.sh" #
+juliusFile = "exec_juliusChat.sh"   #
 sensitivity = 50                     # マイク感度の設定。62が最大値。
 
 # Variables

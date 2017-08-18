@@ -203,7 +203,7 @@ function routing(req, res){ // requestイベントが発生したら実行され
             }); // end of exec
         } else if (url_parts.pathname == "/stop_pythonApp"){ // アプリ停止
             pageWrite(res);
-            var COMMAND = "sh stop_pythonApp.sh";
+            var COMMAND = "sh stop_python.sh";
             exec(COMMAND, function(error, stdout, stderr) {
             }); // end of exec
             var COMMAND = "sh stop_julius.sh";
