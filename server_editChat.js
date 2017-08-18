@@ -1,6 +1,8 @@
-// node js
 // べゼリー対話データを編集するWebアプリ 
-// Updated in Aug 10th 2017 by Jun Toyoda.
+// for Bezelie Edgar
+// in Node-JS
+// by Jun Toyoda (Team Bezelie)
+// From  Aug 10th 2017
 // ---------------------------------------------------------------------------------
 
 // モジュールをロードして変数にオブジェクトとして読み込む
@@ -29,20 +31,20 @@ var os   = require('os');
                             //    os.networkInterfaces();
 
 // ejsファイルの読み込み
-var template            = fs.readFileSync(__dirname + '/public_html/template.ejs', 'utf-8');
-var top                 = fs.readFileSync(__dirname + '/public_html/top.ejs', 'utf-8');
-var editChat            = fs.readFileSync(__dirname + '/public_html/editChat.ejs', 'utf-8');
-var editTime            = fs.readFileSync(__dirname + '/public_html/editTime.ejs', 'utf-8');
-var setTime             = fs.readFileSync(__dirname + '/public_html/setTime.ejs', 'utf-8');
-var editIntent          = fs.readFileSync(__dirname + '/public_html/editIntent.ejs', 'utf-8');
-var selectIntent4entity = fs.readFileSync(__dirname + '/public_html/selectIntent4entity.ejs', 'utf-8');
-var editEntity          = fs.readFileSync(__dirname + '/public_html/editEntity.ejs', 'utf-8');
-var selectIntent4dialog = fs.readFileSync(__dirname + '/public_html/selectIntent4dialog.ejs', 'utf-8');
-var editDialog          = fs.readFileSync(__dirname + '/public_html/editDialog.ejs', 'utf-8');
-var starting_pythonApp  = fs.readFileSync(__dirname + '/public_html/starting_pythonApp.ejs', 'utf-8');
-var stop_pythonApp      = fs.readFileSync(__dirname + '/public_html/stop_pythonApp.ejs', 'utf-8');
-var disableServer       = fs.readFileSync(__dirname + '/public_html/disableServer.ejs', 'utf-8');
-var test                = fs.readFileSync(__dirname + '/public_html/test.ejs', 'utf-8');
+var template            = fs.readFileSync(__dirname + '/ejs/template.ejs', 'utf-8');
+var top                 = fs.readFileSync(__dirname + '/ejs/top.ejs', 'utf-8');
+var editChat            = fs.readFileSync(__dirname + '/ejs/editChat.ejs', 'utf-8');
+var editTime            = fs.readFileSync(__dirname + '/ejs/editTime.ejs', 'utf-8');
+var setTime             = fs.readFileSync(__dirname + '/ejs/setTime.ejs', 'utf-8');
+var editIntent          = fs.readFileSync(__dirname + '/ejs/editIntent.ejs', 'utf-8');
+var selectIntent4entity = fs.readFileSync(__dirname + '/ejs/selectIntent4entity.ejs', 'utf-8');
+var editEntity          = fs.readFileSync(__dirname + '/ejs/editEntity.ejs', 'utf-8');
+var selectIntent4dialog = fs.readFileSync(__dirname + '/ejs/selectIntent4dialog.ejs', 'utf-8');
+var editDialog          = fs.readFileSync(__dirname + '/ejs/editDialog.ejs', 'utf-8');
+var starting_pythonApp  = fs.readFileSync(__dirname + '/ejs/starting_pythonApp.ejs', 'utf-8');
+var stop_pythonApp      = fs.readFileSync(__dirname + '/ejs/stop_pythonApp.ejs', 'utf-8');
+var disableServer       = fs.readFileSync(__dirname + '/ejs/disableServer.ejs', 'utf-8');
+var test                = fs.readFileSync(__dirname + '/ejs/test.ejs', 'utf-8');
 
 // 変数宣言
 var routes = { // パスごとの表示内容を連想配列に格納
@@ -194,6 +196,7 @@ function routing(req, res){ // requestイベントが発生したら実行され
             return;
         } else if (url_parts.pathname == "/starting_pythonApp"){ // ラズパイ再起動
             pageWrite(res);
+            // Actually, this process is unnecesary
             var COMMAND = 'sh '+__dirname+'/setting_enableApp.sh';
             exec(COMMAND, {maxBuffer : 1024 * 1024 * 1024}, function(error, stdout, stderr) {
             // reboot(); // ラズパイを再起動させる。

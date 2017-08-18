@@ -12,7 +12,7 @@ if (obj_config.data1[0].alarmKind == 'mild'){alarmKind0 = selected}else{alarmKin
 <form method="post" action="/setTime" id="form">
 <table border="1">
     <tr align="center">
-        <th rowspan=4>アラーム</th>
+        <th rowspan=3>アラーム</th>
         <td>有無</td>
         <td>
             <input type="radio" name="alarmOn" value="true" <%= alarmOn0 %>>ON</input>
@@ -29,11 +29,12 @@ if (obj_config.data1[0].alarmKind == 'mild'){alarmKind0 = selected}else{alarmKin
             <option <%= alarmKind1 %>>hard</option>
         </select></td>
     </tr>
+<!--
     <tr align="center">
         <td>音量</td><td align="right"><input type="number" size="10" name="alarmVol" min="0" max="100" step="10" 
         value=<%= obj_config.data1[0].alarmVol %>></td>
     </tr>
-
+-->
     <tr align="center">
         <th rowspan=2>活動時間１</th>
         <td>開始</td><td align="right"><input type="time" min="00:00" max="23:30" step="600" name="awake1Start" 
@@ -78,4 +79,3 @@ document.getElementById('form').onsubmit = function(){
         return false;}
 }
 </script>
-
