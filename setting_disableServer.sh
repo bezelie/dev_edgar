@@ -16,5 +16,5 @@ sudo cp config/dhcpcd_original.conf /etc/dhcpcd.conf
 # wlan0をアクセスポイントにすることの無効化
 sudo cp config/interfaces_original /etc/network/interfaces
 # node-jsとアプリの自動起動の無効化
-sudo systemctl disable autoStart_app.service
+# sudo systemctl disable autoStart_app.service
 sudo systemctl disable autoStart_server.service

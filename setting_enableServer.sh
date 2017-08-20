@@ -22,4 +22,4 @@ sudo cp autoStart_server.service /etc/systemd/system/
 sudo systemctl enable autoStart_server.service
 # sudo cp autoStart_app.service /etc/systemd/system/
 # sudo systemctl enable autoStart_app.service
-sudo reboot
+# sudo reboot
