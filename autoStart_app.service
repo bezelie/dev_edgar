@@ -1,5 +1,5 @@
 [Unit]
-Description = starting DHCP service and node-js
+Description = starting python app
 After=syslog.target
 
 [Service]
