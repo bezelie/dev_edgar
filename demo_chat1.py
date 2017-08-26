@@ -16,10 +16,10 @@ import socket                      # ソケット通信モジュール
 import json                        #
 import csv                         #
 
-csvFile = "chatDialog.csv"           # 対話リスト
-jsonFile = "data_chat.json"          # 設定ファイル
-openJTalkFile = "exec_openJTalk.sh" #
-juliusFile = "exec_juliusChat.sh"   #
+csvFile = "/home/pi/bezelie/dev_edgar/chatDialog.csv"           # 対話リスト
+jsonFile = "/home/pi/bezelie/dev_edgar/data_chat.json"          # 設定ファイル
+openJTalkFile = "/home/pi/bezelie/dev_edgar/exec_openJTalk.sh"  #
+juliusFile = "/home/pi/bezelie/dev_edgar/exec_juliusChat.sh"    #
 sensitivity = 50                     # マイク感度の設定。62が最大値。
 
 # Variables
@@ -38,10 +38,10 @@ sleep(0.5)
 subprocess.call("sh "+openJTalkFile+" "+"起動します", shell=True)
 sleep(1)
 print "Please Wait For A While"  # サーバーが起動するまで時間がかかるので待つ
-p = subprocess.Popen(["sh "+juliusFile], stdout=subprocess.PIPE, shell=True)
+# p = subprocess.Popen(["sh "+juliusFile], stdout=subprocess.PIPE, shell=True)
 # subprocess.PIPEは標準ストリームに対するパイプを開くことを指定するための特別な値
-pid = p.stdout.read()  # 終了時にJuliusのプロセスをkillするためプロセスIDをとっておく 
-print "Julius's Process ID =" +pid
+# pid = p.stdout.read()  # 終了時にJuliusのプロセスをkillするためプロセスIDをとっておく 
+# print "Julius's Process ID =" +pid
 # TCPクライアントを作成しJuliusサーバーに接続する
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 # client.connect(('10.0.0.1', 10500))  # Juliusサーバーに接続
@@ -86,7 +86,7 @@ def replyMessage(keyWord):        # 対話
       ansNum = i[3]               # Index of answer
 
   # 発話
-  subprocess.call('sudo amixer -q sset Mic 0', shell=True)  # 自分の声を認識してしまわないようにマイクを切る
+  # subprocess.call('sudo amixer -q sset Mic 0', shell=True)  # 自分の声を認識してしまわないようにマイクを切る
   print "Bezelie..."+data[ansNum][1]
 
   if timeCheck(): # 活動時間かどうかをチェック
@@ -98,7 +98,7 @@ def replyMessage(keyWord):        # 対話
 
   alarmStop = True # アラームを止める
   sleep (muteTime)
-  subprocess.call('sudo amixer -q sset Mic '+str(sensitivity), shell=True)  #
+  # subprocess.call('sudo amixer -q sset Mic '+str(sensitivity), shell=True)  #
 
 def timeCheck(): # 活動時間内かどうかのチェック
   f = open (jsonFile,'r')
@@ -140,7 +140,7 @@ def alarm():
     if alarmOn == "true":
       if alarmStop == False:
         print 'アラームの時間です'
-        subprocess.call('sudo amixer -q sset Mic 0', shell=True)  #
+        # subprocess.call('sudo amixer -q sset Mic 0', shell=True)  #
         if alarmKind == 'mild':
           bez.moveAct('happy')
           subprocess.call("sh "+openJTalkFile+" "+"朝ですよ", shell=True)
@@ -150,7 +150,7 @@ def alarm():
           subprocess.call("sh "+openJTalkFile+" "+"朝だよ起きて起きてー", shell=True)
           bez.stop()
         sleep (muteTime)
-        subprocess.call('sudo amixer -q sset Mic '+str(sensitivity), shell=True)  #
+        # subprocess.call('sudo amixer -q sset Mic '+str(sensitivity), shell=True)  #
       else:
         print '_'
         alarmStop = False
@@ -199,8 +199,8 @@ def main():
 
   except KeyboardInterrupt: # CTRL+Cで終了
     print "  終了しました"
-    p.kill()
-    subprocess.call(["kill " + pid], shell=True) # juliusのプロセスを終了
+    # p.kill()
+    # subprocess.call(["kill " + pid], shell=True) # juliusのプロセスを終了
     client.close()
     bez.stop()
 

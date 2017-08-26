@@ -1,5 +1,7 @@
 # Julius 起動スクリプト
-ALSADEV="plughw:0,0" julius -w /home/pi/bezelie/dev_edgar/chatEntity.dic -C /home/pi/bezelie/dev_edgar/julius.jconf -module > /dev/null &
+julius -w /home/pi/bezelie/dev_edgar/chatEntity.dic -C /home/pi/bezelie/dev_edgar/julius.jconf -module > /dev/null &
+# ALSADEV="plughw:1,0" julius -w /home/pi/bezelie/dev_edgar/chatEntity.dic -C /home/pi/bezelie/dev_edgar/julius.jconf -module > /dev/null &
+# julius -w /home/pi/bezelie/dev_edgar/chatEntity.dic -C /home/pi/bezelie/dev_edgar/julius.jconf -module
 echo $!
 sleep 4
 # -moduleオプション= Juliusをモジュールモードで起動
