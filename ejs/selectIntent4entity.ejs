@@ -10,16 +10,16 @@
         <% } %>
     </select></td>
     </tr>
-    <tr><td><input type="submit" value="このインテントを選択" style="font-size:16px;"></td></tr>
+    <tr><td><input type="submit" value="この質問内容を選択" style="font-size:16px;"></td></tr>
 </table>
 </form>
-<p><a href="/editChat">会話編集ページに戻る</a></p>
+<p><a href="/editChat">対話編集ページに戻る</a></p>
 <p><a href="/">トップページに戻る</a></p>
 <script>
 document.getElementById('form').onsubmit = function(){
     var keyword = document.getElementById('form').intent.value;
     if (keyword.length < 1){
-        window.alert('インテントを選んでください');
+        window.alert('質問内容を選んでください');
         return false;
     }
 }

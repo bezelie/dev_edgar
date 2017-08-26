@@ -2,7 +2,7 @@
 #!/bin/sh
 SCRIPT_DIR=`dirname $0`
 cd $SCRIPT_DIR
-echo "Connecting to WiFi..."
+echo "Disable Server"
 # サービス終了
 sudo service isc-dhcp-server stop
 # DHCPサーバ無効化

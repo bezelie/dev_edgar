@@ -65,24 +65,24 @@ var routes = { // パスごとの表示内容を連想配列に格納
         "message":"再起動します",
         "content":disableServer},
     "/editIntent":{
-        "title":"インテント（意図）の編集",
-        "message":"インテントの追加や削除ができます。インテントとはロボットに伝えたい内容のことです。この文字が音声認識されるわけではないので、内容がわかるような簡潔な名称をつけてください",
+        "title":"質問内容データの編集",
+        "message":"質問内容の追加や削除ができます。質問内容とはべゼリーに聞きたい内容のことです。この文字が音声認識されるわけではないので、わかりやすい名称をつけてください",
         "content":editIntent},
     "/selectIntent4entity":{
-        "title":"エンティティ（同意語）の編集",
-        "message":"エンティティを関連付けるインテントを選んでください。",
+        "title":"質問の言い回しデータの編集",
+        "message":"リストから質問内容を選んでください。リストの中に望みの質問内容が無い場合は、いったん対話編集画面に戻り、質問内容の追加をしてください",
         "content":selectIntent4entity},
     "/editEntity":{
-        "title":"エンティティ（同意語）の編集",
-        "message":"エンティティの追加や削除ができます。エンティティとはインテントをロボットに伝えるための具体的な言葉のことです。ひとつのインテントに対して複数設定することができます。ひらがなで入力してください（カタカナなどが含まれているとエラーになります）",
+        "title":"質問の言い回しデータの編集",
+        "message":"質問の言い回しデータの追加や削除ができます。質問の言い回しとはべゼリーに質問する際の、さまざまな言いかたのことです。ひらがなで入力してください（カタカナなどが含まれているとエラーになります）",
         "content":editEntity},
     "/selectIntent4dialog":{
-        "title":"ダイアログ（対話）の編集",
-        "message":"ダイアログを関連付けるインテントを選んでください。",
+        "title":"返答候補データの編集",
+        "message":"リストから質問内容を選んでください。リストの中に好みの質問内容が無い場合は、いったん対話編集画面に戻り、質問内容データの追加をしてください。",
         "content":selectIntent4dialog},
     "/editDialog":{
-        "title":"ダイアログ（対話）の編集",
-        "message":"ダイアログの追加や削除ができます。ダイアログとはインテントに対するロボットの返答です。ひとつのインテントに対して複数設定した場合はランダムで選ばれます。",
+        "title":"返答候補データの編集",
+        "message":"返答候補データの追加や削除ができます。返答候補とはユーザーからの質問に対するべゼリーからの返答の候補です。複数の返答を設定した場合はランダムで選ばれます。",
         "content":editDialog},
     "/stop_pythonApp":{
         "title":"プログラム停止",
@@ -265,13 +265,13 @@ function routing(req, res){ // requestイベントが発生したら実行され
                         posts = readPosts(file_chatEntity);
                         for (var i=0;i < posts.length; i++ ) {
                             if (posts[i][0] == intent){
-                                errorMsg = "インテントを削除するには、対応するエンティティをすべて削除してください。";
+                                errorMsg = "質問内容を削除するには、先に言い回しデータをすべて削除してください。";
                             }
                         }
                         posts = readPosts(file_chatDialog);
                         for (var i=0;i < posts.length; i++ ) {
                             if (posts[i][0] == intent){
-                                errorMsg = "インテントを削除するには、対応するダイアログをすべて削除してください。";
+                                errorMsg = "質問内容を削除するには、先に返答候補データをすべて削除してください。";
                             }
                         }
                         posts = readPosts(file_chatIntent);
@@ -297,7 +297,7 @@ function routing(req, res){ // requestイベントが発生したら実行され
                         var unicode = query.newItem.charCodeAt(i);
                         if ( unicode<0x3040 || unicode>0x309f ){
                             if ( unicode != 0x30fc ){ // chou-on
-                                errorMsg = "エンティティはひらがな(全角)で入力してください";
+                                errorMsg = "言い回しデータはひらがな(全角)で入力してください";
                             }
                         }
                     }
