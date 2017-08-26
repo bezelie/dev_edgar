@@ -2,4 +2,4 @@
 #!/bin/sh
 echo "app auto start cancelling"
 cd /home/pi/bezelie/dev_edgar
-sudo cp rc.startups /etc/rc.local
+sudo cp rc.nothing /etc/rc.local
