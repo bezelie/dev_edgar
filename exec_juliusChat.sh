@@ -3,7 +3,7 @@ julius -w /home/pi/bezelie/dev_edgar/chatEntity.dic -C /home/pi/bezelie/dev_edga
 # ALSADEV="plughw:1,0" julius -w /home/pi/bezelie/dev_edgar/chatEntity.dic -C /home/pi/bezelie/dev_edgar/julius.jconf -module > /dev/null &
 # julius -w /home/pi/bezelie/dev_edgar/chatEntity.dic -C /home/pi/bezelie/dev_edgar/julius.jconf -module
 echo $!
-sleep 4
+# sleep 4
 # -moduleオプション= Juliusをモジュールモードで起動
 # /dev/nullはlinuxの特殊ファイルで、何も出力したくない時に指定する。
 # $! = シェルが最後に実行したバックグラウンドプロセスのID

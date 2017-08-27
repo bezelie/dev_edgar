@@ -108,6 +108,9 @@ var file_chatDialog            = __dirname+"/chatDialog.csv";
 var file_chatEntity_tsv        = __dirname+"/chatEntity.tsv";
 var file_chatEntity_dic        = __dirname+"/chatEntity.dic";
 var file_setting_enableApp     = __dirname+"/setting_enableApp.sh";
+var file_restart_app           = __dirname+"/restart_app.sh";
+var file_exec_python           = __dirname+"/exec_python.sh";
+var file_exec_julius           = __dirname+"/exec_juliusChat.sh";
 var file_stop_python           = __dirname+"/stop_python.sh";
 var file_stop_julius           = __dirname+"/stop_julius.sh";
 var file_setting_disableServer = __dirname+"/setting_disableServer.sh";
@@ -208,17 +211,12 @@ function routing(req, res){ // requestイベントが発生したら実行され
             return;
         } else if (url_parts.pathname == "/starting_pythonApp"){ // ラズパイ再起動
             pageWrite(res);
-            // Actually, this process is unnecesary
-            var COMMAND = "sh "+file_setting_enableApp;
-            exec(COMMAND, {maxBuffer : 1024 * 1024 * 1024}, function(error, stdout, stderr) {
-            reboot(); // ラズパイを再起動させる。
+            var COMMAND = "sh "+file_restart_app;
+            exec(COMMAND, function(error, stdout, stderr) {
             }); // end of exec
         } else if (url_parts.pathname == "/stop_pythonApp"){ // アプリ停止
             pageWrite(res);
-            var COMMAND = "sh "+file_stop_python;
-            exec(COMMAND, function(error, stdout, stderr) {
-            }); // end of exec
-            var COMMAND = "sh "+file_stop_julius;
+            var COMMAND = "sh "+file_restart_app;
             exec(COMMAND, function(error, stdout, stderr) {
             }); // end of exec
         } else if (url_parts.pathname === "/disableServer"){ // サーバーを無効化して再起動
