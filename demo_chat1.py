@@ -16,15 +16,15 @@ import socket                      # ソケット通信モジュール
 import json                        #
 import csv                         #
 
-csvFile = "/home/pi/bezelie/dev_edgar/chatDialog.csv"           # 対話リスト
-jsonFile = "/home/pi/bezelie/dev_edgar/data_chat.json"          # 設定ファイル
+csvFile       = "/home/pi/bezelie/dev_edgar/chatDialog.csv"     # 対話リスト
+jsonFile      = "/home/pi/bezelie/dev_edgar/data_chat.json"     # 設定ファイル
 openJTalkFile = "/home/pi/bezelie/dev_edgar/exec_openJTalk.sh"  #
-juliusFile = "/home/pi/bezelie/dev_edgar/exec_juliusChat.sh"    #
+juliusFile    = "/home/pi/bezelie/dev_edgar/exec_juliusChat.sh" #
 sensitivity = 50                     # マイク感度の設定。62が最大値。
 
 # Variables
 muteTime = 1      # 音声入力を無視する時間
-bufferSize = 256  # 受信するデータの最大バイト数。できるだけ小さな２の倍数が望ましい。
+bufferSize = 512  # 受信するデータの最大バイト数。できるだけ小さな２の倍数が望ましい。
 alarmStop = False # アラームのスヌーズ機能（非搭載）
 
 # Servo Setting
@@ -48,20 +48,8 @@ client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 client.connect(('localhost', 10500))  # Juliusサーバーに接続
 
 # Functions
-def writeFile(text): # デバッグ用機能
-  f = open ('out.txt', 'r')
-  textBefore = ""
-  for row in f:
-    print row+"\n"
-    textBefore = textBefore + row
-  f.close()
-  f = open ('out.txt', 'w')
-  f.write(textBefore+text+"\n")
-  f.close()
-  sleep(0.1)
-
 def replyMessage(keyWord):        # 対話
-  # writeFile("reply start")
+  writeFile("reply start")
   data = []
   with open(csvFile, 'rb') as f:  # opening the datafile to read as utf_8
     for i in csv.reader(f):
@@ -88,6 +76,7 @@ def replyMessage(keyWord):        # 対話
   # 発話
   # subprocess.call('sudo amixer -q sset Mic 0', shell=True)  # 自分の声を認識してしまわないようにマイクを切る
   print "Bezelie..."+data[ansNum][1]
+  writeFile(data[ansNum][1])
 
   if timeCheck(): # 活動時間かどうかをチェック
     bez.moveRnd()
@@ -160,9 +149,21 @@ def alarm():
   t.setDaemon(True)           # メインスレッドが終了したら終了させる
   t.start()
 
+def writeFile(text): # デバッグ用機能
+  f = open ('out.txt', 'r')
+  textBefore = ""
+  for row in f:
+    print row
+    textBefore = textBefore + row
+  f.close()
+  f = open ('out.txt', 'w')
+  f.write(textBefore + text + "\n")
+  f.close()
+  sleep(0.1)
+
 # Set up
-subprocess.call('amixer cset numid=1 100%', shell=True)                  # Speakerr
-subprocess.call('sudo amixer -q sset Mic '+str(sensitivity), shell=True) # Mic
+subprocess.call('amixer cset numid=1 100%', shell=True)                  # Speaker
+subprocess.call('sudo amixer -q sset Mic '+str(sensitivity)+' -c 0', shell=True) # Mic
 
 t=threading.Timer(10,alarm)
 t.setDaemon(True)
@@ -170,6 +171,7 @@ t.start()
 
 # Main Loop
 def main():
+  writeFile("mained ----------------------------")
   try:
     data = ""
     print "Please Speak"
@@ -178,16 +180,32 @@ def main():
     bez.stop()
     while True:
       if "</RECOGOUT>\n." in data:  # RECOGOUTツリーの最終行を見つけたら以下の処理を行う
+#          writeFile("RECOGOUTed ")
         try:
           # dataから必要部分だけ抽出し、かつエラーの原因になる文字列を削除する。
-          data = data[data.find("<RECOGOUT>"):].replace("\n.", "").replace("</s>","").replace("<s>","")
+          data = data[data.find("<RECOGOUT>"):].replace("\n.", "")
+#          data = data[data.find("<RECOGOUT>"):].replace("\n.", "").replace('&','&amp;')
+#          data = data[data.find("<RECOGOUT>"):].replace("\n.", "").replace("</s>","").replace("<s>","")
+#          data = data[data.find("<RECOGOUT>"):].replace("\n.", "").replace("</s>","").replace("<s>","").replace("/","") #          print data
+          writeFile(data)
           # fromstringはXML文字列からコンテナオブジェクトであるElement型に直接 $
-          root = ET.fromstring('<?xml version="1.0"?>\n' + data)
+          root = ET.fromstring('<?xml version="1.0" encoding="utf-8" ?>\n' + data)
           # root = ET.fromstring('<?xml version="1.0"?>\n' + data[data.find("<RECOGOUT>"):].replace("\n.", ""))
+          writeFile("ET passed ")
+          tree = ET.ElementTree(root)
+          tree.write("out.txt")
           keyWord = ""
+#          whypo = root.find(".//SHYPO")
+#          writeFile ("tag="+whypo.tag)
+#          print ("attrib="+whypo.attrib).encode('cp932')
+#          writeFile ("attrib="+whypo.keys)
           for whypo in root.findall("./SHYPO/WHYPO"):
-            keyWord = keyWord + whypo.get("WORD")
-            # writeFile("."+keyWord)
+            keyWord = keyWord + whypo.get("WORD","オブジェクト")
+#            writeFile ("keys="+whypo.keys)
+#            writeFile ("text="+whypo.text)
+#            writeFile("WORD="+whypo.get("WORD","オブジェクト"))
+#          writeFile("keyword = "+keyWord)
+          writeFile("keyword = ")
           print "You......."+keyWord
           replyMessage(keyWord)
         except:
