@@ -35,8 +35,8 @@ sleep(0.5)
 
 # Julius
 # Juliusをサーバモジュールモードで起動＝音声認識サーバーにする
-subprocess.call("sh "+openJTalkFile+" "+"起動します", shell=True)
-sleep(1)
+# subprocess.call("sh "+openJTalkFile+" "+"起動します", shell=True)
+# sleep(1)
 print "Please Wait For A While"  # サーバーが起動するまで時間がかかるので待つ
 # p = subprocess.Popen(["sh "+juliusFile], stdout=subprocess.PIPE, shell=True)
 # subprocess.PIPEは標準ストリームに対するパイプを開くことを指定するための特別な値
@@ -49,7 +49,7 @@ client.connect(('localhost', 10500))  # Juliusサーバーに接続
 
 # Functions
 def replyMessage(keyWord):        # 対話
-  writeFile("reply start")
+#  writeFile("reply start")
   data = []
   with open(csvFile, 'rb') as f:  # opening the datafile to read as utf_8
     for i in csv.reader(f):
@@ -74,9 +74,9 @@ def replyMessage(keyWord):        # 対話
       ansNum = i[3]               # Index of answer
 
   # 発話
-  # subprocess.call('sudo amixer -q sset Mic 0', shell=True)  # 自分の声を認識してしまわないようにマイクを切る
-  print "Bezelie..."+data[ansNum][1]
-  writeFile(data[ansNum][1])
+  subprocess.call('sudo amixer -q sset Mic 0', shell=True)  # 自分の声を認識してしまわないようにマイクを切る
+#  print "Bezelie..."+data[ansNum][1]
+#  writeFile(data[ansNum][1])
 
   if timeCheck(): # 活動時間かどうかをチェック
     bez.moveRnd()
@@ -87,7 +87,7 @@ def replyMessage(keyWord):        # 対話
 
   alarmStop = True # アラームを止める
   sleep (muteTime)
-  # subprocess.call('sudo amixer -q sset Mic '+str(sensitivity), shell=True)  #
+  subprocess.call('sudo amixer -q sset Mic '+str(sensitivity), shell=True)  #
 
 def timeCheck(): # 活動時間内かどうかのチェック
   f = open (jsonFile,'r')
@@ -129,7 +129,7 @@ def alarm():
     if alarmOn == "true":
       if alarmStop == False:
         print 'アラームの時間です'
-        # subprocess.call('sudo amixer -q sset Mic 0', shell=True)  #
+        subprocess.call('sudo amixer -q sset Mic 0', shell=True)  #
         if alarmKind == 'mild':
           bez.moveAct('happy')
           subprocess.call("sh "+openJTalkFile+" "+"朝ですよ", shell=True)
@@ -139,7 +139,7 @@ def alarm():
           subprocess.call("sh "+openJTalkFile+" "+"朝だよ起きて起きてー", shell=True)
           bez.stop()
         sleep (muteTime)
-        # subprocess.call('sudo amixer -q sset Mic '+str(sensitivity), shell=True)  #
+        subprocess.call('sudo amixer -q sset Mic '+str(sensitivity), shell=True)  #
       else:
         print '_'
         alarmStop = False
@@ -153,11 +153,14 @@ def writeFile(text): # デバッグ用機能
   f = open ('out.txt', 'r')
   textBefore = ""
   for row in f:
-    print row
+#    print row
     textBefore = textBefore + row
   f.close()
   f = open ('out.txt', 'w')
   f.write(textBefore + text + "\n")
+  f.write(str(type(textBefore)))
+  f.write(str(type(text)))
+  f.write(str(type(textBefore + text)))
   f.close()
   sleep(0.1)
 
@@ -171,7 +174,7 @@ t.start()
 
 # Main Loop
 def main():
-  writeFile("mained ----------------------------")
+#  writeFile("main start ----------------------------")
   try:
     data = ""
     print "Please Speak"
@@ -187,29 +190,31 @@ def main():
 #          data = data[data.find("<RECOGOUT>"):].replace("\n.", "").replace('&','&amp;')
 #          data = data[data.find("<RECOGOUT>"):].replace("\n.", "").replace("</s>","").replace("<s>","")
 #          data = data[data.find("<RECOGOUT>"):].replace("\n.", "").replace("</s>","").replace("<s>","").replace("/","") #          print data
-          writeFile(data)
+#          writeFile(data)
+#          type(data) = str
           # fromstringはXML文字列からコンテナオブジェクトであるElement型に直接 $
           root = ET.fromstring('<?xml version="1.0" encoding="utf-8" ?>\n' + data)
           # root = ET.fromstring('<?xml version="1.0"?>\n' + data[data.find("<RECOGOUT>"):].replace("\n.", ""))
-          writeFile("ET passed ")
+#          writeFile("ET passed ")
           tree = ET.ElementTree(root)
-          tree.write("out.txt")
+          tree.write("tree.txt")
           keyWord = ""
 #          whypo = root.find(".//SHYPO")
 #          writeFile ("tag="+whypo.tag)
 #          print ("attrib="+whypo.attrib).encode('cp932')
 #          writeFile ("attrib="+whypo.keys)
           for whypo in root.findall("./SHYPO/WHYPO"):
-            keyWord = keyWord + whypo.get("WORD","オブジェクト")
+            keyWord = keyWord + whypo.get("WORD")
 #            writeFile ("keys="+whypo.keys)
 #            writeFile ("text="+whypo.text)
 #            writeFile("WORD="+whypo.get("WORD","オブジェクト"))
-#          writeFile("keyword = "+keyWord)
-          writeFile("keyword = ")
-          print "You......."+keyWord
+#          writeFile("keyword = "+keyWord.decode('UTF-8'))
+#          print "keyword type = "+type(keyWord)
+#          writeFile("keyword = ")
+#          print "You......."+keyWord.decode('UTF-8')
           replyMessage(keyWord)
         except:
-          print "------------------------"
+          print "----- except -------------------"
         data = ""  # 認識終了したのでデータをリセットする
       else:
         data = data + client.recv(bufferSize)  # Juliusサーバーから受信

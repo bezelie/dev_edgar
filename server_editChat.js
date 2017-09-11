@@ -50,7 +50,7 @@ var test                = fs.readFileSync(__dirname + '/ejs/test.ejs', 'utf-8');
 var routes = { // パスごとの表示内容を連想配列に格納
     "/":{
         "title":"BEZELIE",
-        "message":"べゼリーとの対話データの編集やアラーム時間などの変更ができます",
+        "message":"べゼリーとの対話データやアラーム時間などの編集ができます",
         "content":top}, // テンプレート
     "/editChat":{
         "title":"対話設定",
@@ -211,8 +211,9 @@ function routing(req, res){ // requestイベントが発生したら実行され
             return;
         } else if (url_parts.pathname == "/starting_pythonApp"){ // ラズパイ再起動
             pageWrite(res);
-            var COMMAND = "sh "+file_restart_app;
-            exec(COMMAND, function(error, stdout, stderr) {
+            reboot();
+//            var COMMAND = "sh "+file_restart_app;
+//            exec(COMMAND, function(error, stdout, stderr) {
             }); // end of exec
         } else if (url_parts.pathname == "/stop_pythonApp"){ // アプリ停止
             pageWrite(res);
