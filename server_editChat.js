@@ -214,7 +214,7 @@ function routing(req, res){ // requestイベントが発生したら実行され
             reboot();
 //            var COMMAND = "sh "+file_restart_app;
 //            exec(COMMAND, function(error, stdout, stderr) {
-            }); // end of exec
+//            }); // end of exec
         } else if (url_parts.pathname == "/stop_pythonApp"){ // アプリ停止
             pageWrite(res);
             var COMMAND = "sh "+file_restart_app;
