@@ -34,14 +34,14 @@ window.onload = function(){
 document.getElementById('addItem').onsubmit = function(){
     var keyword = document.getElementById('addItem').newItem.value;
     if (keyword.length == 0){
-        window.alert('入力欄に追加したいインテントを入力してください');
+        window.alert('入力欄に追加したい質問内容を入力してください');
         return false;
     }
 }
 document.getElementById('delItem').onsubmit = function(){
     var keyword = document.getElementById('delItem').delNum.value;
     if (keyword.length == 0){
-        window.alert('入力欄に削除したいインテントの番号を入力してください');
+        window.alert('入力欄に削除したい質問内容の番号を入力してください');
         return false;
     }
 }

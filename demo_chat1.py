@@ -23,7 +23,7 @@ juliusFile    = "/home/pi/bezelie/dev_edgar/exec_juliusChat.sh" #
 sensitivity = 50                     # マイク感度の設定。62が最大値。
 
 # Variables
-muteTime = 1      # 音声入力を無視する時間
+muteTime = 0      # 音声入力を無視する時間
 bufferSize = 512  # 受信するデータの最大バイト数。できるだけ小さな２の倍数が望ましい。
 alarmStop = False # アラームのスヌーズ機能（非搭載）
 
@@ -75,7 +75,7 @@ def replyMessage(keyWord):        # 対話
 
   # 発話
   subprocess.call('sudo amixer -q sset Mic 0', shell=True)  # 自分の声を認識してしまわないようにマイクを切る
-#  print "Bezelie..."+data[ansNum][1]
+  print "Bezelie..."+data[ansNum][1]
 #  writeFile(data[ansNum][1])
 
   if timeCheck(): # 活動時間かどうかをチェック

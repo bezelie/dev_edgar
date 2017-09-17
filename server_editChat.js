@@ -54,7 +54,7 @@ var routes = { // パスごとの表示内容を連想配列に格納
         "content":top}, // テンプレート
     "/editChat":{
         "title":"対話設定",
-        "message":"３つのデータを編集することで、自分だけの対話を作ることができます",
+        "message":"３種類のデータを編集することで、べゼリーとの対話を作ることができます",
         "content":editChat},
     "/editTime":{
         "title":"時間設定",
@@ -65,24 +65,24 @@ var routes = { // パスごとの表示内容を連想配列に格納
         "message":"再起動します",
         "content":disableServer},
     "/editIntent":{
-        "title":"質問内容データの編集",
+        "title":"【質問内容】の編集",
         "message":"質問内容の追加や削除ができます。質問内容とはべゼリーに聞きたい内容のことです。この文字が音声認識されるわけではないので、わかりやすい名称をつけてください",
         "content":editIntent},
     "/selectIntent4entity":{
-        "title":"質問の言い回しデータの編集",
+        "title":"【言い回し】の編集",
         "message":"リストから質問内容を選んでください。リストの中に望みの質問内容が無い場合は、いったん対話編集画面に戻り、質問内容の追加をしてください",
         "content":selectIntent4entity},
     "/editEntity":{
-        "title":"質問の言い回しデータの編集",
-        "message":"質問の言い回しデータの追加や削除ができます。質問の言い回しとはべゼリーに質問する際の、さまざまな言いかたのことです。ひらがなで入力してください（カタカナなどが含まれているとエラーになります）",
+        "title":"【言い回し】の編集",
+        "message":"質問の色々な言い回しの追加や削除ができます。質問の言い回しとはべゼリーに質問する際の、さまざまな言いかたのことです。ひらがなで入力してください",
         "content":editEntity},
     "/selectIntent4dialog":{
-        "title":"返答候補データの編集",
+        "title":"【返答候補】の編集",
         "message":"リストから質問内容を選んでください。リストの中に好みの質問内容が無い場合は、いったん対話編集画面に戻り、質問内容データの追加をしてください。",
         "content":selectIntent4dialog},
     "/editDialog":{
-        "title":"返答候補データの編集",
-        "message":"返答候補データの追加や削除ができます。返答候補とはユーザーからの質問に対するべゼリーからの返答の候補です。複数の返答を設定した場合はランダムで選ばれます。",
+        "title":"【返答候補】の編集",
+        "message":"返答候補の追加や削除ができます。返答候補とはユーザーからの質問に対するべゼリーからの返答の候補です。複数の返答を設定した場合はランダムで選ばれます。",
         "content":editDialog},
     "/stop_pythonApp":{
         "title":"プログラム停止",
@@ -211,10 +211,10 @@ function routing(req, res){ // requestイベントが発生したら実行され
             return;
         } else if (url_parts.pathname == "/starting_pythonApp"){ // ラズパイ再起動
             pageWrite(res);
-            reboot();
-//            var COMMAND = "sh "+file_restart_app;
-//            exec(COMMAND, function(error, stdout, stderr) {
-//            }); // end of exec
+//            reboot();
+            var COMMAND = "sh "+file_restart_app;
+            exec(COMMAND, function(error, stdout, stderr) {
+            }); // end of exec
         } else if (url_parts.pathname == "/stop_pythonApp"){ // アプリ停止
             pageWrite(res);
             var COMMAND = "sh "+file_restart_app;
