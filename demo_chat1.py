@@ -36,7 +36,7 @@ sleep(0.5)
 # Julius
 # Juliusをサーバモジュールモードで起動＝音声認識サーバーにする
 # subprocess.call("sh "+openJTalkFile+" "+"起動します", shell=True)
-# sleep(1)
+sleep(4)
 # print "Please Wait For A While"  # サーバーが起動するまで時間がかかるので待つ
 # p = subprocess.Popen(["sh "+juliusFile], stdout=subprocess.PIPE, shell=True)
 # subprocess.PIPEは標準ストリームに対するパイプを開くことを指定するための特別な値

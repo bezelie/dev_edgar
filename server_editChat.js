@@ -146,12 +146,6 @@ function getLocalAddress() { // IPアドレスの取得
     return ifacesObj;
 };
 
-function reboot(){ // ラズパイの再起動
-    var COMMAND = 'sudo reboot';
-    exec(COMMAND, function(error, stdout, stderr) {
-    }); // end of exec
-}
-
 function pageWrite (res){ // ページ描画
     content = ejs.render( template, {
         title: routes[url_parts.pathname].title,
@@ -213,7 +207,6 @@ function routing(req, res){ // requestイベントが発生したら実行され
             return;
         } else if (url_parts.pathname == "/starting_pythonApp"){ // Juliusとpythonプログラムの再起動
             pageWrite(res);
-//            reboot();
             var COMMAND = "sh "+file_exec_talk+" "+"プログラム再起動";
             exec(COMMAND, function(error, stdout, stderr) {
               var COMMAND = "sh "+file_restart_app;
@@ -224,7 +217,9 @@ function routing(req, res){ // requestイベントが発生したら実行され
             pageWrite(res);
             var COMMAND = "sh "+file_exec_talk+" "+"システム再起動";
             exec(COMMAND, function(error, stdout, stderr) {
-               reboot();
+              var COMMAND = 'sudo reboot';
+              exec(COMMAND, function(error, stdout, stderr) {
+              }); // end of exec
             }); // end of exec
         } else if (url_parts.pathname === "/disableServer"){ // サーバーを無効化して再起動
             pageWrite(res);
@@ -232,7 +227,9 @@ function routing(req, res){ // requestイベントが発生したら実行され
             exec(COMMAND, function(error, stdout, stderr) {
               var COMMAND = "sh "+file_setting_disableServer;
               exec(COMMAND, function(error, stdout, stderr) {
-                reboot();
+                var COMMAND = 'sudo reboot';
+                exec(COMMAND, function(error, stdout, stderr) {
+                }); // end of exec
               }); // end of exec
             }); // end of exec
         } else if (url_parts.pathname === "/editTime"){ // 時間編集
@@ -404,8 +401,9 @@ var host = getLocalAddress().ipv4[0].address; // 現在のIPアドレスを取�
 var server = http.createServer(); // http.serverクラスのインスタンスを作る。戻値はhttp.server型のオブジェクト。
 server.on('request', routing);    // serverでrequestイベントが発生した場合のコールバック関数を登録
 var port = 3000;                  // portは1024以上の数字なら何でもよい。
-server.listen(port, host)         // サーバーを待ち受け状態にする。
+var COMMAND = "sh "+file_exec_talk+" "+host;
+exec(COMMAND, function(error, stdout, stderr) {
+  sleep.sleep(6);
+  server.listen(port, host)         // サーバーを待ち受け状態にする。
+});
 console.log ("server is listening at "+host+":"+port);
-var COMMAND = "sh "+file_exec_talk+" "+"ホスト"+host+"ポート"+port;
-exec(COMMAND, function(error, stdout, stderr) {});
-sleep.sleep(4);
