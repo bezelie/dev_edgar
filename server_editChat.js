@@ -29,6 +29,7 @@ var CSV  = require("comma-separated-values");
                             // CSVを配列変数やオブジェクトに変換する
 var os   = require('os');
                             //    os.networkInterfaces();
+var sleep = require('sleep');
 
 // ejsファイルの読み込み
 var template            = fs.readFileSync(__dirname + '/ejs/template.ejs', 'utf-8');
@@ -42,7 +43,8 @@ var editEntity          = fs.readFileSync(__dirname + '/ejs/editEntity.ejs', 'ut
 var selectIntent4dialog = fs.readFileSync(__dirname + '/ejs/selectIntent4dialog.ejs', 'utf-8');
 var editDialog          = fs.readFileSync(__dirname + '/ejs/editDialog.ejs', 'utf-8');
 var starting_pythonApp  = fs.readFileSync(__dirname + '/ejs/starting_pythonApp.ejs', 'utf-8');
-var stop_pythonApp      = fs.readFileSync(__dirname + '/ejs/stop_pythonApp.ejs', 'utf-8');
+var reboot              = fs.readFileSync(__dirname + '/ejs/reboot.ejs', 'utf-8');
+// var stop_pythonApp      = fs.readFileSync(__dirname + '/ejs/stop_pythonApp.ejs', 'utf-8');
 var disableServer       = fs.readFileSync(__dirname + '/ejs/disableServer.ejs', 'utf-8');
 var test                = fs.readFileSync(__dirname + '/ejs/test.ejs', 'utf-8');
 
@@ -84,10 +86,10 @@ var routes = { // パスごとの表示内容を連想配列に格納
         "title":"【返答候補】の編集",
         "message":"返答候補の追加や削除ができます。返答候補とはユーザーからの質問に対するべゼリーからの返答の候補です。複数の返答を設定した場合はランダムで選ばれます。",
         "content":editDialog},
-    "/stop_pythonApp":{
-        "title":"プログラム停止",
-        "message":"デモを停止します",
-        "content":stop_pythonApp},
+    "/reboot":{
+        "title":"再起動",
+        "message":"システムを再起動します",
+        "content":reboot},
     "/starting_pythonApp":{
         "title":"プログラムの実行",
         "message":"再起動します",
@@ -111,11 +113,11 @@ var file_setting_enableApp     = __dirname+"/setting_enableApp.sh";
 var file_restart_app           = __dirname+"/restart_app.sh";
 var file_exec_python           = __dirname+"/exec_python.sh";
 var file_exec_julius           = __dirname+"/exec_juliusChat.sh";
+var file_exec_talk             = __dirname+"/exec_openJTalk.sh"
 var file_stop_python           = __dirname+"/stop_python.sh";
 var file_stop_julius           = __dirname+"/stop_julius.sh";
 var file_setting_disableServer = __dirname+"/setting_disableServer.sh";
 var file_data_chat             = __dirname+"/data_chat.json"
-
 var errorMsg = ""; // これが空欄のときはエラー無し
 var posts = "";    // ブラウザからPOSTで送られてきたデータ
 var intent = "";   // 今回選択されたintent（単数）
@@ -209,22 +211,29 @@ function routing(req, res){ // requestイベントが発生したら実行され
             posts = readPosts(file_chatIntent);
             pageWrite(res);
             return;
-        } else if (url_parts.pathname == "/starting_pythonApp"){ // ラズパイ再起動
+        } else if (url_parts.pathname == "/starting_pythonApp"){ // Juliusとpythonプログラムの再起動
             pageWrite(res);
 //            reboot();
-            var COMMAND = "sh "+file_restart_app;
+            var COMMAND = "sh "+file_exec_talk+" "+"プログラム再起動";
             exec(COMMAND, function(error, stdout, stderr) {
+              var COMMAND = "sh "+file_restart_app;
+              exec(COMMAND, function(error, stdout, stderr) {
+              }); // end of exec
             }); // end of exec
-        } else if (url_parts.pathname == "/stop_pythonApp"){ // アプリ停止
+        } else if (url_parts.pathname == "/reboot"){ // 再起動
             pageWrite(res);
-            var COMMAND = "sh "+file_restart_app;
+            var COMMAND = "sh "+file_exec_talk+" "+"システム再起動";
             exec(COMMAND, function(error, stdout, stderr) {
+               reboot();
             }); // end of exec
         } else if (url_parts.pathname === "/disableServer"){ // サーバーを無効化して再起動
             pageWrite(res);
-            var COMMAND = "sh "+file_setting_disableServer;
+            var COMMAND = "sh "+file_exec_talk+" "+"アクセスポイント化を無効化して再起動します";
             exec(COMMAND, function(error, stdout, stderr) {
-               reboot();
+              var COMMAND = "sh "+file_setting_disableServer;
+              exec(COMMAND, function(error, stdout, stderr) {
+                reboot();
+              }); // end of exec
             }); // end of exec
         } else if (url_parts.pathname === "/editTime"){ // 時間編集
             var json = fs.readFileSync(file_data_chat, "utf-8");  // 同期でファイルを読む
@@ -389,7 +398,7 @@ function routing(req, res){ // requestイベントが発生したら実行され
 // IPアドレスの設定
 var host = getLocalAddress().ipv4[0].address; // 現在のIPアドレスを取得する。
 // var host = 'localhost'         // macやwindows10以降であれば、localhostで指定できる。
-// var host = '10.0.0.1'          // IPアドレスの取得がうまくいかない場合は直接指定する。
+// var host = '10.0.0.1'          // 
 
 // サーバーの起動
 var server = http.createServer(); // http.serverクラスのインスタンスを作る。戻値はhttp.server型のオブジェクト。
@@ -397,3 +406,6 @@ server.on('request', routing);    // serverでrequestイベントが発生した
 var port = 3000;                  // portは1024以上の数字なら何でもよい。
 server.listen(port, host)         // サーバーを待ち受け状態にする。
 console.log ("server is listening at "+host+":"+port);
+var COMMAND = "sh "+file_exec_talk+" "+"ホスト"+host+"ポート"+port;
+exec(COMMAND, function(error, stdout, stderr) {});
+sleep.sleep(4);
