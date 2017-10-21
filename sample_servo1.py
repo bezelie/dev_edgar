@@ -13,6 +13,7 @@ sleep(0.5)
 # Main Loop
 def main():
   try:
+    print "開始します"
     while True:
       bez.moveAct('happy')
       bez.stop()

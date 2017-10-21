@@ -17,6 +17,7 @@ def main():
   try:
     while (True):
       subprocess.call("sh "+openJTalkFile+" "+"こんにちわ", shell=True)
+
       sleep(0.5)
   except KeyboardInterrupt:
     print ' Interrupted by Keyboard'

@@ -74,8 +74,8 @@ def replyMessage(keyWord):        # 対話
       ansNum = i[3]               #
 
   # 発話
-  subprocess.call('sudo amixer -q sset Mic 0', shell=True)  # 自分の声を認識してしまわないようにマイクを切る
-  # print "Bezelie..."+data[ansNum][1]
+  subprocess.call('sudo amixer -q sset Mic 0 -c 0', shell=True)  # 自分の声を認識してしまわないようにマイクを切る
+  print "Bezelie..."+data[ansNum][1]
   # writeFile(data[ansNum][1])
 
   if timeCheck(): # 活動時間だったら会話する
@@ -83,15 +83,15 @@ def replyMessage(keyWord):        # 対話
     subprocess.call("sh "+openJTalkFile+" "+data[ansNum][1], shell=True)
     bez.stop()
   else:           # 活動時間外は会話しない
-    subprocess.call('amixer cset numid=1 80%', shell=True)                          # スピーカー音量
+    subprocess.call('amixer cset numid=1 80% -c 0', shell=True)                          # スピーカー音量
     subprocess.call("sh "+openJTalkFile+" "+"活動時間外です", shell=True)
     sleep (5)
-    subprocess.call('amixer cset numid=1 100%', shell=True)                          # スピーカー音量
+    subprocess.call('amixer cset numid=1 100% -c 0', shell=True)                          # スピーカー音量
   #  print "活動時間外なので発声・動作しません"
 
   alarmStop = True # 対話が発生したらアラームを止める
   sleep (muteTime)
-  subprocess.call('sudo amixer -q sset Mic '+str(sensitivity), shell=True)  # マイク感受性を元に戻す
+  subprocess.call('sudo amixer -q sset Mic '+str(sensitivity)+' -c 0', shell=True)  # マイク感受性を元に戻す
 
 def timeCheck(): # 活動時間内かどうかのチェック
   f = open (jsonFile,'r')
@@ -169,7 +169,7 @@ def writeFile(text): # デバッグファイル（out.txt）出力機能
   sleep(0.1)
 
 # Set up
-subprocess.call('amixer cset numid=1 100%', shell=True)                          # スピーカー音量
+subprocess.call('amixer cset numid=1 100% -c 0', shell=True)                          # スピーカー音量
 subprocess.call('sudo amixer -q sset Mic '+str(sensitivity)+' -c 0', shell=True) # マイク感受性
 
 t=threading.Timer(10,alarm)

@@ -20,5 +20,5 @@ sudo echo "$1" | open_jtalk \
 -jf 1.5 \
 -z 0.0 \
 
-aplay -D plughw:1,0 $VOICEDATA
+aplay -q -D plughw:1,0 $VOICEDATA
 sudo rm -f $VOICEDATA

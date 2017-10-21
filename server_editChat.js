@@ -395,7 +395,7 @@ function routing(req, res){ // requestイベントが発生したら実行され
 // IPアドレスの設定
 var host = getLocalAddress().ipv4[0].address; // 現在のIPアドレスを取得する。
 // var host = 'localhost'         // macやwindows10以降であれば、localhostで指定できる。
-var host = '10.0.0.1'          // 
+// var host = '10.0.0.1'          // 
 
 // サーバーの起動
 var server = http.createServer(); // http.serverクラスのインスタンスを作る。戻値はhttp.server型のオブジェクト。
