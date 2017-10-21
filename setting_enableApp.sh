@@ -1,5 +1,5 @@
-# アプリの自動起動を設定する
 #!/bin/sh
+# アプリの自動起動を設定する
 SCRIPT_DIR=`dirname $0`
 cd $SCRIPT_DIR
 echo "app auto start setting"
