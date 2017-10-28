@@ -19,7 +19,6 @@ import csv                         #
 csvFile       = "/home/pi/bezelie/dev_edgar/chatDialog.csv"     # 対話リスト
 jsonFile      = "/home/pi/bezelie/dev_edgar/data_chat.json"     # 設定ファイル
 openJTalkFile = "/home/pi/bezelie/dev_edgar/exec_openJTalk.sh"  # 音声合成
-juliusFile    = "/home/pi/bezelie/dev_edgar/exec_juliusChat.sh" # 音声認識
 sensitivity = 50                   # マイク感度の設定。62が最大値。
 
 # Variables
@@ -33,15 +32,6 @@ bez.setTrim(head=0, back=-5, stage=0) # センター位置の微調整
 bez.moveCenters()                     # ０番から７番までのサーボをセンタリング
 sleep(0.5)
 
-# Julius
-# Juliusをサーバモジュールモードで起動＝音声認識サーバーにする
-# subprocess.call("sh "+openJTalkFile+" "+"起動します", shell=True)
-sleep(3)
-# print "Please Wait For A While"  # サーバーが起動するまで時間がかかるので待つ
-# p = subprocess.Popen(["sh "+juliusFile], stdout=subprocess.PIPE, shell=True)
-# subprocess.PIPEは標準ストリームに対するパイプを開くことを指定するための特別な値
-# pid = p.stdout.read()  # 終了時にJuliusのプロセスをkillするためプロセスIDをとっておく 
-# print "Julius's Process ID =" +pid
 # TCPクライアントを作成しJuliusサーバーに接続する
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 # client.connect(('10.0.0.1', 10500))  # Juliusサーバーに接続
@@ -49,7 +39,6 @@ client.connect(('localhost', 10500))  # Juliusサーバーに接続
 
 # Functions
 def replyMessage(keyWord):        # 対話
-#  writeFile("reply start")
   data = []                       # 対話ファイル（csv）を変数dataに読み込む
   with open(csvFile, 'rb') as f:  #
     for i in csv.reader(f):
@@ -76,14 +65,13 @@ def replyMessage(keyWord):        # 対話
   # 発話
   subprocess.call('sudo amixer -q sset Mic 0 -c 0', shell=True)  # 自分の声を認識してしまわないようにマイクを切る
   print "Bezelie..."+data[ansNum][1]
-  # writeFile(data[ansNum][1])
 
   if timeCheck(): # 活動時間だったら会話する
     bez.moveRnd()
     subprocess.call("sh "+openJTalkFile+" "+data[ansNum][1], shell=True)
     bez.stop()
   else:           # 活動時間外は会話しない
-    subprocess.call('amixer cset numid=1 80% -c 0', shell=True)                          # スピーカー音量
+    subprocess.call('amixer cset numid=1 70% -c 0', shell=True)                          # スピーカー音量
     subprocess.call("sh "+openJTalkFile+" "+"活動時間外です", shell=True)
     sleep (5)
     subprocess.call('amixer cset numid=1 100% -c 0', shell=True)                          # スピーカー音量
@@ -157,7 +145,6 @@ def writeFile(text): # デバッグファイル（out.txt）出力機能
   f = open ('out.txt', 'r')
   textBefore = ""
   for row in f:
-#    print row
     textBefore = textBefore + row
   f.close()
   f = open ('out.txt', 'w')
@@ -187,35 +174,14 @@ def main():
     bez.stop()
     while True:
       if "</RECOGOUT>\n." in data:  # RECOGOUTツリーの最終行を見つけたら以下の処理を行う
-#          writeFile("RECOGOUTed ")
         try:
           # dataから必要部分だけ抽出し、かつエラーの原因になる文字列を削除する。
           data = data[data.find("<RECOGOUT>"):].replace("\n.", "")
-#          data = data[data.find("<RECOGOUT>"):].replace("\n.", "").replace('&','&amp;')
-#          data = data[data.find("<RECOGOUT>"):].replace("\n.", "").replace("</s>","").replace("<s>","")
-#          data = data[data.find("<RECOGOUT>"):].replace("\n.", "").replace("</s>","").replace("<s>","").replace("/","") #          print data
-#          writeFile(data)
-#          type(data) = str
           # fromstringはXML文字列からコンテナオブジェクトであるElement型に直接変換するメソッド
           root = ET.fromstring('<?xml version="1.0" encoding="utf-8" ?>\n' + data)
-          # root = ET.fromstring('<?xml version="1.0"?>\n' + data[data.find("<RECOGOUT>"):].replace("\n.", ""))
-#          writeFile("ET passed ")
-#          tree = ET.ElementTree(root)
-#          tree.write("tree.txt")
           keyWord = ""
-#          whypo = root.find(".//SHYPO")
-#          writeFile ("tag="+whypo.tag)
-#          print ("attrib="+whypo.attrib).encode('cp932')
-#          writeFile ("attrib="+whypo.keys)
           for whypo in root.findall("./SHYPO/WHYPO"):
             keyWord = keyWord + whypo.get("WORD")
-#            writeFile ("keys="+whypo.keys)
-#            writeFile ("text="+whypo.text)
-#            writeFile("WORD="+whypo.get("WORD","オブジェクト"))
-#          writeFile("keyword = "+keyWord.decode('UTF-8'))
-#          print "keyword type = "+type(keyWord)
-#          writeFile("keyword = ")
-#          print "You......."+keyWord.decode('UTF-8')
           replyMessage(keyWord)
         except:
           print "----- except -------------------"
@@ -226,8 +192,6 @@ def main():
 
   except KeyboardInterrupt: # CTRL+Cで終了
     print "  終了しました"
-    # p.kill()
-    # subprocess.call(["kill " + pid], shell=True) # juliusのプロセスを終了
     client.close()
     bez.stop()
 

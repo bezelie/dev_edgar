@@ -8,7 +8,7 @@ sudo cp config/interfaces_changed /etc/network/interfaces
 # IPアドレス固定 wlan0に固定IPアドレスを割り振る
 sudo cp config/dhcpcd_changed.conf /etc/dhcpcd.conf
 # サービスを再起動
-sudo service dhcpcd start
+sudo service dhcpcd restart
 # sudo service dhcpcd restart
 # Hostapdでアクセスポイント化
 sudo cp config/hostapd_changed.conf /etc/hostapd/hostapd.conf
