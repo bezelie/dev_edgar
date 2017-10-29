@@ -13,7 +13,7 @@
 
 sleep 5
 su - pi -c 'node /home/pi/bezelie/dev_edgar/server_editChat.js &'
-sleep 15
+sleep 20
 su - pi -c 'sh /home/pi/bezelie/dev_edgar/exec_juliusChat.sh &'
 sleep 3
 su - pi -c 'python /home/pi/bezelie/dev_edgar/demo_chat1.py'
