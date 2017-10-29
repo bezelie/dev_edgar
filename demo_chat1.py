@@ -24,8 +24,6 @@ ttsFile  = "exec_openJTalk.sh"  # 音声合成
 # Read JSON File
 f = open (jsonFile,'r')
 jDict = json.load(f)
-version = jDict['data0'][0]['version'] # 
-path = jDict['data0'][0]['path']       #
 name = jDict['data0'][0]['name']       # 
 user = jDict['data0'][0]['user']       # 
 mic = jDict['data0'][0]['mic']         # マイク感度の設定。62が最大値。
