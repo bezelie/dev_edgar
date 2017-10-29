@@ -17,9 +17,9 @@ import json                        #
 import csv                         #
 import RPi.GPIO as GPIO
 
-csvFile  = "chatDialog.csv"     # 対話リスト
-jsonFile = "data_chat.json"     # 設定ファイル
-ttsFile  = "exec_openJTalk.sh"  # 音声合成
+csvFile  = "/home/pi/bezelie/dev_edgar/chatDialog.csv"     # 対話リスト
+jsonFile = "/home/pi/bezelie/dev_edgar/data_chat.json"     # 設定ファイル
+ttsFile  = "/home/pi/bezelie/dev_edgar/exec_openJTalk.sh"  # 音声合成
 
 # Read JSON File
 f = open (jsonFile,'r')
@@ -77,7 +77,7 @@ def replyMessage(keyWord):        # 対話
       ansNum = i[3]               #
 
   # 発話
-  subprocess.call('sudo amixer -q sset Mic 0 -c 0', shell=True)  # 自分の声を認識してしまわないようにマイクを切る
+#  subprocess.call('sudo amixer -q sset Mic 0 -c 0', shell=True)  # 自分の声を認識してしまわないようにマイクを切る
   print "Intent... "+keyWord
   print "Bezelie.. "+data[ansNum][1]
 
@@ -89,19 +89,20 @@ def replyMessage(keyWord):        # 対話
 
   if timeCheck(): # 活動時間だったら会話する
     bez.moveRnd()
-    subprocess.call('amixer cset numid=1 '+vol+'% -q', shell=True) # スピーカー音量
+    subprocess.call('amixer cset numid=1 '+vol+'% -c 0', shell=True) # スピーカー音量
     subprocess.call("sh "+ttsFile+" "+data[ansNum][1], shell=True)
     bez.stop()
   else:           # 活動時間外は会話しない
-    subprocess.call('amixer cset numid=1 70% -q', shell=True)      # スピーカー音量
+    subprocess.call('amixer cset numid=1 70% -c 0', shell=True)      # スピーカー音量
     subprocess.call("sh "+ttsFile+" "+"活動時間外です", shell=True)
     sleep (5)
-    subprocess.call('amixer cset numid=1 '+vol+'% -q', shell=True) # スピーカー音量
+    subprocess.call('amixer cset numid=1 '+vol+'% -c 0', shell=True) # スピーカー音量
   #  print "活動時間外なので発声・動作しません"
 
   alarmStop = True # 対話が発生したらアラームを止める
   sleep (muteTime)
-  subprocess.call('sudo amixer -q sset Mic '+mic+' -c 0', shell=True)  # マイク感受性を元に戻す
+  subprocess.call('sudo amixer -q sset Mic 50 -c 0', shell=True)  # マイク感受性を元に戻す
+#  subprocess.call('sudo amixer -q sset Mic '+mic+' -c 0', shell=True)  # マイク感受性を元に戻す
 
 def timeCheck(): # 活動時間内かどうかのチェック
   f = open (jsonFile,'r')
@@ -178,8 +179,9 @@ def writeFile(text): # デバッグファイル（out.txt）出力機能
   sleep(0.1)
 
 # Set up
-subprocess.call('amixer cset numid=1 '+vol+'% -q', shell=True)       # スピーカー音量
-subprocess.call('sudo amixer sset Mic '+mic+' -c 0 -q', shell=True) # マイク感受性
+subprocess.call('amixer cset numid=1 '+vol+'% -c 0', shell=True)       # スピーカー音量
+subprocess.call('sudo amixer sset Mic 50 -c 0 -q', shell=True) # マイク感受性
+#subprocess.call('sudo amixer sset Mic '+mic+' -c 0 -q', shell=True) # マイク感受性
 
 t=threading.Timer(10,alarm)
 t.setDaemon(True)
