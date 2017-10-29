@@ -5,12 +5,12 @@ import subprocess
 from time import sleep             # ウェイト処理
 import bezelie                     # べゼリー専用モジュール
 
-openJTalkFile = "/home/pi/bezelie/dev_edgar/exec_openJTalk.sh"  #
+openJTalkFile = "exec_openJTalk.sh"  #
 
 # Setting
 bez = bezelie.Control()               # べゼリー操作インスタンスの生成
 bez.setTrim(head=0, back=-5, stage=0) # センター位置の微調整
-bez.moveCenters()                     # ０番から７番までのサーボをセン$
+bez.moveCenters()                     # サーボのセンタリング
 
 # Main Loop
 def main():

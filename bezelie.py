@@ -48,14 +48,14 @@ class Control(object): # クラスの定義。ユーザー定義のクラスは�
         self.moveBack (0)
         self.moveStage (0)
 
-    def moveCenters(self): # ０番から７番までのサーボをセンタリングする
-        for i in range (0,8):
+    def moveCenters(self): # ０番から3番までのサーボをセンタリングする
+        for i in range (0,3):
             self.moveServo(i, 0, 0, 390, 210, 1, self.dutyCenter+20)
             sleep (0.1)
-        for i in range (0,8):
+        for i in range (0,3):
             self.moveServo(i, 0, 0, 390, 210, 1, self.dutyCenter-20)
             sleep (0.1)
-        for i in range (0,8):
+        for i in range (0,3):
             self.moveServo(i, 0, 0, 390, 210, 1, self.dutyCenter)
             sleep (0.1)
 

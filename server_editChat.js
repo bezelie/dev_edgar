@@ -34,8 +34,10 @@ var sleep = require('sleep');
 // ejsファイルの読み込み
 var template            = fs.readFileSync(__dirname + '/ejs/template.ejs', 'utf-8');
 var top                 = fs.readFileSync(__dirname + '/ejs/top.ejs', 'utf-8');
+var editBasic           = fs.readFileSync(__dirname + '/ejs/editBasic.ejs', 'utf-8');
 var editChat            = fs.readFileSync(__dirname + '/ejs/editChat.ejs', 'utf-8');
 var editTime            = fs.readFileSync(__dirname + '/ejs/editTime.ejs', 'utf-8');
+var setBasic            = fs.readFileSync(__dirname + '/ejs/setBasic.ejs', 'utf-8');
 var setTime             = fs.readFileSync(__dirname + '/ejs/setTime.ejs', 'utf-8');
 var editIntent          = fs.readFileSync(__dirname + '/ejs/editIntent.ejs', 'utf-8');
 var selectIntent4entity = fs.readFileSync(__dirname + '/ejs/selectIntent4entity.ejs', 'utf-8');
@@ -54,6 +56,10 @@ var routes = { // パスごとの表示内容を連想配列に格納
         "title":"BEZELIE",
         "message":"べゼリーとの対話データやアラーム時間などの編集ができます",
         "content":top}, // テンプレート
+    "/editBasic":{
+        "title":"基本設定",
+        "message":"べゼリーの基本的な設定を行います",
+        "content":editBasic},
     "/editChat":{
         "title":"対話設定",
         "message":"３種類のデータを編集することで、べゼリーとの対話を作ることができます",
@@ -94,6 +100,10 @@ var routes = { // パスごとの表示内容を連想配列に格納
         "title":"プログラムの実行",
         "message":"再起動します",
         "content":starting_pythonApp},
+    "/setBasic":{
+        "title":"設定完了",
+        "message":"設定を更新しました",
+        "content":setBasic},
     "/setTime":{
         "title":"設定完了",
         "message":"設定を更新しました",
@@ -199,7 +209,7 @@ function routing(req, res){ // requestイベントが発生したら実行され
         res.end();
         return;
     }
-    // GETリクエストの場合  -------------------------------------------------------------------------------
+    // GETリクエストの処理  -------------------------------------------------------------------------------
     if (req.method === "GET"){
         if (url_parts.pathname === "/editIntent" || url_parts.pathname === "/selectIntent4entity" || url_parts.pathname === "/selectIntent4dialog"){ 
             posts = readPosts(file_chatIntent);
@@ -232,6 +242,10 @@ function routing(req, res){ // requestイベントが発生したら実行され
                 }); // end of exec
               }); // end of exec
             }); // end of exec
+        } else if (url_parts.pathname === "/editBasic"){ // 基本編集
+            var json = fs.readFileSync(file_data_chat, "utf-8");  // 同期でファイルを読む
+            obj_config = JSON.parse(json); // JSONをオブジェクトに変換する。ejsからも読めるようにグローバルで定義する
+            pageWrite(res)
         } else if (url_parts.pathname === "/editTime"){ // 時間編集
             var json = fs.readFileSync(file_data_chat, "utf-8");  // 同期でファイルを読む
             obj_config = JSON.parse(json); // JSONをオブジェクトに変換する。ejsからも読めるようにグローバルで定義する
@@ -240,7 +254,7 @@ function routing(req, res){ // requestイベントが発生したら実行され
             pageWrite(res);
         }// end of if
     } // end of get request
-    // POSTリクエストの場合 -------------------------------------------------------------------------------
+    // POSTリクエストの処理 -------------------------------------------------------------------------------
     if (req.method === 'POST') {
         req.data = "";
         req.on("data", function(data) {
@@ -369,6 +383,11 @@ function routing(req, res){ // requestイベントが発生したら実行され
                     });
                 }
                 pageWrite(res);
+            } else if (url_parts.pathname == "/setBasic"){ // 基本設定の保存
+                obj_config.data0[0] = qs.parse(req.data);
+                fs.writeFile(file_data_chat, JSON.stringify(obj_config), function (err) {
+                });
+                pageWrite(res);
             } else if (url_parts.pathname == "/setTime"){ // 時間設定の保存
                 obj_config.data1[0] = qs.parse(req.data);
                 fs.writeFile(file_data_chat, JSON.stringify(obj_config), function (err) {
@@ -393,9 +412,9 @@ function routing(req, res){ // requestイベントが発生したら実行され
 
 // ---------------------------------------------------------------------------------------------------------
 // IPアドレスの設定
-// var host = getLocalAddress().ipv4[0].address; // 現在のIPアドレスを取得する。
+var host = getLocalAddress().ipv4[0].address; // 現在のIPアドレスを取得する。
 // var host = 'localhost'         // macやwindows10以降であれば、localhostで指定できる。
-var host = '10.0.0.1'          // 
+// var host = '10.0.0.1'          // 
 
 // サーバーの起動
 console.log ("starting node server");

@@ -2,7 +2,6 @@
 #HTSVOICE=/usr/share/hts-voice/miku/beta.htsvoice
 #HTSVOICE=/usr/share/hts-voice/miku/ver1.htsvoice
 HTSVOICE=/usr/share/hts-voice/mei/mei_happy.htsvoice
-#HTSVOICE=/usr/share/hts-voice/nitech-jp-atr503-m001/nitech_jp_atr503_m001.htsvoice
 DICDIRE=/var/lib/mecab/dic/open-jtalk/naist-jdic/
 VOICEDATA=/tmp/voice.wav
 sudo echo "$1" | open_jtalk \
@@ -21,4 +20,4 @@ sudo echo "$1" | open_jtalk \
 -z 0.0 \
 
 aplay -q -D plughw:1,0 $VOICEDATA
-sudo rm -f $VOICEDATA
+# sudo rm -f $VOICEDATA
