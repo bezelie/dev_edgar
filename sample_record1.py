@@ -1,6 +1,7 @@
-# -*- coding: utf-8 -*-
-# Bezelie demo Code for Raspberry Pi : Voice Recording Test
+# -*- coding: utf-8 -*-              : 文字コードの指定
+# Bezelie demo Code for Raspberry Pi : 音声録音サンプル
 
+# ライブラリの読み込み
 import time
 from time import sleep
 import subprocess
@@ -8,7 +9,8 @@ import pyaudio
 import wave
 import bezelie
 
-openJTalkFile = "/home/pi/bezelie/dev_edgar/exec_openJTalk.sh"  #
+# 音声合成シェルスクリプトのファイル名の指定
+openJTalkFile = "/home/pi/bezelie/dev_edgar/exec_openJTalk.sh"
 
 # Pyaudio
 # micro USB mic

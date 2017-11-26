@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-                : 文字コードの指定
-# Bezelie Sample Code for Raspberry Pi : コメント
+# Bezelie Sample Code for Raspberry Pi : １秒おきに文字を画面に表示するだけのサンプルです
 
 # ライブラリの読み込み
 from time import sleep                 # ウェイト処理

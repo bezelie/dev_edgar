@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
-# Bezelie Sample Code : speak by openJTalk
+# Bezelie Sample Code for Raspberry Pi : 発話するサンプル
 
-import subprocess
-from time import sleep             # ウェイト処理
-import bezelie                     # べゼリー専用モジュール
+# ライブラリの読み込み
+import subprocess                     # shellの実行をするためのライブラリ
+from time import sleep                # ウェイト処理
+import bezelie                        # べゼリー専用モジュール
 
-openJTalkFile = "exec_openJTalk.sh"  #
+openJTalkFile = "exec_openJTalk.sh"   # 発話シェルスクリプトのファイル名
 
 # Setting
 bez = bezelie.Control()               # べゼリー操作インスタンスの生成
@@ -17,7 +18,6 @@ def main():
   try:
     while (True):
       subprocess.call("sh "+openJTalkFile+" "+"こんにちわ", shell=True)
-
       sleep(0.5)
   except KeyboardInterrupt:
     print ' Interrupted by Keyboard'

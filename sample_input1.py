@@ -22,6 +22,7 @@ def main():
       sleep (0.5)                      # 0.5秒待つ
   except KeyboardInterrupt:            # コントロール＋Cが押された場合の処理
     print "終了しました"
+    GPIO.cleanup()                     # ポートをクリア
 
 # 直接実行された場合の処理
 if __name__ == "__main__":

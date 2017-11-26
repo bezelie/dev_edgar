@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
-# Bezelie Sample Code for Raspberry Pi : Servo Movement Test
+# Bezelie Sample Code for Raspberry Pi : サーボ動作サンプル
 
-from time import sleep             # ウェイト処理
-import bezelie                     # べゼリー専用モジュール
+# ライブラリの読み込み
+from time import sleep                # ウェイト処理
+import bezelie                        # べゼリー専用モジュール
 
-# Servo Setting
+# Setting
 bez = bezelie.Control()               # べゼリー操作インスタンスの生成
 bez.setTrim(head=0, back=-5, stage=0) # センター位置の微調整
 bez.moveCenters()                     # ０番から７番までのサーボをセンタリング
@@ -15,11 +16,11 @@ def main():
   try:
     print "開始します"
     while True:
-      bez.moveAct('happy')
+      bez.moveAct('happy')            # 喜び
       bez.stop()
-      bez.moveAct('nod')
+      bez.moveAct('nod')              # うなづき
       bez.stop()
-      bez.moveAct('why')
+      bez.moveAct('why')              # 首かしげ
       bez.stop()
       sleep (0.5)
   except KeyboardInterrupt:
