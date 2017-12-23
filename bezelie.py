@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 # Bezelie Python Module for Raspberry Pi
+# べゼリー専用モジュール。
 import RPi.GPIO as GPIO
 from time import sleep
 from random import randint
@@ -9,7 +10,7 @@ import threading
 
 bus = smbus.SMBus(1)
 
-class Control(object): # クラスの定義。ユーザー定義のクラスは大文字から始めるのが習慣。
+class Control(object): # クラスの定義。
 
     # 初期化メソッド。インスタンス生成時に自動実行される。
     def __init__(self, address_pca9685=0x40, dutyMax=490, dutyMin=110, dutyCenter=300, steps=1):
@@ -119,33 +120,23 @@ class Control(object): # クラスの定義。ユーザー定義のクラスは�
             sleep(0.004 * self.steps *(speed))
         return (now)
 
-    '''
-    def centering(self):
-        self.stop_event = threading.Event()
-        self.thread = threading.Thread(target = self.centerings)
-        self.thread.start()
-
-    def centerings(self):
-        for i in range (0,8):
-            self.setPCA9685Duty(i, 0, self.dutyCenter-64)
-            sleep(0.1)
-        for i in range (0,8):
-            self.setPCA9685Duty(i, 0, self.dutyCenter+64)
-            sleep(0.1)
-        for i in range (0,8):
-            self.setPCA9685Duty(i, 0, self.dutyCenter)
-            sleep(0.1)
-    '''
-
     def moveRnd(self):
         self.stop_event = threading.Event()
-        r = randint(1,3)
+        r = randint(1,7)
         if r == 1:
             self.thread = threading.Thread(target = self.actHappy)
         elif r == 2:
             self.thread = threading.Thread(target = self.actNod)
-        else:
+        elif r == 3:
             self.thread = threading.Thread(target = self.actWhy)
+        elif r == 4:
+            self.thread = threading.Thread(target = self.actAround)
+        elif r == 5:
+            self.thread = threading.Thread(target = self.actUp)
+        elif r == 6:
+            self.thread = threading.Thread(target = self.actWave)
+        else:
+            self.thread = threading.Thread(target = self.actEtc)
         self.thread.start()
 
     def moveAct(self, act):
@@ -154,13 +145,21 @@ class Control(object): # クラスの定義。ユーザー定義のクラスは�
             self.thread = threading.Thread(target = self.actHappy)
         elif act == 'nod':
             self.thread = threading.Thread(target = self.actNod)
-        else:
+        elif act == 'why':
             self.thread = threading.Thread(target = self.actWhy)
+        elif act == 'around':
+            self.thread = threading.Thread(target = self.actAround)
+        elif act == 'up':
+            self.thread = threading.Thread(target = self.actUp)
+        elif act == 'wave':
+            self.thread = threading.Thread(target = self.actWave)
+        else:
+            self.thread = threading.Thread(target = self.actEtc)
         self.thread.start()
 
-    def actHappy(self, time=0.5):
+    def actHappy(self, time=0.5): # しあわせ
         while not self.stop_event.is_set():
-            self.moveHead(20)
+            self.moveHead(30)
             self.moveBack(10)
             self.moveBack(-10)
             self.moveBack(10)
@@ -169,19 +168,54 @@ class Control(object): # クラスの定義。ユーザー定義のクラスは�
             sleep (time)
             self.moveHead(0)  
   
-    def actNod(self, time=0.5):
+    def actNod(self, time=0.5): # うなづき
         while not self.stop_event.is_set():
             self.moveHead(-10)
-            self.moveHead(0)  
+            self.moveHead(10)  
             self.moveHead(-10)
             sleep (time)
             self.moveHead(0)  
 
     def actWhy(self, time=1): # 首かしげ
         while not self.stop_event.is_set():
-            self.moveBack(15)
+            self.moveHead(20)
+            self.moveBack(30)
             sleep (time)
             self.moveBack(0)
+            self.moveHead(0)
+
+    def actAround(self, time=1): # 見回し
+        while not self.stop_event.is_set():
+            self.moveHead(20)
+            self.moveStage(40)
+            self.moveStage(-40)
+            self.moveStage(0)
+            sleep (time)
+            self.moveHead(0)
+
+    def actUp(self, time=1): # 見上げ
+        while not self.stop_event.is_set():
+            self.moveHead(30)
+            self.moveHead(-10)
+            self.moveHead(30)
+            sleep (time)
+            self.moveHead(0)
+
+    def actWave(self, time=1): # くねくね
+        while not self.stop_event.is_set():
+            self.moveBack(20)
+            self.moveStage(20)
+            self.moveBack(-20)
+            self.moveStage(-20)
+            self.moveBack(10)
+            self.moveStage(0)
+            self.moveBack(0)
+
+    def actEtc(self, time=1): # ETC
+        while not self.stop_event.is_set():
+            self.moveHead(-10)
+            sleep (time)
+            self.moveHead(0)  
 
     def stop(self):
         self.stop_event.set()

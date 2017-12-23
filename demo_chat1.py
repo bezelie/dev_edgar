@@ -8,20 +8,23 @@
 from datetime import datetime      # 現在時刻取得
 from random import randint         # 乱数の発生
 from time import sleep             # ウェイト処理
-import bezelie                     # べゼリー専用モジュール
 import xml.etree.ElementTree as ET # XMLエレメンタルツリー変換モジュール
+import RPi.GPIO as GPIO
 import subprocess                  #
 import threading                   # マルチスレッド処理
+import traceback                   # デバッグ用
+import bezelie                     # べゼリー専用モジュール
 import socket                      # ソケット通信モジュール
+import select                      # 待機モジュール
 import json                        #
 import csv                         #
-import RPi.GPIO as GPIO
+import sys
 
-csvFile  = "/home/pi/bezelie/dev_edgar/chatDialog.csv"     # 対話リスト
-jsonFile = "/home/pi/bezelie/dev_edgar/data_chat.json"     # 設定ファイル
-ttsFile  = "/home/pi/bezelie/dev_edgar/exec_openJTalk.sh"  # 音声合成
+csvFile  = "chatDialog.csv"        # 対話リスト
+jsonFile = "data_chat.json"        # 設定ファイル
+ttsFile  = "exec_openJTalk.sh"     # 音声合成
 
-# Read JSON File
+# Read Config File
 f = open (jsonFile,'r')
 jDict = json.load(f)
 name = jDict['data0'][0]['name']       # 
@@ -32,9 +35,10 @@ print 'mic = '+mic
 print 'vol = '+vol
 
 # Variables
-muteTime = 0.5    # 音声入力を無視する時間
-bufferSize = 512  # 受信するデータの最大バイト数。できるだけ小さな２の倍数が望ましい。
-alarmStop = False # アラームのスヌーズ機能（非搭載）
+muteTime = 0.5      # 音声入力を無視する時間
+bufferSize = 512    # 受信するデータの最大バイト。２の倍数が望ましい。
+alarmStop = False   # アラームのスヌーズ機能（非搭載）
+is_playing = False  # 再生中か否かのフラグ
 
 # Servo Setting
 bez = bezelie.Control()               # べゼリー操作インスタンスの生成
@@ -44,12 +48,31 @@ sleep(0.5)
 
 # GPIO Setting
 GPIO.setmode(GPIO.BCM)
-GPIO.setup(24, GPIO.IN)
+GPIO.setup(24, GPIO.IN)          # スイッチでモード(normal/manual)を切り替えたいときに使います。
 
 # TCPクライアントを作成しJuliusサーバーに接続する
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+client.settimeout(300)
 # client.connect(('10.0.0.1', 10500))  # Juliusサーバーに接続
-client.connect(('localhost', 10500))  # Juliusサーバーに接続
+# client.connect(('localhost', 10500))  # Juliusサーバーに接続
+
+enabled_julius = False
+for count in range(3):
+  try:
+    client.connect(('localhost', 10500))
+    enabled_julius = True
+    break
+  except socket.error, e:
+    print 'failed socket connect. retry'
+    sleep(3)
+
+if enabled_julius == False:
+  print 'boot failed...'
+  sys.exit(1)
+
+# Set up
+subprocess.call('amixer cset numid=1 '+vol+'% -q', shell=True)       # スピーカー音量
+subprocess.call('sudo amixer sset Mic '+mic+' -c 0 -q', shell=True) # マイク感受性
 
 # Functions
 def replyMessage(keyWord):        # 対話
@@ -77,9 +100,10 @@ def replyMessage(keyWord):        # 対話
       ansNum = i[3]               #
 
   # 発話
-#  subprocess.call('sudo amixer -q sset Mic 0 -c 0', shell=True)  # 自分の声を認識してしまわないようにマイクを切る
+  subprocess.call('sudo amixer -q sset Mic 0 -c 0', shell=True)  # 自分の声を認識してしまわないようにマイクを切る
   print "Intent... "+keyWord
   print "Bezelie.. "+data[ansNum][1]
+  is_playing = True
 
   # Read JSON File
   f = open (jsonFile,'r')
@@ -89,20 +113,20 @@ def replyMessage(keyWord):        # 対話
 
   if timeCheck(): # 活動時間だったら会話する
     bez.moveRnd()
-    subprocess.call('amixer cset numid=1 '+vol+'% -c 0', shell=True) # スピーカー音量
+    subprocess.call('amixer cset numid=1 '+vol+'% -q', shell=True) # スピーカー音量
     subprocess.call("sh "+ttsFile+" "+data[ansNum][1], shell=True)
     bez.stop()
   else:           # 活動時間外は会話しない
-    subprocess.call('amixer cset numid=1 70% -c 0', shell=True)      # スピーカー音量
+    subprocess.call('amixer cset numid=1 70% -q', shell=True)      # スピーカー音量
     subprocess.call("sh "+ttsFile+" "+"活動時間外です", shell=True)
     sleep (5)
-    subprocess.call('amixer cset numid=1 '+vol+'% -c 0', shell=True) # スピーカー音量
+    subprocess.call('amixer cset numid=1 '+vol+'% -q', shell=True) # スピーカー音量
   #  print "活動時間外なので発声・動作しません"
 
   alarmStop = True # 対話が発生したらアラームを止める
   sleep (muteTime)
-  subprocess.call('sudo amixer -q sset Mic 50 -c 0', shell=True)  # マイク感受性を元に戻す
-#  subprocess.call('sudo amixer -q sset Mic '+mic+' -c 0', shell=True)  # マイク感受性を元に戻す
+  subprocess.call('sudo amixer -q sset Mic '+mic+' -c 0', shell=True)  # マイク感受性を元に戻す
+  is_playing = False
 
 def timeCheck(): # 活動時間内かどうかのチェック
   f = open (jsonFile,'r')
@@ -178,52 +202,74 @@ def writeFile(text): # デバッグファイル（out.txt）出力機能
   f.close()
   sleep(0.1)
 
-# Set up
-subprocess.call('amixer cset numid=1 '+vol+'% -c 0', shell=True)       # スピーカー音量
-subprocess.call('sudo amixer sset Mic 50 -c 0 -q', shell=True) # マイク感受性
-#subprocess.call('sudo amixer sset Mic '+mic+' -c 0 -q', shell=True) # マイク感受性
+def check_mode():
+  mode = "normal"
+  if GPIO.input(24)==GPIO.LOW:    # normal mode
+    print "起動完了"
+    subprocess.call("sh "+ttsFile+" "+"起動完了", shell=True)
+  else:                           # manual mode
+    mode = "manual"
+    print "手動モード"
+    subprocess.call("sh "+ttsFile+" "+"手動モード", shell=True)
+    sleep (2)
+    manual_mode()
 
-t=threading.Timer(10,alarm)
-t.setDaemon(True)
-t.start()
+def manua_mode():
+  while True:
+    if GPIO.input(24)==GPIO.HIGH:
+      replyMessage(u'その他')
+      sleep(0.2)
+    else:
+      pass
+    sleep(0.1)
+    bez.stop()
+
+def debug_message(message):
+  #sys.stdout.write(message)
+  return
+
+def socket_buffer_clear():
+  while True:
+    rlist, _, _ = select.select([client], [], [], 1)
+
+    if len(rlist) > 0: 
+      dummy_buffer = client.recv(bufferSize)
+    else:
+      break
+
+def parse_recogout(data):
+  try:
+    # dataから必要部分だけ抽出し、かつエラーの原因になる文字列を削除する。
+    data = data[data.find("<RECOGOUT>"):].replace("\n.", "")
+    # fromstringはXML文字列からコンテナオブジェクトであるElement型に直接変換するメソッド
+    root = ET.fromstring('<?xml version="1.0" encoding="utf-8" ?>\n' + data)
+    keyWord = ""
+    for whypo in root.findall("./SHYPO/WHYPO"):
+      keyWord = keyWord + whypo.get("WORD")
+
+    if not is_playing:
+      replyMessage(keyWord)
+      socket_buffer_clear()
+
+  except:
+    pass
+#    debug_message('Parse Error')
+#    traceback.print_exc()
 
 # Main Loop
 def main():
-#  writeFile("main start ----------------------------")
+  debug_message('Main got started')
+  t=threading.Timer(10,alarm)
+  t.setDaemon(True)
+  t.start()
   try:
     data = ""
-    mode = "normal"
     bez.moveAct('happy')
-    if GPIO.input(24)==GPIO.LOW:
-      print "起動完了"
-      subprocess.call("sh "+ttsFile+" "+"起動完了", shell=True)
-    else:
-      mode = "manual"
-      print "手動モード"
-      subprocess.call("sh "+ttsFile+" "+"手動モード", shell=True)
-      sleep (2)
-      while True:
-        if GPIO.input(24)==GPIO.HIGH:
-          replyMessage(u'その他')
-          sleep(0.2)
-        else:
-          pass
-        sleep(0.1)
-        bez.stop()
+    check_mode()
     bez.stop()
     while True:
       if "</RECOGOUT>\n." in data:  # RECOGOUTツリーの最終行を見つけたら以下の処理を行う
-        try:
-          # dataから必要部分だけ抽出し、かつエラーの原因になる文字列を削除する。
-          data = data[data.find("<RECOGOUT>"):].replace("\n.", "")
-          # fromstringはXML文字列からコンテナオブジェクトであるElement型に直接変換するメソッド
-          root = ET.fromstring('<?xml version="1.0" encoding="utf-8" ?>\n' + data)
-          keyWord = ""
-          for whypo in root.findall("./SHYPO/WHYPO"):
-            keyWord = keyWord + whypo.get("WORD")
-          replyMessage(keyWord)
-        except:
-          print "------------------------"
+        parse_recogout(data)
         data = ""  # 認識終了したのでデータをリセットする
       else:
         data = data + client.recv(bufferSize)  # Juliusサーバーから受信
@@ -233,7 +279,9 @@ def main():
     print "  終了しました"
     client.close()
     bez.stop()
+    sys.exit(0)
 
 if __name__ == "__main__":
-#    pass
     main()
+    debug_message('finished')
+    sys.exit(0)

@@ -1,5 +1,5 @@
 # Julius 起動スクリプト
-ALSADEV="plughw:0,0" julius -w /home/pi/bezelie/dev_edgar/chatEntity.dic -C /home/pi/bezelie/dev_edgar/julius.jconf -module > /dev/null &
+ALSADEV="plughw:0,0" julius -w $HOME/bezelie/dev_edgar/chatEntity.dic -C $HOME/bezelie/dev_edgar/julius.jconf -module > /dev/null &
 # ALSADEV="plughw:0,0" julius -w chatEntity.dic -C julius.jconf -module > /dev/null &
 echo "Julius's Process ID = "$!
 # -moduleオプション= Juliusをモジュールモードで起動

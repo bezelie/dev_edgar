@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 # Bezelie Sample Code for Raspberry Pi : サーボ動作サンプル
+# ラズパイにサーボドライバーとサーボを接続してから実行してください。
 
 # ライブラリの読み込み
 from time import sleep                # ウェイト処理
@@ -28,4 +29,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
