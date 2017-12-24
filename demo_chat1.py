@@ -20,17 +20,17 @@ import json                        #
 import csv                         #
 import sys
 
-csvFile  = "chatDialog.csv"        # 対話リスト
-jsonFile = "data_chat.json"        # 設定ファイル
-ttsFile  = "exec_openJTalk.sh"     # 音声合成
+csvFile  = "/home/pi/bezelie/dev_edgar/chatDialog.csv"        # 対話リスト
+jsonFile = "/home/pi/bezelie/dev_edgar/data_chat.json"        # 設定ファイル
+ttsFile  = "/home/pi/bezelie/dev_edgar/exec_openJTalk.sh"     # 音声合成
 
 # Read Config File
 f = open (jsonFile,'r')
 jDict = json.load(f)
-name = jDict['data0'][0]['name']       # 
-user = jDict['data0'][0]['user']       # 
-mic = jDict['data0'][0]['mic']         # マイク感度の設定。62が最大値。
-vol = jDict['data0'][0]['vol']         # 
+name = jDict['data0'][0]['name']       # べゼリーの別名。
+user = jDict['data0'][0]['user']       # ユーザーのニックネーム。
+mic = jDict['data0'][0]['mic']         # マイク感度。62が最大値。
+vol = jDict['data0'][0]['vol']         # スピーカー音量。
 print 'mic = '+mic
 print 'vol = '+vol
 
@@ -42,7 +42,7 @@ is_playing = False  # 再生中か否かのフラグ
 
 # Servo Setting
 bez = bezelie.Control()               # べゼリー操作インスタンスの生成
-bez.setTrim(head=0, back=0, stage=0)  # センター位置の微調整
+# bez.setTrim(head=0, back=0, stage=0)  # センター位置の微調整
 bez.moveCenters()                     # サーボをセンタリング
 sleep(0.5)
 
@@ -55,7 +55,6 @@ client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 client.settimeout(300)
 # client.connect(('10.0.0.1', 10500))  # Juliusサーバーに接続
 # client.connect(('localhost', 10500))  # Juliusサーバーに接続
-
 enabled_julius = False
 for count in range(3):
   try:
@@ -206,7 +205,7 @@ def check_mode():
   mode = "normal"
   if GPIO.input(24)==GPIO.LOW:    # normal mode
     print "起動完了"
-    subprocess.call("sh "+ttsFile+" "+"起動完了", shell=True)
+    subprocess.call("sh "+ttsFile+" "+"こんにちわ", shell=True)
   else:                           # manual mode
     mode = "manual"
     print "手動モード"

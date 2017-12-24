@@ -23,6 +23,5 @@ sudo systemctl enable autoStart_server.service
 # sudo cp autoStart_app.service /etc/systemd/system/
 # sudo systemctl enable autoStart_app.service
 # rc.localによってrc.startupsが自動起動するように設定する。
-cd /home/pi/bezelie/dev_edgar
 sudo cp rc.startups /etc/rc.local
 # sudo reboot

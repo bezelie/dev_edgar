@@ -30,6 +30,7 @@ var CSV  = require("comma-separated-values");
 var os   = require('os');
                             //    os.networkInterfaces();
 var sleep = require('sleep');
+                            // ウェイト処理用モジュール
 
 // ejsファイルの読み込み
 var template            = fs.readFileSync(__dirname + '/ejs/template.ejs', 'utf-8');
@@ -37,8 +38,10 @@ var top                 = fs.readFileSync(__dirname + '/ejs/top.ejs', 'utf-8');
 var editBasic           = fs.readFileSync(__dirname + '/ejs/editBasic.ejs', 'utf-8');
 var editChat            = fs.readFileSync(__dirname + '/ejs/editChat.ejs', 'utf-8');
 var editTime            = fs.readFileSync(__dirname + '/ejs/editTime.ejs', 'utf-8');
+var editServo           = fs.readFileSync(__dirname + '/ejs/editServo.ejs', 'utf-8');
 var setBasic            = fs.readFileSync(__dirname + '/ejs/setBasic.ejs', 'utf-8');
 var setTime             = fs.readFileSync(__dirname + '/ejs/setTime.ejs', 'utf-8');
+var setServo            = fs.readFileSync(__dirname + '/ejs/setServo.ejs', 'utf-8');
 var editIntent          = fs.readFileSync(__dirname + '/ejs/editIntent.ejs', 'utf-8');
 var selectIntent4entity = fs.readFileSync(__dirname + '/ejs/selectIntent4entity.ejs', 'utf-8');
 var editEntity          = fs.readFileSync(__dirname + '/ejs/editEntity.ejs', 'utf-8');
@@ -54,7 +57,7 @@ var test                = fs.readFileSync(__dirname + '/ejs/test.ejs', 'utf-8');
 var routes = { // パスごとの表示内容を連想配列に格納
     "/":{
         "title":"BEZELIE",
-        "message":"べゼリーとの対話データやアラーム時間などの編集ができます",
+        "message":"べゼリー設定データの編集ができます",
         "content":top}, // テンプレート
     "/editBasic":{
         "title":"基本設定",
@@ -68,6 +71,10 @@ var routes = { // パスごとの表示内容を連想配列に格納
         "title":"時間設定",
         "message":"アラームと活動時間の設定をします",
         "content":editTime},
+    "/editServo":{
+        "title":"サーボ調整",
+        "message":"サーボの初期位置を調整します",
+        "content":editServo},
     "/disableServer":{
         "title":"再起動",
         "message":"再起動します",
@@ -108,6 +115,10 @@ var routes = { // パスごとの表示内容を連想配列に格納
         "title":"設定完了",
         "message":"設定を更新しました",
         "content":setTime},
+    "/setServo":{
+        "title":"設定完了",
+        "message":"設定を更新しました",
+        "content":setServo},
     "/test":{
         "title":"テスト",
         "message":"これはテスト用のページです",
@@ -133,7 +144,7 @@ var posts = "";    // ブラウザからPOSTで送られてきたデータ
 var intent = "";   // 今回選択されたintent（単数）
 
 // 関数定義
-function getLocalAddress() { // IPアドレスの取得
+function getLocalAddress() {                    // IPアドレスの取得
     var ifacesObj = {}
     ifacesObj.ipv4 = [];
     ifacesObj.ipv6 = [];
@@ -156,7 +167,7 @@ function getLocalAddress() { // IPアドレスの取得
     return ifacesObj;
 };
 
-function pageWrite (res){ // ページ描画
+function pageWrite (res){                      // ページ描画
     content = ejs.render( template, {
         title: routes[url_parts.pathname].title,
         errorMsg: errorMsg,
@@ -171,7 +182,7 @@ function pageWrite (res){ // ページ描画
     res.end();
 }
 
-function delChk (query, posts, intent){ // 削除しようとしている番号が、選択中のインテントのものかを調べる
+function delChk (query, posts, intent){       // 削除しようとしている番号が、選択中のインテントのものかを調べる
     errorMsg = "番号が違います";
     for (var i=0;i < posts.length; i++ ) {
         if (posts[i][0]==intent && i==query.delNum){
@@ -181,14 +192,14 @@ function delChk (query, posts, intent){ // 削除しようとしている番号�
     return errorMsg;
 }
 
-function readPosts(file){
+function readPosts(file){                     // 
     var text = fs.readFileSync(file, 'utf8'); // 同期でファイルを読む
     //var text = fs.readFileSync(__dirname + "/" + file, 'utf8'); // 同期でファイルを読む
     posts = new CSV(text, {header:false}).parse(); //  TEXTをCSVを仲介してリスト変数に変換する
     return posts;
 }
 
-function obj2csv(posts){
+function obj2csv(posts){                     // 
     text = '';
     for (var i=0;i < posts.length; i++ ) {
         text = text+posts[i]+'\n';
@@ -215,6 +226,10 @@ function routing(req, res){ // requestイベントが発生したら実行され
             posts = readPosts(file_chatIntent);
             pageWrite(res);
             return;
+        } else if (url_parts.pathname === "/editBasic" || url_parts.pathname === "/editTime" || url_parts.pathname === "/editServo"){ //
+            var json = fs.readFileSync(file_data_chat, "utf-8");  // 同期でファイルを読む
+            obj_config = JSON.parse(json); // JSONをオブジェクトに変換する。ejsからも読めるようにグローバルで定義する
+            pageWrite(res)
         } else if (url_parts.pathname == "/starting_pythonApp"){ // Juliusとpythonプログラムの再起動
             pageWrite(res);
             var COMMAND = "sh "+file_exec_talk+" "+"プログラム再起動";
@@ -242,14 +257,6 @@ function routing(req, res){ // requestイベントが発生したら実行され
                 }); // end of exec
               }); // end of exec
             }); // end of exec
-        } else if (url_parts.pathname === "/editBasic"){ // 基本編集
-            var json = fs.readFileSync(file_data_chat, "utf-8");  // 同期でファイルを読む
-            obj_config = JSON.parse(json); // JSONをオブジェクトに変換する。ejsからも読めるようにグローバルで定義する
-            pageWrite(res)
-        } else if (url_parts.pathname === "/editTime"){ // 時間編集
-            var json = fs.readFileSync(file_data_chat, "utf-8");  // 同期でファイルを読む
-            obj_config = JSON.parse(json); // JSONをオブジェクトに変換する。ejsからも読めるようにグローバルで定義する
-            pageWrite(res)
         } else {
             pageWrite(res);
         }// end of if
@@ -398,6 +405,14 @@ function routing(req, res){ // requestイベントが発生したら実行され
                 console.log(yearNow);
                 console.log(timeNow);
                 var COMMAND = "sudo date -s '"+yearNow+" "+timeNow+"'";
+                exec(COMMAND, function(error, stdout, stderr) {
+                });
+            } else if (url_parts.pathname == "/setServo"){ // サーボ調整の保存
+                obj_config.data2[0] = qs.parse(req.data);
+                fs.writeFile(file_data_chat, JSON.stringify(obj_config), function (err) {
+                });
+                pageWrite(res);
+                var COMMAND = "python bezelie.py";
                 exec(COMMAND, function(error, stdout, stderr) {
                 });
             } else { // 該当せず

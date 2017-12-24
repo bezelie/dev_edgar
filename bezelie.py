@@ -7,6 +7,7 @@ from random import randint
 import smbus # for I2C
 import math
 import threading
+import json                        #
 
 bus = smbus.SMBus(1)
 
@@ -14,15 +15,25 @@ class Control(object): # クラスの定義。
 
     # 初期化メソッド。インスタンス生成時に自動実行される。
     def __init__(self, address_pca9685=0x40, dutyMax=490, dutyMin=110, dutyCenter=300, steps=1):
+        jsonFile = "data_chat.json"        # 設定ファイル
+        f = open (jsonFile,'r')
+        jDict = json.load(f)
+        self.headTrim = int(jDict['data2'][0]['head'])
+        self.backTrim = int(jDict['data2'][0]['back'])
+        self.stageTrim = int(jDict['data2'][0]['stage'])
+        #print self.headTrim
+        #print self.backTrim
+        #print self.stageTrim
+
         # インスタンス変数に値を代入。selfは自分自身のインスタンス名。
         self.address_pca9685 = address_pca9685
         self.dutyMax = dutyMax
         self.dutyMin = dutyMin
         self.dutyCenter = dutyCenter
         self.steps = steps
-        self.headTrim = 0
-        self.backTrim = 0
-        self.stageTrim = 0
+        # self.headTrim = 0
+        # self.backTrim = 0
+        # self.stageTrim = 0
         self.headNow = dutyCenter
         self.backNow = dutyCenter
         self.stageNow = dutyCenter
@@ -184,7 +195,7 @@ class Control(object): # クラスの定義。
             self.moveBack(0)
             self.moveHead(0)
 
-    def actAround(self, time=1): # 見回し
+    def actAround(self, time=0.5): # 見回し
         while not self.stop_event.is_set():
             self.moveHead(20)
             self.moveStage(40)
@@ -201,7 +212,7 @@ class Control(object): # クラスの定義。
             sleep (time)
             self.moveHead(0)
 
-    def actWave(self, time=1): # くねくね
+    def actWave(self, time=0.5): # くねくね
         while not self.stop_event.is_set():
             self.moveBack(20)
             self.moveStage(20)
@@ -221,3 +232,13 @@ class Control(object): # クラスの定義。
         self.stop_event.set()
         self.thread.join()
 
+# Centering Servo Motors
+if __name__ == "__main__":  # Do only when this is done as a script
+  bez = Control()               # べゼリー操作インスタンスの生成
+#  jsonFile = "data_chat.json"        # 設定ファイル
+#  f = open (jsonFile,'r')
+#  jDict = json.load(f)
+#  bez.headTrim = int(jDict['data2'][0]['head'])
+#  bez.backTrim = int(jDict['data2'][0]['back'])
+#  bez.stageTrim = int(jDict['data2'][0]['stage'])
+  bez.moveCenter()

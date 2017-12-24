@@ -18,6 +18,5 @@ sudo cp config/interfaces_original /etc/network/interfaces
 # sudo systemctl disable autoStart_app.service
 sudo systemctl disable autoStart_server.service
 # node-js自動起動の無効化
-cd /home/pi/bezelie/dev_edgar
 sudo cp rc.nothing /etc/rc.local
 
