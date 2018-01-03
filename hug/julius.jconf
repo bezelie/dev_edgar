@@ -1,0 +1,11 @@
+-v $HOME/julius/model/lang_m/bccwj.60k.htkdic
+-h $HOME/julius/model/phone_m/jnas-tri-3k16-gid.binhmm
+-hlist $HOME/julius/model/phone_m/logicalTri
+-n 2
+-output 1
+-input mic
+-input oss
+-rejectshort 600
+-charconv euc-jp utf8
+-lv 1000
+-zmean
