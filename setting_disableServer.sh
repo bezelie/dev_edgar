@@ -1,5 +1,5 @@
+#!/bin/bash
 # ラズパイのアクセスポイント化を解除し、wifiに接続する設定にする
-#!/bin/sh
 SCRIPT_DIR=`dirname $0`
 cd $SCRIPT_DIR
 echo "Disable Server"
@@ -15,8 +15,9 @@ sudo cp config/hostapd_original.conf /etc/hostapd/hostapd.conf
 sudo cp config/dhcpcd_original.conf /etc/dhcpcd.conf
 # wlan0をアクセスポイントにすることの無効化
 sudo cp config/interfaces_original /etc/network/interfaces
-# sudo systemctl disable autoStart_app.service
-sudo systemctl disable autoStart_server.service
-# node-js自動起動の無効化
+# sudo systemctl disable service
+# sudo systemctl disable autoStart_node.service
+# sudo systemctl disable autoStart_julius.service
+# sudo systemctl disable autoStart_python.service
+# rc.localの無効化
 sudo cp rc.nothing /etc/rc.local
-

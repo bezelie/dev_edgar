@@ -1,0 +1,11 @@
+[Unit]
+Description=starting julius
+After=syslog.target sockets.target network.target network-online.target
+
+[Service]
+ExecStart=/home/pi/bezelie/dev_edgar/boot_julius.sh
+Type=simple
+Restart=no
+
+[Install]
+WantedBy=multi-user.target

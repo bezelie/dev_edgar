@@ -1,3 +1,4 @@
+
 // べゼリー対話データを編集するWebアプリ 
 // for Bezelie Edgar
 // in Node-JS
@@ -132,6 +133,8 @@ var file_chatEntity_tsv        = __dirname+"/chatEntity.tsv";
 var file_chatEntity_dic        = __dirname+"/chatEntity.dic";
 var file_setting_enableApp     = __dirname+"/setting_enableApp.sh";
 var file_restart_app           = __dirname+"/restart_app.sh";
+var file_restart_app1           = __dirname+"/restart_app1.sh";
+var file_restart_app2           = __dirname+"/restart_app2.sh";
 var file_exec_python           = __dirname+"/exec_python.sh";
 var file_exec_julius           = __dirname+"/exec_juliusChat.sh";
 var file_exec_talk             = __dirname+"/exec_openJTalk.sh"
@@ -139,6 +142,7 @@ var file_stop_python           = __dirname+"/stop_python.sh";
 var file_stop_julius           = __dirname+"/stop_julius.sh";
 var file_setting_disableServer = __dirname+"/setting_disableServer.sh";
 var file_data_chat             = __dirname+"/data_chat.json"
+var file_debug                 = __dirname+"/debug.txt"
 var errorMsg = ""; // これが空欄のときはエラー無し
 var posts = "";    // ブラウザからPOSTで送られてきたデータ
 var intent = "";   // 今回選択されたintent（単数）
@@ -207,6 +211,10 @@ function obj2csv(posts){                     //
     return text;
 }
 
+function debug(text){                        // 
+    fs.appendFileSync(file_debug, text, 'utf8'); // 同期でファイルを読む
+}
+
 //-------------------------------------------------------------------------------------------------------
 // ルーティング
 function routing(req, res){ // requestイベントが発生したら実行される関数
@@ -232,12 +240,14 @@ function routing(req, res){ // requestイベントが発生したら実行され
             pageWrite(res)
         } else if (url_parts.pathname == "/starting_pythonApp"){ // Juliusとpythonプログラムの再起動
             pageWrite(res);
-            var COMMAND = "sh "+file_exec_talk+" "+"プログラム再起動";
+            debug('restart function start \n');
+            var COMMAND = "bash "+file_restart_app;
             exec(COMMAND, function(error, stdout, stderr) {
-              var COMMAND = "sh "+file_restart_app;
-              exec(COMMAND, function(error, stdout, stderr) {
-              }); // end of exec
+              debug('app done \n');
+              debug('stdout: '+stdout+'\n');
+              debug('stderr: '+stderr+'\n');
             }); // end of exec
+            debug('restart function end \n');
         } else if (url_parts.pathname == "/reboot"){ // 再起動
             pageWrite(res);
             var COMMAND = "sh "+file_exec_talk+" "+"システム再起動";
@@ -430,6 +440,8 @@ function routing(req, res){ // requestイベントが発生したら実行され
 var host = getLocalAddress().ipv4[0].address; // 現在のIPアドレスを取得する。
 // var host = 'localhost'         // macやwindows10以降であれば、localhostで指定できる。
 // var host = '10.0.0.1'          // 
+debug('server_editChat.js start \n');
+debug(host+'\n');
 
 // サーバーの起動
 console.log ("starting node server");

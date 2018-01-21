@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # ラズパイをアクセスポイントにする
 SCRIPT_DIR=`dirname $0`
 cd $SCRIPT_DIR
@@ -9,7 +9,7 @@ sudo cp config/interfaces_changed /etc/network/interfaces
 sudo cp config/dhcpcd_changed.conf /etc/dhcpcd.conf
 # サービスを再起動
 sudo service dhcpcd restart
-# sudo service dhcpcd restart
+# sudo service dhcpcd start
 # Hostapdでアクセスポイント化
 sudo cp config/hostapd_changed.conf /etc/hostapd/hostapd.conf
 # DEAMON_CONF の指定。
@@ -17,11 +17,14 @@ sudo cp config/hostapd_changed /etc/default/hostapd
 # DHCPサーバ化
 sudo cp config/dhcpd_changed.conf /etc/dhcp/dhcpd.conf
 sudo cp config/isc-dhcp-server_changed /etc/default/isc-dhcp-server
-# dhcpサービスとnode-jsを起動するため自動起動を設定する
-sudo cp autoStart_server.service /etc/systemd/system/
-sudo systemctl enable autoStart_server.service
-# sudo cp autoStart_app.service /etc/systemd/system/
-# sudo systemctl enable autoStart_app.service
+# 自動起動を設定する
+# sudo cp autoStart_julius.service /etc/systemd/system/
+# sudo cp autoStart_python.service /etc/systemd/system/
+# sudo cp autoStart_node.service /etc/systemd/system/
+# sudo systemctl enable autoStart_julius.service
+# sudo systemctl enable autoStart_python.service
+# sudo systemctl enable autoStart_node.service
+# sudo systemctl daemon-reload
 # rc.localによってrc.startupsが自動起動するように設定する。
 sudo cp rc.startups /etc/rc.local
-# sudo reboot
+sudo reboot

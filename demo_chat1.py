@@ -51,15 +51,17 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setup(24, GPIO.IN)          # スイッチでモード(normal/manual)を切り替えたいときに使います。
 
 # TCPクライアントを作成しJuliusサーバーに接続する
+# sleep(1)
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 client.settimeout(300)
-# client.connect(('10.0.0.1', 10500))  # Juliusサーバーに接続
 # client.connect(('localhost', 10500))  # Juliusサーバーに接続
 enabled_julius = False
 for count in range(3):
   try:
     client.connect(('localhost', 10500))
+    # client.connect(('10.0.0.1', 10500))  # Juliusサーバーに接続
     enabled_julius = True
+    print 'success! socket connected.'
     break
   except socket.error, e:
     print 'failed socket connect. retry'
@@ -224,7 +226,7 @@ def manua_mode():
     bez.stop()
 
 def debug_message(message):
-  #sys.stdout.write(message)
+  sys.stdout.write(message)
   return
 
 def socket_buffer_clear():
