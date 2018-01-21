@@ -31,8 +31,8 @@ name = jDict['data0'][0]['name']       # べゼリーの別名。
 user = jDict['data0'][0]['user']       # ユーザーのニックネーム。
 mic = jDict['data0'][0]['mic']         # マイク感度。62が最大値。
 vol = jDict['data0'][0]['vol']         # スピーカー音量。
-print 'mic = '+mic
-print 'vol = '+vol
+# print 'mic = '+mic
+# print 'vol = '+vol
 
 # Variables
 muteTime = 0.5      # 音声入力を無視する時間
@@ -44,7 +44,7 @@ is_playing = False  # 再生中か否かのフラグ
 bez = bezelie.Control()               # べゼリー操作インスタンスの生成
 # bez.setTrim(head=0, back=0, stage=0)  # センター位置の微調整
 bez.moveCenters()                     # サーボをセンタリング
-sleep(0.5)
+# sleep(0.5)
 
 # GPIO Setting
 GPIO.setmode(GPIO.BCM)
@@ -61,14 +61,14 @@ for count in range(3):
     client.connect(('localhost', 10500))
     # client.connect(('10.0.0.1', 10500))  # Juliusサーバーに接続
     enabled_julius = True
-    print 'success! socket connected.'
+    # print 'success! socket connected.'
     break
   except socket.error, e:
-    print 'failed socket connect. retry'
+    # print 'failed socket connect. retry'
     sleep(3)
 
 if enabled_julius == False:
-  print 'boot failed...'
+  # print 'boot failed...'
   sys.exit(1)
 
 # Set up
@@ -102,8 +102,8 @@ def replyMessage(keyWord):        # 対話
 
   # 発話
   subprocess.call('sudo amixer -q sset Mic 0 -c 0', shell=True)  # 自分の声を認識してしまわないようにマイクを切る
-  print "Intent... "+keyWord
-  print "Bezelie.. "+data[ansNum][1]
+  # print "Intent... "+keyWord
+  # print "Bezelie.. "+data[ansNum][1]
   is_playing = True
 
   # Read JSON File
@@ -118,7 +118,7 @@ def replyMessage(keyWord):        # 対話
     subprocess.call("sh "+ttsFile+" "+data[ansNum][1], shell=True)
     bez.stop()
   else:           # 活動時間外は会話しない
-    subprocess.call('amixer cset numid=1 70% -q', shell=True)      # スピーカー音量
+    subprocess.call('amixer cset numid=1 60% -q', shell=True)      # スピーカー音量
     subprocess.call("sh "+ttsFile+" "+"活動時間外です", shell=True)
     sleep (5)
     subprocess.call('amixer cset numid=1 '+vol+'% -q', shell=True) # スピーカー音量
@@ -162,13 +162,13 @@ def alarm():
   alarmKind = jDict['data1'][0]['alarmKind']
   # alarmVol = jDict['data1'][0]['alarmVol']
   now = datetime.now()
-  print 'Time: '+str(now.hour)+':'+str(now.minute)
+  # print 'Time: '+str(now.hour)+':'+str(now.minute)
 
   #if True: # アラーム動作のチェック用
   if int(now.hour) == int(alarmTime[0:2]) and int(now.minute) == int(alarmTime[3:5]):
     if alarmOn == "true":
       if alarmStop == False:
-        print 'アラームの時間です'
+        # print 'アラームの時間です'
         subprocess.call('sudo amixer -q sset Mic 0 -c 0', shell=True)  #
         if alarmKind == 'mild':
           bez.moveAct('happy')
@@ -181,10 +181,11 @@ def alarm():
         sleep (muteTime)
         subprocess.call('sudo amixer -q sset Mic '+mic+' -c 0', shell=True)  #
       else:
-        print '_'
+        # print '_'
         alarmStop = False
-    else:
-      print 'アラームの時間ですが、アラームはオフになっています'
+    # else:
+      # print 'アラームの時間ですが、アラームはオフになっています'
+
   t=threading.Timer(20,alarm) # ｎ秒後にまたスレッドを起動する
   t.setDaemon(True)           # メインスレッドが終了したら終了させる
   t.start()
@@ -206,11 +207,12 @@ def writeFile(text): # デバッグファイル（out.txt）出力機能
 def check_mode():
   mode = "normal"
   if GPIO.input(24)==GPIO.LOW:    # normal mode
-    print "起動完了"
-    subprocess.call("sh "+ttsFile+" "+"こんにちわ", shell=True)
+    # print "起動完了"
+    subprocess.call("sh "+ttsFile+" "+u"こんにちは"+user, shell=True)
+    subprocess.call("sh "+ttsFile+" "+u"ぼくは"+name, shell=True)
   else:                           # manual mode
     mode = "manual"
-    print "手動モード"
+    # print "手動モード"
     subprocess.call("sh "+ttsFile+" "+"手動モード", shell=True)
     sleep (2)
     manual_mode()
@@ -277,7 +279,7 @@ def main():
         # /RECOGOUTに達するまで受信データを追加していく
 
   except KeyboardInterrupt: # CTRL+Cで終了
-    print "  終了しました"
+    # print "  終了しました"
     client.close()
     bez.stop()
     sys.exit(0)

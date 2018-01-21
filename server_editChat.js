@@ -241,16 +241,19 @@ function routing(req, res){ // requestイベントが発生したら実行され
         } else if (url_parts.pathname == "/starting_pythonApp"){ // Juliusとpythonプログラムの再起動
             pageWrite(res);
             debug('restart function start \n');
-            var COMMAND = "bash "+file_restart_app;
+            var COMMAND = "sh "+file_exec_talk+" "+"プログラムを再起動します";
             exec(COMMAND, function(error, stdout, stderr) {
-              debug('app done \n');
-              debug('stdout: '+stdout+'\n');
-              debug('stderr: '+stderr+'\n');
+              var COMMAND = "bash "+file_restart_app;
+              exec(COMMAND, function(error, stdout, stderr) {
+                debug('app done \n');
+                debug('stdout: '+stdout+'\n');
+                debug('stderr: '+stderr+'\n');
+              }); // end of exec
             }); // end of exec
             debug('restart function end \n');
         } else if (url_parts.pathname == "/reboot"){ // 再起動
             pageWrite(res);
-            var COMMAND = "sh "+file_exec_talk+" "+"システム再起動";
+            var COMMAND = "sh "+file_exec_talk+" "+"システムを再起動します";
             exec(COMMAND, function(error, stdout, stderr) {
               var COMMAND = 'sudo reboot';
               exec(COMMAND, function(error, stdout, stderr) {
@@ -448,9 +451,10 @@ console.log ("starting node server");
 var server = http.createServer(); // http.serverクラスのインスタンスを作る。戻値はhttp.server型のオブジェクト。
 server.on('request', routing);    // serverでrequestイベントが発生した場合のコールバック関数を登録
 var port = 3000;                  // portは1024以上の数字なら何でもよい。
-var COMMAND = "sh "+file_exec_talk+" "+host;
-exec(COMMAND, function(error, stdout, stderr) {
-  sleep.sleep(6);
-  server.listen(port, host)         // サーバーを待ち受け状態にする。
-});
+server.listen(port, host)         // サーバーを待ち受け状態にする。
+// var COMMAND = "sh "+file_exec_talk+" "+host;
+// exec(COMMAND, function(error, stdout, stderr) {
+//   sleep.sleep(6);
+//   server.listen(port, host)         // サーバーを待ち受け状態にする。
+// });
 console.log ("server is listening at "+host+":"+port);
