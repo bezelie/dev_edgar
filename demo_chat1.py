@@ -19,6 +19,8 @@ import select                      # 待機モジュール
 import json                        #
 import csv                         #
 import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
 
 csvFile  = "/home/pi/bezelie/dev_edgar/chatDialog.csv"        # 対話リスト
 jsonFile = "/home/pi/bezelie/dev_edgar/data_chat.json"        # 設定ファイル
@@ -53,7 +55,7 @@ GPIO.setup(24, GPIO.IN)          # スイッチでモード(normal/manual)を切
 # TCPクライアントを作成しJuliusサーバーに接続する
 # sleep(1)
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-client.settimeout(300)
+# client.settimeout(300)
 # client.connect(('localhost', 10500))  # Juliusサーバーに接続
 enabled_julius = False
 for count in range(3):
@@ -68,7 +70,7 @@ for count in range(3):
     sleep(3)
 
 if enabled_julius == False:
-  # print 'boot failed...'
+  print 'boot failed...'
   sys.exit(1)
 
 # Set up
@@ -190,20 +192,6 @@ def alarm():
   t.setDaemon(True)           # メインスレッドが終了したら終了させる
   t.start()
 
-def writeFile(text): # デバッグファイル（out.txt）出力機能
-  f = open ('out.txt', 'r')
-  textBefore = ""
-  for row in f:
-    textBefore = textBefore + row
-  f.close()
-  f = open ('out.txt', 'w')
-  f.write(textBefore + text + "\n")
-  f.write(str(type(textBefore)))
-  f.write(str(type(text)))
-  f.write(str(type(textBefore + text)))
-  f.close()
-  sleep(0.1)
-
 def check_mode():
   mode = "normal"
   if GPIO.input(24)==GPIO.LOW:    # normal mode
@@ -217,7 +205,7 @@ def check_mode():
     sleep (2)
     manual_mode()
 
-def manua_mode():
+def manual_mode():
   while True:
     if GPIO.input(24)==GPIO.HIGH:
       replyMessage(u'その他')
@@ -226,10 +214,6 @@ def manua_mode():
       pass
     sleep(0.1)
     bez.stop()
-
-def debug_message(message):
-  sys.stdout.write(message)
-  return
 
 def socket_buffer_clear():
   while True:
@@ -240,35 +224,78 @@ def socket_buffer_clear():
     else:
       break
 
-def parse_recogout(data):
+def parse_recogoutBackUp(data):
   try:
     # dataから必要部分だけ抽出し、かつエラーの原因になる文字列を削除する。
+    # data = data[data.find("<RECOGOUT>"):].replace("\n.", "").replace("</s>","").replace("<s>","")
     data = data[data.find("<RECOGOUT>"):].replace("\n.", "")
+    # debug_message('1')
+    # debug_message(data)
     # fromstringはXML文字列からコンテナオブジェクトであるElement型に直接変換するメソッド
     root = ET.fromstring('<?xml version="1.0" encoding="utf-8" ?>\n' + data)
+    # debug_message('2')
     keyWord = ""
+
     for whypo in root.findall("./SHYPO/WHYPO"):
+      # debug_message('3')
       keyWord = keyWord + whypo.get("WORD")
+      # debug_message('4')
+
+    debug_message('keyword = ' + keyWord)
 
     if not is_playing:
       replyMessage(keyWord)
       socket_buffer_clear()
 
   except:
-    pass
-#    debug_message('Parse Error')
+    print('Parse Error')
+    debug_message('Parse Error')
 #    traceback.print_exc()
+
+def parse_recogout(data):
+  data = data[data.find("<RECOGOUT>"):].replace("\n.", "")
+  root = ET.fromstring('<?xml version="1.0" encoding="utf-8" ?>\n' + data)
+  keyWord = ""
+
+  for whypo in root.findall("./SHYPO/WHYPO"):
+    keyWord = keyWord + whypo.get("WORD")
+
+  debug_message('keyword = ' + keyWord)
+
+  if not is_playing:
+    replyMessage(keyWord)
+    socket_buffer_clear()
+
+def debug_message(message):
+  writeFile(message)
+  print message
+#  pass
+#  sleep(1)
+#  print type(message)
+#  sys.stdout.write(message)
+#  return
+
+def writeFile(text): # デバッグファイル出力機能
+  f = open ('debug.txt', 'r')
+  textBefore = ""
+  for row in f:
+    textBefore = textBefore + row
+  f.close()
+  f = open ('debug.txt', 'w')
+  f.write(textBefore + text + "\n")
+  f.close()
+#  sleep(0.1)
 
 # Main Loop
 def main():
-  debug_message('Main got started')
+  debug_message('main started')
   t=threading.Timer(10,alarm)
   t.setDaemon(True)
   t.start()
   try:
     data = ""
     bez.moveAct('happy')
-    check_mode()
+    check_mode()                    # GPIO24が押されていたらマニュアルモードに切り替える
     bez.stop()
     while True:
       if "</RECOGOUT>\n." in data:  # RECOGOUTツリーの最終行を見つけたら以下の処理を行う
@@ -280,11 +307,13 @@ def main():
 
   except KeyboardInterrupt: # CTRL+Cで終了
     # print "  終了しました"
+    debug_message('keyboard interrupted')
     client.close()
     bez.stop()
     sys.exit(0)
 
 if __name__ == "__main__":
+    debug_message('---------- started ----------')
     main()
-    debug_message('finished')
+    # debug_message('finished')
     sys.exit(0)

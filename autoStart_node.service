@@ -3,11 +3,11 @@ Description = starting node-js
 After=autoStart_python.service
 
 [Service]
-User=pi
-Group=pi
 ExecStart=/home/pi/bezelie/dev_edgar/boot_node.sh
 Type=simple
 Restart=no
+User=pi
+Group=pi
 
 [Install]
 WantedBy=multi-user.target

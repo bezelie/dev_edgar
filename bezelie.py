@@ -96,7 +96,8 @@ class Control(object): # クラスの定義。
         sleep(0.005)
         bus.write_byte_data(self.address_pca9685, 0x00, oldmode | 0xa1)
       except:
-        print "Please connect PCA9685 to RaspberryPi"
+        pass
+        # print "Please connect PCA9685 to RaspberryPi"
 
     def resetPCA9685(self):
         bus.write_byte_data(self.address_pca9685, 0x00, 0x00)

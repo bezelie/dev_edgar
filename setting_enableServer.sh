@@ -17,7 +17,7 @@ sudo cp config/hostapd_changed /etc/default/hostapd
 # DHCPサーバ化
 sudo cp config/dhcpd_changed.conf /etc/dhcp/dhcpd.conf
 sudo cp config/isc-dhcp-server_changed /etc/default/isc-dhcp-server
-# 自動起動を設定する
+# systemd自動起動を設定する
 # sudo cp autoStart_julius.service /etc/systemd/system/
 # sudo cp autoStart_python.service /etc/systemd/system/
 # sudo cp autoStart_node.service /etc/systemd/system/
