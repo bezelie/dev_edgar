@@ -19,6 +19,7 @@ import select                      # 待機モジュール
 import json                        #
 import csv                         #
 import sys
+import re
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
@@ -41,6 +42,7 @@ muteTime = 0.5      # 音声入力を無視する時間
 bufferSize = 512    # 受信するデータの最大バイト。２の倍数が望ましい。
 alarmStop = False   # アラームのスヌーズ機能（非搭載）
 is_playing = False  # 再生中か否かのフラグ
+mode = "normal"
 
 # Servo Setting
 bez = bezelie.Control()               # べゼリー操作インスタンスの生成
@@ -105,7 +107,6 @@ def replyMessage(keyWord):        # 対話
   # 発話
   subprocess.call('sudo amixer -q sset Mic 0 -c 0', shell=True)  # 自分の声を認識してしまわないようにマイクを切る
   # print "Intent... "+keyWord
-  # print "Bezelie.. "+data[ansNum][1]
   is_playing = True
 
   # Read JSON File
@@ -208,7 +209,7 @@ def check_mode():
 def manual_mode():
   while True:
     if GPIO.input(24)==GPIO.HIGH:
-      replyMessage(u'その他')
+      replyMessage(u'デモ')
       sleep(0.2)
     else:
       pass
@@ -229,7 +230,6 @@ def parse_recogoutBackUp(data):
     # dataから必要部分だけ抽出し、かつエラーの原因になる文字列を削除する。
     # data = data[data.find("<RECOGOUT>"):].replace("\n.", "").replace("</s>","").replace("<s>","")
     data = data[data.find("<RECOGOUT>"):].replace("\n.", "")
-    # debug_message('1')
     # debug_message(data)
     # fromstringはXML文字列からコンテナオブジェクトであるElement型に直接変換するメソッド
     root = ET.fromstring('<?xml version="1.0" encoding="utf-8" ?>\n' + data)
@@ -254,6 +254,9 @@ def parse_recogoutBackUp(data):
 
 def parse_recogout(data):
   data = data[data.find("<RECOGOUT>"):].replace("\n.", "")
+  data = re.sub(r'<ST.+','',data)
+  data = re.sub(r'<IN.+','',data)
+  # debug_message(data)
   root = ET.fromstring('<?xml version="1.0" encoding="utf-8" ?>\n' + data)
   keyWord = ""
 
@@ -288,7 +291,7 @@ def writeFile(text): # デバッグファイル出力機能
 
 # Main Loop
 def main():
-  debug_message('main started')
+  # debug_message('main started')
   t=threading.Timer(10,alarm)
   t.setDaemon(True)
   t.start()
@@ -313,7 +316,7 @@ def main():
     sys.exit(0)
 
 if __name__ == "__main__":
-    debug_message('---------- started ----------')
-    main()
-    # debug_message('finished')
-    sys.exit(0)
+  debug_message('---------- started ----------')
+  main()
+  # debug_message('finished')
+  sys.exit(0)
