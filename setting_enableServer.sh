@@ -18,13 +18,13 @@ sudo cp config/hostapd_changed /etc/default/hostapd
 sudo cp config/dhcpd_changed.conf /etc/dhcp/dhcpd.conf
 sudo cp config/isc-dhcp-server_changed /etc/default/isc-dhcp-server
 # systemd自動起動を設定する
-# sudo cp autoStart_julius.service /etc/systemd/system/
-# sudo cp autoStart_python.service /etc/systemd/system/
-# sudo cp autoStart_node.service /etc/systemd/system/
-# sudo systemctl enable autoStart_julius.service
-# sudo systemctl enable autoStart_python.service
-# sudo systemctl enable autoStart_node.service
-# sudo systemctl daemon-reload
+sudo cp autoStart_julius.service /etc/systemd/system/
+sudo cp autoStart_python.service /etc/systemd/system/
+sudo cp autoStart_node.service /etc/systemd/system/
+sudo systemctl daemon-reload
+sudo systemctl enable autoStart_julius.service
+sudo systemctl enable autoStart_python.service
+sudo systemctl enable autoStart_node.service
 # rc.localによってrc.startupsが自動起動するように設定する。
-sudo cp rc.startups /etc/rc.local
+# sudo cp rc.startups /etc/rc.local
 sudo reboot

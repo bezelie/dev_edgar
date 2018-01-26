@@ -1,11 +1,9 @@
-
 // べゼリー対話データを編集するWebアプリ 
 // for Bezelie Edgar
 // in Node-JS
 // by Jun Toyoda (Team Bezelie)
 // From  Aug 10th 2017
 // ---------------------------------------------------------------------------------
-
 // モジュールをロードして変数にオブジェクトとして読み込む
 var http = require('http'); // httpアクセスのための機能を提供するモジュール
                             //   http.createServer(function);

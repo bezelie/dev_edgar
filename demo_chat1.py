@@ -8,7 +8,6 @@
 from datetime import datetime      # 現在時刻取得
 from random import randint         # 乱数の発生
 from time import sleep             # ウェイト処理
-import xml.etree.ElementTree as ET # XMLエレメンタルツリー変換モジュール
 import RPi.GPIO as GPIO
 import subprocess                  #
 import threading                   # マルチスレッド処理
@@ -20,6 +19,7 @@ import json                        #
 import csv                         #
 import sys
 import re
+# import xml.etree.ElementTree as ET # XMLエレメンタルツリー変換モジュール
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
@@ -34,50 +34,40 @@ name = jDict['data0'][0]['name']       # べゼリーの別名。
 user = jDict['data0'][0]['user']       # ユーザーのニックネーム。
 mic = jDict['data0'][0]['mic']         # マイク感度。62が最大値。
 vol = jDict['data0'][0]['vol']         # スピーカー音量。
-# print 'mic = '+mic
-# print 'vol = '+vol
 
 # Variables
-muteTime = 0.5      # 音声入力を無視する時間
-bufferSize = 512    # 受信するデータの最大バイト。２の倍数が望ましい。
+muteTime = 0.2      # 音声入力を無視する時間
+bufferSize = 256    # 受信するデータの最大バイト。２の倍数が望ましい。
 alarmStop = False   # アラームのスヌーズ機能（非搭載）
 is_playing = False  # 再生中か否かのフラグ
-mode = "normal"
+mode = "normal"     # manualモードでは音声認識ではなくスイッチで話す
 
 # Servo Setting
 bez = bezelie.Control()               # べゼリー操作インスタンスの生成
 # bez.setTrim(head=0, back=0, stage=0)  # センター位置の微調整
 bez.moveCenters()                     # サーボをセンタリング
-# sleep(0.5)
 
 # GPIO Setting
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(24, GPIO.IN)          # スイッチでモード(normal/manual)を切り替えたいときに使います。
 
 # TCPクライアントを作成しJuliusサーバーに接続する
-# sleep(1)
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 # client.settimeout(300)
-# client.connect(('localhost', 10500))  # Juliusサーバーに接続
 enabled_julius = False
 for count in range(3):
   try:
     client.connect(('localhost', 10500))
     # client.connect(('10.0.0.1', 10500))  # Juliusサーバーに接続
     enabled_julius = True
-    # print 'success! socket connected.'
     break
   except socket.error, e:
     # print 'failed socket connect. retry'
-    sleep(3)
+    pass
 
 if enabled_julius == False:
   print 'boot failed...'
   sys.exit(1)
-
-# Set up
-subprocess.call('amixer cset numid=1 '+vol+'% -q', shell=True)       # スピーカー音量
-subprocess.call('sudo amixer sset Mic '+mic+' -c 0 -q', shell=True) # マイク感受性
 
 # Functions
 def replyMessage(keyWord):        # 対話
@@ -106,7 +96,6 @@ def replyMessage(keyWord):        # 対話
 
   # 発話
   subprocess.call('sudo amixer -q sset Mic 0 -c 0', shell=True)  # 自分の声を認識してしまわないようにマイクを切る
-  # print "Intent... "+keyWord
   is_playing = True
 
   # Read JSON File
@@ -128,7 +117,7 @@ def replyMessage(keyWord):        # 対話
   #  print "活動時間外なので発声・動作しません"
 
   alarmStop = True # 対話が発生したらアラームを止める
-  sleep (muteTime)
+  # sleep (muteTime)
   subprocess.call('sudo amixer -q sset Mic '+mic+' -c 0', shell=True)  # マイク感受性を元に戻す
   is_playing = False
 
@@ -194,6 +183,7 @@ def alarm():
   t.start()
 
 def check_mode():
+  subprocess.call('sudo amixer sset Mic 0 -c 0 -q', shell=True) # マイク感受性
   mode = "normal"
   if GPIO.input(24)==GPIO.LOW:    # normal mode
     # print "起動完了"
@@ -253,30 +243,20 @@ def parse_recogoutBackUp(data):
 #    traceback.print_exc()
 
 def parse_recogout(data):
-  data = data[data.find("<RECOGOUT>"):].replace("\n.", "")
-  data = re.sub(r'<ST.+','',data)
-  data = re.sub(r'<IN.+','',data)
-  # debug_message(data)
-  root = ET.fromstring('<?xml version="1.0" encoding="utf-8" ?>\n' + data)
-  keyWord = ""
-
-  for whypo in root.findall("./SHYPO/WHYPO"):
-    keyWord = keyWord + whypo.get("WORD")
-
+  data = re.search(r'WORD\S+', data)    # \s
+  keyWord = data.group().replace("WORD=","").replace("\"","")
   debug_message('keyword = ' + keyWord)
+  replyMessage(keyWord)
 
-  if not is_playing:
-    replyMessage(keyWord)
-    socket_buffer_clear()
+#  if not is_playing:
+#    replyMessage(keyWord)
+#    socket_buffer_clear()
 
 def debug_message(message):
   writeFile(message)
   print message
 #  pass
-#  sleep(1)
-#  print type(message)
 #  sys.stdout.write(message)
-#  return
 
 def writeFile(text): # デバッグファイル出力機能
   f = open ('debug.txt', 'r')
@@ -287,7 +267,6 @@ def writeFile(text): # デバッグファイル出力機能
   f = open ('debug.txt', 'w')
   f.write(textBefore + text + "\n")
   f.close()
-#  sleep(0.1)
 
 # Main Loop
 def main():
@@ -296,10 +275,12 @@ def main():
   t.setDaemon(True)
   t.start()
   try:
+    subprocess.call('amixer cset numid=1 '+vol+'% -q', shell=True)       # スピーカー音量
     data = ""
     bez.moveAct('happy')
     check_mode()                    # GPIO24が押されていたらマニュアルモードに切り替える
     bez.stop()
+    subprocess.call('sudo amixer sset Mic '+mic+' -c 0 -q', shell=True) # マイク感受性
     while True:
       if "</RECOGOUT>\n." in data:  # RECOGOUTツリーの最終行を見つけたら以下の処理を行う
         parse_recogout(data)
