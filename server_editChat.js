@@ -72,7 +72,7 @@ var routes = { // パスごとの表示内容を連想配列に格納
         "content":editTime},
     "/editServo":{
         "title":"サーボ調整",
-        "message":"サーボの初期位置を調整します",
+        "message":"サーボの初期位置（角度）を調整します。単位は度です。サーボを上から見て時計回りが正の値になります",
         "content":editServo},
     "/disableServer":{
         "title":"再起動",
@@ -131,8 +131,6 @@ var file_chatEntity_tsv        = __dirname+"/chatEntity.tsv";
 var file_chatEntity_dic        = __dirname+"/chatEntity.dic";
 var file_setting_enableApp     = __dirname+"/setting_enableApp.sh";
 var file_restart_app           = __dirname+"/restart_app.sh";
-var file_restart_app1           = __dirname+"/restart_app1.sh";
-var file_restart_app2           = __dirname+"/restart_app2.sh";
 var file_exec_python           = __dirname+"/exec_python.sh";
 var file_exec_julius           = __dirname+"/exec_juliusChat.sh";
 var file_exec_talk             = __dirname+"/exec_openJTalk.sh"
@@ -259,7 +257,7 @@ function routing(req, res){ // requestイベントが発生したら実行され
             }); // end of exec
         } else if (url_parts.pathname === "/disableServer"){ // サーバーを無効化して再起動
             pageWrite(res);
-            var COMMAND = "sh "+file_exec_talk+" "+"アクセスポイント化を無効化して再起動します";
+            var COMMAND = "sh "+file_exec_talk+" "+"プログラムを終了し、アクセスポイント化を無効化して再起動します";
             exec(COMMAND, function(error, stdout, stderr) {
               var COMMAND = "sh "+file_setting_disableServer;
               exec(COMMAND, function(error, stdout, stderr) {
@@ -302,13 +300,13 @@ function routing(req, res){ // requestイベントが発生したら実行され
                         posts = readPosts(file_chatEntity);
                         for (var i=0;i < posts.length; i++ ) {
                             if (posts[i][0] == intent){
-                                errorMsg = "質問内容を削除するには、先に言い回しデータをすべて削除してください。";
+                                errorMsg = "この質問内容に対応している言い回しデータが存在します。先に削除してください。";
                             }
                         }
                         posts = readPosts(file_chatDialog);
                         for (var i=0;i < posts.length; i++ ) {
                             if (posts[i][0] == intent){
-                                errorMsg = "質問内容を削除するには、先に返答候補データをすべて削除してください。";
+                                errorMsg = "この質問内容に対応している返答候補データが存在します。先に削除してください。";
                             }
                         }
                         posts = readPosts(file_chatIntent);

@@ -36,16 +36,15 @@ mic = jDict['data0'][0]['mic']         # マイク感度。62が最大値。
 vol = jDict['data0'][0]['vol']         # スピーカー音量。
 
 # Variables
-muteTime = 0.2      # 音声入力を無視する時間
+muteTime = 1        # 音声入力を無視する時間
 bufferSize = 256    # 受信するデータの最大バイト。２の倍数が望ましい。
 alarmStop = False   # アラームのスヌーズ機能（非搭載）
 is_playing = False  # 再生中か否かのフラグ
 mode = "normal"     # manualモードでは音声認識ではなくスイッチで話す
 
 # Servo Setting
-bez = bezelie.Control()               # べゼリー操作インスタンスの生成
-# bez.setTrim(head=0, back=0, stage=0)  # センター位置の微調整
-bez.moveCenters()                     # サーボをセンタリング
+bez = bezelie.Control()                 # べゼリー操作インスタンスの生成
+bez.moveCenter()                        # サーボの回転位置をトリム値に合わせる
 
 # GPIO Setting
 GPIO.setmode(GPIO.BCM)
@@ -70,57 +69,6 @@ if enabled_julius == False:
   sys.exit(1)
 
 # Functions
-def replyMessage(keyWord):        # 対話
-  data = []                       # 対話ファイル（csv）を変数dataに読み込む
-  with open(csvFile, 'rb') as f:  # csvFileをオープン
-    for i in csv.reader(f):       # ファイルから１行ずつiに読み込む
-      data.append(i)              # dataに追加
-
-  data1 = []                      # dataから質問内容がキーワードに一致している行をdata1として抜き出す
-  for index,i in enumerate(data): # index=連番
-    if unicode(i[0], 'utf-8')==keyWord:  # i[0]はstrなのでutf-8に変換して比較する必要がある
-      j = randint(1,100)          # １から１００までの乱数を発生させる
-      data1.append(i+[j]+[index]) # data1=質問内容,返答,乱数,連番のリスト
-
-  if data1 == []:                 # data1が空っぽだったら質問内容は不一致として処理する
-    for index,i in enumerate(data): 
-      if i[0]=='その他':           
-        j = randint(1,100)         
-        data1.append(i+[j]+[index])
-
-  maxNum = 0                      # 複数の候補からランダムで選出。data1から欄数値が最大なものを選ぶ
-  for i in data1:                 # 
-    if i[2] > maxNum:             # 
-      maxNum = i[2]               # 
-      ansNum = i[3]               #
-
-  # 発話
-  subprocess.call('sudo amixer -q sset Mic 0 -c 0', shell=True)  # 自分の声を認識してしまわないようにマイクを切る
-  is_playing = True
-
-  # Read JSON File
-  f = open (jsonFile,'r')
-  jDict = json.load(f)
-  mic = jDict['data0'][0]['mic']         # マイク感度の設定。62が最大値。
-  vol = jDict['data0'][0]['vol']         # 
-
-  if timeCheck(): # 活動時間だったら会話する
-    bez.moveRnd()
-    subprocess.call('amixer cset numid=1 '+vol+'% -q', shell=True) # スピーカー音量
-    subprocess.call("sh "+ttsFile+" "+data[ansNum][1], shell=True)
-    bez.stop()
-  else:           # 活動時間外は会話しない
-    subprocess.call('amixer cset numid=1 60% -q', shell=True)      # スピーカー音量
-    subprocess.call("sh "+ttsFile+" "+"活動時間外です", shell=True)
-    sleep (5)
-    subprocess.call('amixer cset numid=1 '+vol+'% -q', shell=True) # スピーカー音量
-  #  print "活動時間外なので発声・動作しません"
-
-  alarmStop = True # 対話が発生したらアラームを止める
-  # sleep (muteTime)
-  subprocess.call('sudo amixer -q sset Mic '+mic+' -c 0', shell=True)  # マイク感受性を元に戻す
-  is_playing = False
-
 def timeCheck(): # 活動時間内かどうかのチェック
   f = open (jsonFile,'r')
   jDict = json.load(f)
@@ -182,6 +130,59 @@ def alarm():
   t.setDaemon(True)           # メインスレッドが終了したら終了させる
   t.start()
 
+def replyMessage(keyWord):        # 対話
+  data = []                       # 対話ファイル（csv）を変数dataに読み込む
+  with open(csvFile, 'rb') as f:  # csvFileをオープン
+    for i in csv.reader(f):       # ファイルから１行ずつiに読み込む
+      data.append(i)              # dataに追加
+
+  data1 = []                      # dataから質問内容がキーワードに一致している行をdata1として抜き出す
+  for index,i in enumerate(data): # index=連番
+    if unicode(i[0], 'utf-8')==keyWord:  # i[0]はstrなのでutf-8に変換して比較する必要がある
+      j = randint(1,100)          # １から１００までの乱数を発生させる
+      data1.append(i+[j]+[index]) # data1=質問内容,返答,乱数,連番のリスト
+
+  if data1 == []:                 # data1が空っぽだったら質問内容は不一致として処理する
+    for index,i in enumerate(data): 
+      if i[0]=='その他':           
+        j = randint(1,100)         
+        data1.append(i+[j]+[index])
+
+  maxNum = 0                      # 複数の候補からランダムで選出。data1から欄数値が最大なものを選ぶ
+  for i in data1:                 # 
+    if i[2] > maxNum:             # 
+      maxNum = i[2]               # 
+      ansNum = i[3]               #
+
+  debug_message('50: Answer Selected')
+
+  # 発話
+  subprocess.call('sudo amixer -q sset Mic 0 -c 0', shell=True)  # 自分の声を認識してしまわないようにマイクを切る
+  is_playing = True
+
+  # Read JSON File
+  f = open (jsonFile,'r')
+  jDict = json.load(f)
+  mic = jDict['data0'][0]['mic']         # マイク感度の設定。62が最大値。
+  vol = jDict['data0'][0]['vol']         # 
+
+  if timeCheck(): # 活動時間だったら会話する
+    bez.moveRnd()
+    subprocess.call('amixer cset numid=1 '+vol+'% -q', shell=True) # スピーカー音量
+    subprocess.call("sh "+ttsFile+" "+data[ansNum][1], shell=True)
+    bez.stop()
+  else:           # 活動時間外は会話しない
+    subprocess.call('amixer cset numid=1 60% -q', shell=True)      # スピーカー音量
+    subprocess.call("sh "+ttsFile+" "+"活動時間外です", shell=True)
+    sleep (5)
+    subprocess.call('amixer cset numid=1 '+vol+'% -q', shell=True) # スピーカー音量
+  #  print "活動時間外なので発声・動作しません"
+
+  alarmStop = True # 対話が発生したらアラームを止める
+  subprocess.call('sudo amixer -q sset Mic '+mic+' -c 0', shell=True)  # マイク感受性を元に戻す
+  is_playing = False
+  debug_message('60: Reply Finished')
+
 def check_mode():
   subprocess.call('sudo amixer sset Mic 0 -c 0 -q', shell=True) # マイク感受性
   mode = "normal"
@@ -193,7 +194,6 @@ def check_mode():
     mode = "manual"
     # print "手動モード"
     subprocess.call("sh "+ttsFile+" "+"手動モード", shell=True)
-    sleep (2)
     manual_mode()
 
 def manual_mode():
@@ -244,9 +244,13 @@ def parse_recogoutBackUp(data):
 
 def parse_recogout(data):
   data = re.search(r'WORD\S+', data)    # \s
+  debug_message('30: Got WORD')
   keyWord = data.group().replace("WORD=","").replace("\"","")
-  debug_message('keyword = ' + keyWord)
+  debug_message('40: keyword Parsed= ' + keyWord)
   replyMessage(keyWord)
+  debug_message('70')
+  socket_buffer_clear()
+  debug_message('80')
 
 #  if not is_playing:
 #    replyMessage(keyWord)
@@ -283,9 +287,12 @@ def main():
     subprocess.call('sudo amixer sset Mic '+mic+' -c 0 -q', shell=True) # マイク感受性
     while True:
       if "</RECOGOUT>\n." in data:  # RECOGOUTツリーの最終行を見つけたら以下の処理を行う
+        debug_message('20: Recognized')
         parse_recogout(data)
+        debug_message('90: Session End')
         data = ""  # 認識終了したのでデータをリセットする
       else:
+        debug_message('10: Listening...')
         data = data + client.recv(bufferSize)  # Juliusサーバーから受信
         # /RECOGOUTに達するまで受信データを追加していく
 

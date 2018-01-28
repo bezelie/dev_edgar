@@ -3,5 +3,5 @@
 /usr/local/nodejs/bin/node /home/pi/bezelie/dev_edgar/server_editChat.js &
 # echo "starting startup applications"
 # DHCPサービスの起動
-sudo service isc-dhcp-server start
+# sudo service isc-dhcp-server start
 exit 0

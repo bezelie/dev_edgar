@@ -1,10 +1,10 @@
 [Unit]
-Description = starting node-js
-After=autoStart_dhcp.service
+Description = starting dhcp service
+After=syslog.target network.target
 ConditionPathExists=/opt/bezelie/bin
 
 [Service]
-ExecStart=/opt/bezelie/bin/boot_node.sh
+ExecStart=/opt/bezelie/bin/boot_dhcp.sh
 Type=forking
 Restart=no
 User=pi

@@ -21,10 +21,12 @@ sudo cp config/isc-dhcp-server_changed /etc/default/isc-dhcp-server
 sudo cp autoStart_julius.service /etc/systemd/system/
 sudo cp autoStart_python.service /etc/systemd/system/
 sudo cp autoStart_node.service /etc/systemd/system/
-sudo systemctl daemon-reload
+sudo cp autoStart_dhcp.service /etc/systemd/system/
 sudo systemctl enable autoStart_julius.service
 sudo systemctl enable autoStart_python.service
 sudo systemctl enable autoStart_node.service
+sudo systemctl enable autoStart_dhcp.service
+sudo systemctl daemon-reload
 # rc.localによってrc.startupsが自動起動するように設定する。
 # sudo cp rc.startups /etc/rc.local
-sudo reboot
+# sudo reboot

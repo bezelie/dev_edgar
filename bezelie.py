@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 # Bezelie Python Module for Raspberry Pi
-# べゼリー専用モジュール。
-import RPi.GPIO as GPIO
-from time import sleep
-from random import randint
-import smbus # for I2C
-import math
-import threading
-import json                        #
+# べゼリー専用モジュール
+from random import randint      # 
+from time import sleep          #
+import RPi.GPIO as GPIO         #
+import smbus                    # for I2C
+import math                     # 
+import threading                # 
+import json                     #
 
 bus = smbus.SMBus(1)
 
@@ -31,9 +31,6 @@ class Control(object): # クラスの定義。
         self.dutyMin = dutyMin
         self.dutyCenter = dutyCenter
         self.steps = steps
-        # self.headTrim = 0
-        # self.backTrim = 0
-        # self.stageTrim = 0
         self.headNow = dutyCenter
         self.backNow = dutyCenter
         self.stageNow = dutyCenter
@@ -55,17 +52,17 @@ class Control(object): # クラスの定義。
         min = 210    # Clocwise limit
         self.stageNow = self.moveServo(0, degree, self.stageTrim, max, min, speed, self.stageNow)
 
-    def moveCenter(self):
-        self.moveHead (0)
-        self.moveBack (0)
-        self.moveStage (0)
+    def moveCenter(self): # 3つのサーボの回転位置をトリム値に合わせる
+            self.moveHead(self.headTrim)
+            self.moveBack(self.backTrim)
+            self.moveStage(self.stageTrim)
 
-    def moveCenters(self): # ０番から3番までのサーボをセンタリングする
+    def moveCenters(self): # ０番から3番までのサーボを０度にセンタリングする
         for i in range (0,3):
-            self.moveServo(i, 0, 0, 390, 210, 1, self.dutyCenter+20)
+            self.moveServo(i, 0, 0, 390, 210, 1, self.dutyCenter+5)
             sleep (0.1)
         for i in range (0,3):
-            self.moveServo(i, 0, 0, 390, 210, 1, self.dutyCenter-20)
+            self.moveServo(i, 0, 0, 390, 210, 1, self.dutyCenter-5)
             sleep (0.1)
         for i in range (0,3):
             self.moveServo(i, 0, 0, 390, 210, 1, self.dutyCenter)
@@ -169,61 +166,61 @@ class Control(object): # クラスの定義。
             self.thread = threading.Thread(target = self.actEtc)
         self.thread.start()
 
-    def actHappy(self, time=0.5): # しあわせ
+    def actHappy(self, time=0.2): # しあわせ
         while not self.stop_event.is_set():
-            self.moveHead(30)
+            self.moveHead(20)
             self.moveBack(10)
             self.moveBack(-10)
-            self.moveBack(10)
-            self.moveBack(-10)
+            # self.moveBack(10)
+            # self.moveBack(-10)
             self.moveBack(0)
             sleep (time)
             self.moveHead(0)  
   
-    def actNod(self, time=0.5): # うなづき
+    def actNod(self, time=0.2): # うなづき
         while not self.stop_event.is_set():
             self.moveHead(-10)
-            self.moveHead(10)  
-            self.moveHead(-10)
+            # self.moveHead(10)  
+            # self.moveHead(-10)
             sleep (time)
             self.moveHead(0)  
 
-    def actWhy(self, time=1): # 首かしげ
+    def actWhy(self, time=0.2): # 首かしげ
         while not self.stop_event.is_set():
-            self.moveHead(20)
-            self.moveBack(30)
+            self.moveHead(10)
+            self.moveBack(20)
             sleep (time)
             self.moveBack(0)
             self.moveHead(0)
 
-    def actAround(self, time=0.5): # 見回し
+    def actAround(self, time=0.2): # 見回し
         while not self.stop_event.is_set():
-            self.moveHead(20)
-            self.moveStage(40)
-            self.moveStage(-40)
+            # self.moveHead(20)
+            self.moveStage(20)
+            self.moveStage(-20)
             self.moveStage(0)
             sleep (time)
             self.moveHead(0)
 
-    def actUp(self, time=1): # 見上げ
+    def actUp(self, time=0.2): # 見上げ
         while not self.stop_event.is_set():
             self.moveHead(30)
-            self.moveHead(-10)
-            self.moveHead(30)
+            # self.moveHead(-10)
+            # self.moveHead(30)
             sleep (time)
             self.moveHead(0)
 
-    def actWave(self, time=0.5): # くねくね
+    def actWave(self, time=0.2): # くねくね
         while not self.stop_event.is_set():
             self.moveBack(20)
-            self.moveStage(20)
-            self.moveBack(-20)
-            self.moveStage(-20)
-            self.moveBack(10)
+            self.moveStage(10)
+            # self.moveBack(-20)
+            self.moveStage(-10)
+            # self.moveBack(10)
             self.moveStage(0)
             self.moveBack(0)
 
-    def actEtc(self, time=1): # ETC
+    def actEtc(self, time=0.2): # ETC
         while not self.stop_event.is_set():
             self.moveHead(-10)
             sleep (time)
