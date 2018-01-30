@@ -215,33 +215,6 @@ def socket_buffer_clear():
     else:
       break
 
-def parse_recogoutBackUp(data):
-  try:
-    # dataから必要部分だけ抽出し、かつエラーの原因になる文字列を削除する。
-    # data = data[data.find("<RECOGOUT>"):].replace("\n.", "").replace("</s>","").replace("<s>","")
-    data = data[data.find("<RECOGOUT>"):].replace("\n.", "")
-    # debug_message(data)
-    # fromstringはXML文字列からコンテナオブジェクトであるElement型に直接変換するメソッド
-    root = ET.fromstring('<?xml version="1.0" encoding="utf-8" ?>\n' + data)
-    # debug_message('2')
-    keyWord = ""
-
-    for whypo in root.findall("./SHYPO/WHYPO"):
-      # debug_message('3')
-      keyWord = keyWord + whypo.get("WORD")
-      # debug_message('4')
-
-    debug_message('keyword = ' + keyWord)
-
-    if not is_playing:
-      replyMessage(keyWord)
-      socket_buffer_clear()
-
-  except:
-    print('Parse Error')
-    debug_message('Parse Error')
-#    traceback.print_exc()
-
 def parse_recogout(data):
   data = re.search(r'WORD\S+', data)    # \s
   debug_message('30: Got WORD')
@@ -251,10 +224,6 @@ def parse_recogout(data):
   debug_message('70')
   socket_buffer_clear()
   debug_message('80')
-
-#  if not is_playing:
-#    replyMessage(keyWord)
-#    socket_buffer_clear()
 
 def debug_message(message):
   writeFile(message)

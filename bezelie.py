@@ -21,9 +21,6 @@ class Control(object): # クラスの定義。
         self.headTrim = int(jDict['data2'][0]['head'])
         self.backTrim = int(jDict['data2'][0]['back'])
         self.stageTrim = int(jDict['data2'][0]['stage'])
-        #print self.headTrim
-        #print self.backTrim
-        #print self.stageTrim
 
         # インスタンス変数に値を代入。selfは自分自身のインスタンス名。
         self.address_pca9685 = address_pca9685
@@ -168,9 +165,9 @@ class Control(object): # クラスの定義。
 
     def actHappy(self, time=0.2): # しあわせ
         while not self.stop_event.is_set():
-            self.moveHead(20)
-            self.moveBack(10)
-            self.moveBack(-10)
+            self.moveHead(10)
+            self.moveBack(5)
+            self.moveBack(-5)
             # self.moveBack(10)
             # self.moveBack(-10)
             self.moveBack(0)

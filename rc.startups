@@ -15,6 +15,6 @@ echo "Julius started. Process ID = "$!
 cd /home/pi/bezelie/dev_edgar
 sleep 2
 /usr/bin/python /home/pi/bezelie/dev_edgar/demo_chat1.py &
-/usr/local/nodejs/bin/node /home/pi/bezelie/dev_edgar/server_editChat.js &
+/usr/local/nodejs/bin/node /home/pi/bezelie/dev_edgar/server_chat.js &
 service isc-dhcp-server start
 exit 0
