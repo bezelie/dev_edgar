@@ -11,14 +11,14 @@ import json                     #
 
 bus = smbus.SMBus(1)
 
-class Control(object): # クラスの定義。
+class Control(object): # クラスの定義
 
     # 初期化メソッド。インスタンス生成時に自動実行される。
     def __init__(self, address_pca9685=0x40, dutyMax=490, dutyMin=110, dutyCenter=300, steps=1):
         jsonFile = "data_chat.json"        # 設定ファイル
         f = open (jsonFile,'r')
         jDict = json.load(f)
-        self.headTrim = int(jDict['data2'][0]['head'])
+        self.headTrim = int(jDict['data2'][0]['head'])    # トリム値の読み込み
         self.backTrim = int(jDict['data2'][0]['back'])
         self.stageTrim = int(jDict['data2'][0]['stage'])
 
@@ -35,43 +35,24 @@ class Control(object): # クラスの定義。
         # 第１引数はselfにするのが義務。
 
     def moveHead(self, degree, speed=1):
-        max = 320     # Downward limit
-        min = 230     # Upward limit
+        max = 320     # 下方向の限界
+        min = 230     # 上方向の限界
         self.headNow = self.moveServo(2, degree, self.headTrim, max, min, speed, self.headNow)
 
     def moveBack(self, degree, speed=1):
-        max = 380     # AntiClockwise limit
-        min = 220     # Clockwise limit
+        max = 380     # 反時計回りの限界
+        min = 220     # 時計回りの限界
         self.backNow = self.moveServo(1, degree, self.backTrim, max, min, speed, self.backNow)
 
     def moveStage(self, degree, speed=1):
-        max = 390    # AntiClockWise limit
-        min = 210    # Clocwise limit
+        max = 390     # 反時計回りの限界
+        min = 210     # 時計回りの限界
         self.stageNow = self.moveServo(0, degree, self.stageTrim, max, min, speed, self.stageNow)
 
     def moveCenter(self): # 3つのサーボの回転位置をトリム値に合わせる
-            self.moveHead(self.headTrim)
-            self.moveBack(self.backTrim)
-            self.moveStage(self.stageTrim)
-
-    def moveCenters(self): # ０番から3番までのサーボを０度にセンタリングする
-        for i in range (0,3):
-            self.moveServo(i, 0, 0, 390, 210, 1, self.dutyCenter+5)
-            sleep (0.1)
-        for i in range (0,3):
-            self.moveServo(i, 0, 0, 390, 210, 1, self.dutyCenter-5)
-            sleep (0.1)
-        for i in range (0,3):
-            self.moveServo(i, 0, 0, 390, 210, 1, self.dutyCenter)
-            sleep (0.1)
-
-    def setTrim(self, head=None, back=None, stage=None):
-        if head is not None:
-            self.headTrim = head;
-        if back is not None:
-            self.backTrim = back;
-        if stage is not None:
-            self.stageTrim = stage;
+        self.moveHead(self.headTrim)
+        self.moveBack(self.backTrim)
+        self.moveStage(self.stageTrim)
 
     def initPCA9685(self):
       try:
@@ -230,10 +211,10 @@ class Control(object): # クラスの定義。
 # Centering Servo Motors
 if __name__ == "__main__":  # Do only when this is done as a script
   bez = Control()               # べゼリー操作インスタンスの生成
-#  jsonFile = "data_chat.json"        # 設定ファイル
-#  f = open (jsonFile,'r')
-#  jDict = json.load(f)
-#  bez.headTrim = int(jDict['data2'][0]['head'])
-#  bez.backTrim = int(jDict['data2'][0]['back'])
-#  bez.stageTrim = int(jDict['data2'][0]['stage'])
+  jsonFile = "data_chat.json"        # 設定ファイル
+  f = open (jsonFile,'r')
+  jDict = json.load(f)
+  bez.headTrim = int(jDict['data2'][0]['head'])
+  bez.backTrim = int(jDict['data2'][0]['back'])
+  bez.stageTrim = int(jDict['data2'][0]['stage'])
   bez.moveCenter()

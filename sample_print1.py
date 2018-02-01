@@ -4,7 +4,7 @@
 # ライブラリの読み込み
 from time import sleep                 # ウェイト処理
 
-# Main Loop                            : メインループ
+# メインループ
 def main():
   try:
     print "開始します"

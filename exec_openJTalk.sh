@@ -1,6 +1,4 @@
-#!/bin/sh
-#HTSVOICE=/usr/share/hts-voice/miku/beta.htsvoice
-#HTSVOICE=/usr/share/hts-voice/miku/ver1.htsvoice
+#!/bin/bash
 HTSVOICE=/usr/share/hts-voice/mei/mei_happy.htsvoice
 DICDIRE=/var/lib/mecab/dic/open-jtalk/naist-jdic/
 VOICEDATA=/tmp/voice.wav

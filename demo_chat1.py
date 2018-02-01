@@ -19,15 +19,14 @@ import json                        #
 import csv                         #
 import sys
 import re
-# import xml.etree.ElementTree as ET # XMLエレメンタルツリー変換モジュール
-reload(sys)
-sys.setdefaultencoding('utf-8')
+# reload(sys)
+# sys.setdefaultencoding('utf-8')
 
 csvFile  = "/home/pi/bezelie/dev_edgar/chatDialog.csv"        # 対話リスト
 jsonFile = "/home/pi/bezelie/dev_edgar/data_chat.json"        # 設定ファイル
 ttsFile  = "/home/pi/bezelie/dev_edgar/exec_openJTalk.sh"     # 音声合成
 
-# Read Config File
+# 設定ファイルの読み込み
 f = open (jsonFile,'r')
 jDict = json.load(f)
 name = jDict['data0'][0]['name']       # べゼリーの別名。
@@ -35,24 +34,23 @@ user = jDict['data0'][0]['user']       # ユーザーのニックネーム。
 mic = jDict['data0'][0]['mic']         # マイク感度。62が最大値。
 vol = jDict['data0'][0]['vol']         # スピーカー音量。
 
-# Variables
+# 変数の初期化
 muteTime = 1        # 音声入力を無視する時間
 bufferSize = 256    # 受信するデータの最大バイト。２の倍数が望ましい。
 alarmStop = False   # アラームのスヌーズ機能（非搭載）
 is_playing = False  # 再生中か否かのフラグ
 mode = "normal"     # manualモードでは音声認識ではなくスイッチで話す
 
-# Servo Setting
+# サーボの初期化
 bez = bezelie.Control()                 # べゼリー操作インスタンスの生成
 bez.moveCenter()                        # サーボの回転位置をトリム値に合わせる
 
-# GPIO Setting
+# GPIOの設定
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(24, GPIO.IN)          # スイッチでモード(normal/manual)を切り替えたいときに使います。
 
 # TCPクライアントを作成しJuliusサーバーに接続する
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-# client.settimeout(300)
 enabled_julius = False
 for count in range(3):
   try:
@@ -68,7 +66,7 @@ if enabled_julius == False:
   print 'boot failed...'
   sys.exit(1)
 
-# Functions
+# 関数
 def timeCheck(): # 活動時間内かどうかのチェック
   f = open (jsonFile,'r')
   jDict = json.load(f)
@@ -160,7 +158,7 @@ def replyMessage(keyWord):        # 対話
   subprocess.call('sudo amixer -q sset Mic 0 -c 0', shell=True)  # 自分の声を認識してしまわないようにマイクを切る
   is_playing = True
 
-  # Read JSON File
+  # 設定ファイルの読み込み
   f = open (jsonFile,'r')
   jDict = json.load(f)
   mic = jDict['data0'][0]['mic']         # マイク感度の設定。62が最大値。
@@ -226,9 +224,9 @@ def parse_recogout(data):
   debug_message('80')
 
 def debug_message(message):
-  writeFile(message)
   print message
-#  pass
+#　pass
+#  writeFile(message)
 #  sys.stdout.write(message)
 
 def writeFile(text): # デバッグファイル出力機能
@@ -243,12 +241,11 @@ def writeFile(text): # デバッグファイル出力機能
 
 # Main Loop
 def main():
-  # debug_message('main started')
   t=threading.Timer(10,alarm)
   t.setDaemon(True)
   t.start()
   try:
-    subprocess.call('amixer cset numid=1 '+vol+'% -q', shell=True)       # スピーカー音量
+    subprocess.call('amixer cset numid=1 '+vol+'% -q', shell=True)      # スピーカー音量
     data = ""
     bez.moveAct('happy')
     check_mode()                    # GPIO24が押されていたらマニュアルモードに切り替える
@@ -266,7 +263,6 @@ def main():
         # /RECOGOUTに達するまで受信データを追加していく
 
   except KeyboardInterrupt: # CTRL+Cで終了
-    # print "  終了しました"
     debug_message('keyboard interrupted')
     client.close()
     bez.stop()
@@ -275,5 +271,4 @@ def main():
 if __name__ == "__main__":
   debug_message('---------- started ----------')
   main()
-  # debug_message('finished')
   sys.exit(0)
