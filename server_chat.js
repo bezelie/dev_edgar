@@ -1,4 +1,4 @@
-// べゼリー対話データを編集するWebアプリ 
+// べゼリー設定Webアプリ 
 // for Bezelie Edgar
 // in Node-JS
 // by Jun Toyoda (Team Bezelie)
@@ -48,7 +48,6 @@ var selectIntent4dialog = fs.readFileSync(__dirname + '/ejs/selectIntent4dialog.
 var editDialog          = fs.readFileSync(__dirname + '/ejs/editDialog.ejs', 'utf-8');
 var starting_pythonApp  = fs.readFileSync(__dirname + '/ejs/starting_pythonApp.ejs', 'utf-8');
 var reboot              = fs.readFileSync(__dirname + '/ejs/reboot.ejs', 'utf-8');
-// var stop_pythonApp      = fs.readFileSync(__dirname + '/ejs/stop_pythonApp.ejs', 'utf-8');
 var disableServer       = fs.readFileSync(__dirname + '/ejs/disableServer.ejs', 'utf-8');
 var test                = fs.readFileSync(__dirname + '/ejs/test.ejs', 'utf-8');
 
@@ -64,7 +63,7 @@ var routes = { // パスごとの表示内容を連想配列に格納
         "content":editBasic},
     "/editChat":{
         "title":"対話設定",
-        "message":"３種類のデータを編集することで、べゼリーとの対話を作ることができます",
+        "message":"３種類のデータを編集することで、対話を作ることができます",
         "content":editChat},
     "/editTime":{
         "title":"時間設定",
@@ -76,7 +75,7 @@ var routes = { // パスごとの表示内容を連想配列に格納
         "content":editServo},
     "/disableServer":{
         "title":"再起動",
-        "message":"再起動します",
+        "message":"プログラムを停止し、アクセスポイント化を無効にして再起動します",
         "content":disableServer},
     "/editIntent":{
         "title":"【質問内容】の編集",
@@ -103,8 +102,8 @@ var routes = { // パスごとの表示内容を連想配列に格納
         "message":"システムを再起動します",
         "content":reboot},
     "/starting_pythonApp":{
-        "title":"プログラムの実行",
-        "message":"再起動します",
+        "title":"プログラムの再起動",
+        "message":"プログラムを再起動します",
         "content":starting_pythonApp},
     "/setBasic":{
         "title":"設定完了",
@@ -129,13 +128,13 @@ var file_chatEntity            = __dirname+"/chatEntity.csv";
 var file_chatDialog            = __dirname+"/chatDialog.csv";
 var file_chatEntity_tsv        = __dirname+"/chatEntity.tsv";
 var file_chatEntity_dic        = __dirname+"/chatEntity.dic";
-var file_setting_enableApp     = __dirname+"/setting_enableApp.sh";
+// var file_setting_enableApp     = __dirname+"/setting_enableApp.sh";
 var file_restart_app           = __dirname+"/restart_app.sh";
-var file_exec_python           = __dirname+"/exec_python.sh";
-var file_exec_julius           = __dirname+"/exec_juliusChat.sh";
+// var file_exec_python           = __dirname+"/exec_python.sh";
+// var file_exec_julius           = __dirname+"/exec_juliusChat.sh";
 var file_exec_talk             = __dirname+"/exec_openJTalk.sh"
-var file_stop_python           = __dirname+"/stop_python.sh";
-var file_stop_julius           = __dirname+"/stop_julius.sh";
+// var file_stop_python           = __dirname+"/stop_python.sh";
+// var file_stop_julius           = __dirname+"/stop_julius.sh";
 var file_setting_disableServer = __dirname+"/setting_disableServer.sh";
 var file_data_chat             = __dirname+"/data_chat.json"
 var file_debug                 = __dirname+"/debug.txt"
@@ -437,7 +436,7 @@ function routing(req, res){ // requestイベントが発生したら実行され
 // ---------------------------------------------------------------------------------------------------------
 // IPアドレスの設定
 var host = getLocalAddress().ipv4[0].address; // 現在のIPアドレスを取得する。
-// var host = 'localhost'         // macやwindows10以降であれば、localhostで指定できる。
+// var host = 'localhost'         //
 // var host = '10.0.0.1'          // 
 debug('server_editChat.js start \n');
 debug(host+'\n');

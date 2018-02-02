@@ -28,13 +28,14 @@ if (obj_config.data1[0].alarmKind == 'mild'){alarmKind0 = selected}else{alarmKin
 
 <p><%=message%></p>
 <hr>
+<center>
 <form method="post" action="/setTime" id="form">
 <table border="1">
     <tr align="center">
         <th rowspan=2>時計合わせ</th>
         <td align=center">日付</td>
         <td align=center">
-          <input id="yearInput" type="date" name="nowYear" size="10">
+          <input id="yearInput" type="date" name="nowYear" size="10" style="font-size:16px">
           <script>document.getElementById("yearInput").value=yearNow;
           </script>
         </td>
@@ -42,7 +43,7 @@ if (obj_config.data1[0].alarmKind == 'mild'){alarmKind0 = selected}else{alarmKin
     <tr align="center">
         <td align=center">時刻</td>
         <td align=center">
-          <input id="timeInput" type="time" name="nowTime" size="8" step="1">
+          <input id="timeInput" type="time" name="nowTime" size="8" step="1"  style="font-size:16px">
           <script>
             document.getElementById("timeInput").value=timeNow;
           </script>
@@ -52,16 +53,16 @@ if (obj_config.data1[0].alarmKind == 'mild'){alarmKind0 = selected}else{alarmKin
         <th rowspan=3>アラーム</th>
         <td>有無</td>
         <td>
-            <input type="radio" name="alarmOn" value="true" <%= alarmOn0 %>>ON</input>
-            <input type="radio" name="alarmOn" value="false" <%= alarmOn1 %>>OFF</input>
+            <input type="radio" name="alarmOn" value="true" <%= alarmOn0 %> style="font-size:16px">ON</input>
+            <input type="radio" name="alarmOn" value="false" <%= alarmOn1 %> style="font-size:16px">OFF</input>
         </td>
     </tr>
     <tr align="center">
         <td>時刻</td><td  align="center"><input type="time" min="00:00" max="12:00" step="300" name="alarmTime" 
-        value=<%= obj_config.data1[0].alarmTime %>></td>
+        value=<%= obj_config.data1[0].alarmTime %> style="font-size:16px"></td>
     </tr>
     <tr align="center">
-        <td>種類</td><td><select type="text" name="alarmKind">
+        <td>種類</td><td><select type="text" name="alarmKind" style="font-size:16px">
             <option <%= alarmKind0 %>>mild</option>
             <option <%= alarmKind1 %>>hard</option>
         </select></td>
@@ -69,32 +70,33 @@ if (obj_config.data1[0].alarmKind == 'mild'){alarmKind0 = selected}else{alarmKin
 <!--
     <tr align="center">
         <td>音量</td><td align="right"><input type="number" size="10" name="alarmVol" min="0" max="100" step="10" 
-        value=<%= obj_config.data1[0].alarmVol %>></td>
+        value=<%= obj_config.data1[0].alarmVol %> style="font-size:16px"></td>
     </tr>
 -->
     <tr align="center">
         <th rowspan=2>活動時間１</th>
         <td>開始</td><td align="center"><input type="time" min="00:00" max="23:30" step="600" name="awake1Start" 
-        value=<%= obj_config.data1[0].awake1Start %>></td>
+        value=<%= obj_config.data1[0].awake1Start %> style="font-size:16px"></td>
     </tr>
     <tr align="center">
         <td>終了</td><td align="center"><input type="time" min="00:30" max="24:00" step="600" name="awake1End" 
-        value=<%= obj_config.data1[0].awake1End %>></td>
+        value=<%= obj_config.data1[0].awake1End %> style="font-size:16px"></td>
     </tr>
     <tr align="center">
         <th rowspan=2>活動時間２</th>
         <td>開始</td><td align="center"><input type="time" min="00:30" max="23:00" step="600" name="awake2Start" 
-        value=<%= obj_config.data1[0].awake2Start %>></td>
+        value=<%= obj_config.data1[0].awake2Start %> style="font-size:16px"></td>
     </tr>
     <tr align="center">
         <td>終了</td><td align="center"><input type="time" min="00:00" max="24:00" step="600" name="awake2End" 
-        value=<%= obj_config.data1[0].awake2End %>></td>
+        value=<%= obj_config.data1[0].awake2End %> style="font-size:16px"></td>
     </tr>
     <tr align="center">
         <td colspan="3"><input type="submit" value="設定を更新する" style="font-size:16px;"></td>
     </tr>
 </table>
 </form>
+</center>
 <p><a href="/">トップページに戻る</a></p>
 <script>
 document.getElementById('form').onsubmit = function(){

@@ -8,19 +8,20 @@ var alarmOn0 = '', alarmOn1 = '', alarmKind0 = '', alarmKind1 = ''
 
 <p><%=message%></p>
 <hr>
+<center>
 <form method="post" action="/setServo" id="form">
 <table border="1">
 
     <tr align="center">
-        <td>頭の上下</td><td align="right"><input type="number" size="10" name="head" min="-20" max="20" step="1" 
+        <td>頭の上下</td><td align="right"><input type="number" size="16" name="head" style="font-size:16px; text-align:right" min="-20" max="20" step="1" 
         value=<%= obj_config.data2[0].head %>></td>
     </tr>
     <tr align="center">
-        <td>頭の左右</td><td align="right"><input type="number" size="10" name="back" min="-20" max="20" step="1" 
+        <td>頭の左右</td><td align="right"><input type="number" size="16" name="back" style="font-size:16px; text-align:right" min="-20" max="20" step="1" 
         value=<%= obj_config.data2[0].back %>></td>
     </tr>
     <tr align="center">
-        <td>体の左右</td><td align="right"><input type="number" size="10" name="stage" min="-20" max="20" step="1" 
+        <td>体の左右</td><td align="right"><input type="number" size="16" name="stage" style="font-size:16px; text-align:right" min="-20" max="20" step="1" 
         value=<%= obj_config.data2[0].stage %>></td>
     </tr>
     <tr align="center">
@@ -31,6 +32,7 @@ var alarmOn0 = '', alarmOn1 = '', alarmKind0 = '', alarmKind1 = ''
 </table>
 </form>
 <p><a href="/">トップページに戻る</a></p>
+</center>
 <script>
 document.getElementById('form').onsubmit = function(){
 }
