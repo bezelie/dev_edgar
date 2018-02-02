@@ -1,4 +1,5 @@
-# -*- coding: utf-8 -*-              : 文字コードの指定
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 # Bezelie demo Code for Raspberry Pi : 音声録音サンプル
 # ラズパイにマイクとスピーカーを接続してから実行してください。
 

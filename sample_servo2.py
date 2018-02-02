@@ -1,3 +1,4 @@
+#!/usr/bin/python
 # -*- coding: utf-8 -*-
 # Bezelie Sample Code for Raspberry Pi : べゼリーの基本アクション
 # ラズパイにサーボドライバーとサーボを接続してから実行してください。

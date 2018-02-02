@@ -1,3 +1,4 @@
+#!/usr/bin/python
 # -*- coding: utf-8 -*-
 # Bezelie Sample Code for Raspberry Pi : 発話するサンプル
 # ミニジャックにスピーカーなどを接続してから試してください。
@@ -6,7 +7,6 @@
 import subprocess                     # shellの実行をするためのライブラリ
 from time import sleep                # ウェイト処理
 import bezelie                        # べゼリー専用モジュール
-
 
 # Variables
 openJTalkFile = "exec_openJTalk.sh"   # 発話シェルスクリプトのファイル名

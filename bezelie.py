@@ -1,3 +1,4 @@
+#!/usr/bin/python
 # -*- coding: utf-8 -*-
 # Bezelie Python Module for Raspberry Pi
 # べゼリー専用モジュール

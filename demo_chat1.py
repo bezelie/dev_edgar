@@ -1,3 +1,4 @@
+#!/usr/bin/python
 # -*- coding: utf-8 -*-
 # 音声対話デモ
 # for Bezelie Edgar

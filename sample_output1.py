@@ -1,4 +1,5 @@
-# -*- coding: utf-8 -*-                : 文字コードの指定
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 # Bezelie Sample Code for Raspberry Pi : 出力のサンプル
 # GPIO 27ピンとGNDにLEDなどを接続してから実行してください。
 

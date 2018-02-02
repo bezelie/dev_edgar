@@ -1,4 +1,5 @@
-# -*- coding: utf-8 -*-                : 文字コードの指定
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 # Bezelie Sample Code for Raspberry Pi : スイッチ（＋プルダウン抵抗）入力のサンプル
 # マニュアルを見てラズパイにスイッチを接続しておいてください。
 

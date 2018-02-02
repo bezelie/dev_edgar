@@ -1,4 +1,5 @@
-# -*- coding: utf-8 -*-                : 文字コードの指定
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 # Bezelie Sample Code for Raspberry Pi : １秒おきに文字を画面に表示するだけのサンプルです
 
 # ライブラリの読み込み
