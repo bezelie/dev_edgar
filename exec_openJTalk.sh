@@ -18,4 +18,4 @@ sudo echo "$1" | open_jtalk \
 -z 0.0 \
 
 aplay -q -D plughw:1,0 $VOICEDATA
-sudo rm -f $VOICEDATA
+# sudo rm -f $VOICEDATA

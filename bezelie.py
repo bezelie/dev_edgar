@@ -199,7 +199,7 @@ class Control(object): # クラスの定義
             self.moveStage(0)
             self.moveBack(0)
 
-    def actEtc(self, time=0.2): # ETC
+    def actEtc(self, time=0.5): # ETC
         while not self.stop_event.is_set():
             self.moveHead(-10)
             sleep (time)
