@@ -10,7 +10,6 @@ import sys
 
 # Setting
 bez = bezelie.Control()               # べゼリー操作インスタンスの生成
-bez.setTrim(head=0, back=0, stage=0) # センター位置の微調整
 bez.moveCenters()                     # ０番から７番までのサーボをセンタリング
 sleep(0.5)
 

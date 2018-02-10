@@ -6,7 +6,7 @@ import picamera.array
 import cv2
 import bezelie
 
-cascade_path =  "/usr/share/opencv/haarcascades/haarcascade_frontalface_alt.xml"
+cascade_path =  "/usr/share/opencv/haarcascades/haarcascade_frontalface_alt.xml" # 顔認識xml
 cascade = cv2.CascadeClassifier(cascade_path)
 
 # Get Started
@@ -17,7 +17,7 @@ bez.moveCenter()                      # サーボをセンタリング
 def main():
   with picamera.PiCamera() as camera:                         # Open Pi-Camera as camera
     with picamera.array.PiRGBArray(camera) as stream:         # Open Video Stream from Pi-Camera as stream
-      camera.resolution = (600, 400)                          # Display Resolution
+      camera.resolution = (640, 480)                          # Display Resolution
       camera.hflip = True                                     # Vertical Flip 
       camera.vflip = True                                     # Horizontal Flip
 
@@ -26,17 +26,18 @@ def main():
         gray = cv2.cvtColor(stream.array, cv2.COLOR_BGR2GRAY) # Convert BGR to Grayscale
         facerect = cascade.detectMultiScale(gray,             # Find face from gray
           scaleFactor=1.9,                                    # 1.1 - 1.9 :the bigger the quicker & less acurate 
-          minNeighbors=1,                                     # 3 - 6 : the smaller the more easy to detect
-          minSize=(60,100),                                  # Minimam face size 
-          maxSize=(400,400))                                  # Maximam face size
+          minNeighbors=3,                                     # 3 - 6 : the smaller the more easy to detect
+          minSize=(80,120),                                  # Minimam face size 
+          maxSize=(640,480))                                  # Maximam face size
 
         if len(facerect) > 0:
-          bez.moveHead (20)
           for rect in facerect:
             cv2.rectangle(stream.array,                       # Draw a red rectangle at face place 
               tuple(rect[0:2]),                               # Upper Left
               tuple(rect[0:2]+rect[2:4]),                     # Lower Right
               (0,0,255), thickness=2)                         # Color and thickness
+          print "顔を発見"
+
 
         cv2.imshow('frame', stream.array)                     # Display the stream
         bez.moveHead (0)
