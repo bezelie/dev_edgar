@@ -1,6 +1,6 @@
 #!/bin/bash
 # Juliusをモジュールモードで起動
-ALSADEV="plughw:0,0" /usr/local/bin/julius -w /home/pi/bezelie/dev_edgar/chatEntity.dic -C /home/pi/bezelie/dev_edgar/julius.jconf -module &
+ALSADEV="plughw:0,0" /usr/local/bin/julius -w /home/pi/bezelie/edgar/chatEntity.dic -C /home/pi/bezelie/edgar/julius.jconf -module &
 echo "Julius's Process ID = "$!
 # cd /home/pi/bezelie/dev_edgar
 # /usr/bin/python /home/pi/bezelie/dev_edgar/demo_chat1.py
