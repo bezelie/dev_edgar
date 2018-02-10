@@ -18,12 +18,11 @@ import socket                      # ソケット通信モジュール
 import select                      # 待機モジュール
 import json                        #
 import csv                         #
-import sys
-import re
-
-import picamera
-import picamera.array
-import cv2
+import sys                         # 
+import re                          # 正規表現
+import picamera                    # 
+import picamera.array              # 
+import cv2                         # openCV
 
 csvFile  = "/home/pi/bezelie/edgar/chatDialog.csv"        # 対話リスト
 jsonFile = "/home/pi/bezelie/edgar/data_chat.json"        # 設定ファイル
@@ -44,10 +43,10 @@ alarmStop = False   # アラームのスヌーズ機能（非搭載）
 is_playing = False  # 再生中か否かのフラグ
 waitTime = 5        # autoモードでの会話の間隔
 mode = True         # Trueなら音声認識モード Falseなら顔認識モード
-modePin = 24        # 
+modePin = 24        # モードの判定につかうGPIOピン
 
 # openCV
-cascade_path =  "/usr/share/opencv/haarcascades/haarcascade_frontalface_alt.xml"
+cascade_path =  "/usr/share/opencv/haarcascades/haarcascade_frontalface_alt.xml" # 顔認識xml
 cascade = cv2.CascadeClassifier(cascade_path)
 
 # 関数
@@ -217,7 +216,7 @@ GPIO.setup(modePin, GPIO.IN)            # モード(normal/auto)を切り替え�
 # TCPクライアントを作成しJuliusサーバーに接続する
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 mode = modeCheck()                 # 音声認識モードか顔認識モードかをチェック
-if mode == True:                   #
+if mode == True:                   # 音声認識モードの場合の処理
   enabled_julius = False
   for count in range(3):
     try:
@@ -229,7 +228,7 @@ if mode == True:                   #
       # print 'failed socket connect. retry'
       pass
   if enabled_julius == False:
-    print 'boot failed...'
+    print 'Could not find Julius'
     sys.exit(1)
 
 # メインループ
@@ -242,15 +241,14 @@ def main():
     bez.moveAct('happy')
     subprocess.call('sudo amixer sset Mic 0 -c 0 -q', shell=True)       # マイク感受性
     subprocess.call("sh "+ttsFile+" "+u"こんにちは"+user, shell=True)
-    subprocess.call("sh "+ttsFile+" "+u"ぼくは"+name, shell=True)
-    subprocess.call('sudo amixer sset Mic '+mic+' -c 0 -q', shell=True) # マイク感受性
+    subprocess.call("sh "+ttsFile+" "+u"ぼく"+name, shell=True)
     bez.stop()
-    sleep (2)
+    sleep (1)
+    subprocess.call('sudo amixer sset Mic '+mic+' -c 0 -q', shell=True) # マイク感受性
     data = ""
     if mode == True:           # 音声認識モード
       subprocess.call('sh exec_camera.sh', shell=True)            # カメラの映像をディスプレイに表示
       while True:
-      
         if "</RECOGOUT>\n." in data:  # RECOGOUTツリーの最終行を見つけたら以下の処理を行う
           debug_message('20: Recognized')
           parse_recogout(data)
@@ -263,11 +261,13 @@ def main():
     else:                      # 顔認識モード
       debug_message('face detection mode')
       stageAngle = 0           # ステージの初期角度
-      stageDelta = 1           # ループごとにステージを回転させる角度
-      stageSpeed = 4           # ループごとにステージを回転させる速度
+      stageDelta = 5           # ループごとにステージを回転させる角度
+      stageSpeed = 8           # ループごとにステージを回転させる速度
       with picamera.PiCamera() as camera:                         # Open Pi-Camera as camera
         with picamera.array.PiRGBArray(camera) as stream:         # Open Video Stream from Pi-Camera as stream
-          camera.resolution = (600, 400)                          # Display Resolution
+          camera.resolution = (640, 480)                          # Display Resolution
+          # camera.resolution = (1280, 720)                       # Display Resolution
+          # camera.resolution = (1920, 1080)                      # Display Resolution
           camera.hflip = True                                     # Vertical Flip 
           camera.vflip = True                                     # Horizontal Flip
 
@@ -276,9 +276,9 @@ def main():
             gray = cv2.cvtColor(stream.array, cv2.COLOR_BGR2GRAY) # Convert BGR to Grayscale
             facerect = cascade.detectMultiScale(gray,             # Find face from gray
               scaleFactor=1.9,                                    # 1.1 - 1.9 :the bigger the quicker & less acurate 
-              minNeighbors=1,                                     # 3 - 6 : the smaller the more easy to detect
-              minSize=(60,100),                                   # Minimam face size 
-              maxSize=(400,400))                                  # Maximam face size
+              minNeighbors=3,                                     # 3 - 6 : the smaller the more easy to detect
+              minSize=(100,120),                                   # Minimam face size 
+              maxSize=(640,480))                                  # Maximam face size
 
             if len(facerect) > 0:
               for rect in facerect:
