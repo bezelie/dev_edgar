@@ -60,6 +60,8 @@ def main():
           try:
             answer = result['responses'][0]['labelAnnotations'][i]['description'].encode('utf-8')
             print (answer)
+            subprocess.call('flite -voice "kal16" -t "'+ answer +'"', shell=True)
+            # Other English Voices :kal awb_time kal16 awb rms slt
           except:
             print ("no answer")
         camera.start_preview()

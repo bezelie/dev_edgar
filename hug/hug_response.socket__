@@ -1,3 +1,0 @@
-[Socket]
-ListenStream = 0.0.0.0:10500
-Accept=yes
