@@ -1,0 +1,14 @@
+[Unit]
+Description = starting julius
+After=syslog.target network.target auditd.service local-fs.target
+ConditionPathExists=/home/pi/bezelie/dev_edgar
+
+[Service]
+User=pi
+Group=pi
+ExecStart=/home/pi/bezelie/dev_edgar/boot_julius.sh
+Type=simple
+Restart=no
+
+[Install]
+WantedBy=multi-user.target
