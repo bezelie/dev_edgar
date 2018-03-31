@@ -1,4 +1,9 @@
+#!/usr/bin/python
 # -*- coding: utf-8 -*-
+# Bezelie Sample Code for Raspberry Pi : アナログ入力のサンプル
+# マニュアルにしたがってラズパイにADコンバータを接続しておいてください。
+
+# ライブラリの読み込み
 import RPi.GPIO as GPIO
 from time import sleep
 
@@ -33,8 +38,10 @@ def readadc(adcnum, clockpin, mosipin, misopin, cspin):
     GPIO.output(cspin, GPIO.HIGH)
     return adcout
 
+# 初期設定
 GPIO.setmode(GPIO.BCM)
-# ピンの名前を変数として定義
+
+# 変数
 SPICLK = 11
 SPIMOSI = 10
 SPIMISO = 9
@@ -45,13 +52,19 @@ GPIO.setup(SPIMOSI, GPIO.OUT)
 GPIO.setup(SPIMISO, GPIO.IN)
 GPIO.setup(SPICS, GPIO.OUT)
 
-try:
+# 関数
+def main():
+  try:
+    print "開始します"
     while True:
-        inputVal0 = readadc(0, SPICLK, SPIMOSI, SPIMISO, SPICS)
-        print(inputVal0)
-        sleep(0.2)
+      inputVal0 = readadc(0, SPICLK, SPIMOSI, SPIMISO, SPICS)
+      print(inputVal0)
+      sleep(0.2)
 
-except KeyboardInterrupt:
-    pass
+  except KeyboardInterrupt:
+    print "終了しました"
+    GPIO.cleanup()                     # ポートをクリア
 
-GPIO.cleanup()
+# 直接実行された場合の処理
+if __name__ == "__main__":
+    main()
