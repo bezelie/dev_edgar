@@ -1,5 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+from random import randint         # 乱数の発生
 import RPi.GPIO as GPIO
 from time import sleep
 import bezelie
@@ -14,6 +15,14 @@ sleep(0.5)
 GPIO.setmode(GPIO.BCM)                 # GPIOをGPIO番号で指定できるように設定
 GPIO.setup(24, GPIO.IN)                # GPIOの24ピンを入力モードに設定
 GPIO.setup(25, GPIO.IN)                # GPIOの25ピンを入力モードに設定
+
+# 変数設定
+headNow = 0
+headOld = headNow
+backNow = 0
+backOld = backNow
+stageNow = 0
+stageOld = stageNow
 
 # MCP3208からSPI通信で12ビットのデジタル値を取得。0から7の8チャンネル使用可
 def readadc(adcnum, clockpin, mosipin, misopin, cspin):
@@ -60,27 +69,45 @@ GPIO.setup(SPICS, GPIO.OUT)
 
 try:
   while True:
-    if GPIO.input(24)==GPIO.HIGH:    # GPIO24に3.3Vの電圧がかかっていたら・・$
-      print "スイッチ24が押されています"
-      subprocess.call('flite -voice "slt" -t "Nice to meet you"', shell=True) # $
-       # Other English Voices :kal awb_time kal16 awb rms slt
     if GPIO.input(25)==GPIO.HIGH:    # GPIO24に3.3Vの電圧がかかっていたら・・$
+      print "スイッチ24が押されています"
+      r = randint(1,3)
+      if r > 2:
+        subprocess.call('flite -voice "slt" -t "Nice to meet you"', shell=True) # $
+      elif r > 1:
+        subprocess.call('flite -voice "slt" -t "I am grad to meet you"', shell=True) # $
+      else:
+        subprocess.call('flite -voice "slt" -t "Hi, ! am Bezelie"', shell=True) # $
+       # Other English Voices :kal awb_time kal16 awb rms slt
+      continue
+    if GPIO.input(24)==GPIO.HIGH:    # GPIO24に3.3Vの電圧がかかっていたら・・$
       print "スイッチ25が押されています"
-      subprocess.call('flite -voice "slt" -t "I am Bezelie"', shell=True) # $
+      r = randint(1,3)
+      if r > 2:
+        subprocess.call('flite -voice "slt" -t "It is awesome!"', shell=True) # $
+      elif r > 1:
+        subprocess.call('flite -voice "slt" -t "That is great!"', shell=True) # $
+      else:
+        subprocess.call('flite -voice "slt" -t "How wonderful it is!"', shell=True) # $
+      continue
 
     inputVal0 = readadc(0, SPICLK, SPIMOSI, SPIMISO, SPICS)
     inputVal0 = inputVal0*180/4096-90
     if inputVal0 > 40:inputVal0=40
     if inputVal0 < -40:inputVal0=-40
     print("stage:"+str(inputVal0))
-    bez.moveStage(inputVal0)
+    if abs(inputVal0 - stageOld) > 4:
+      stageOld = inputVal0
+      bez.moveStage(inputVal0)
 
     inputVal1 = readadc(1, SPICLK, SPIMOSI, SPIMISO, SPICS)
-    inputVal1 = inputVal1*60/4096-30+30
+    inputVal1 = inputVal1*60/4096-30
     if inputVal1 > 30:inputVal1=30
     if inputVal1 < -30:inputVal1=-30
     print("back:"+str(inputVal1))
-    bez.moveBack(inputVal1)
+    if abs(inputVal1 - backOld) > 4:
+      backOld = inputVal1
+      bez.moveBack(inputVal1)
 
     inputVal2 = readadc(2, SPICLK, SPIMOSI, SPIMISO, SPICS)
     inputVal2 = inputVal2*40/4096-30
@@ -88,7 +115,9 @@ try:
     if inputVal2 < -30:inputVal2=-30
     inputVal2 = inputVal2*(-1)
     print("head:"+str(inputVal2))
-    bez.moveHead(inputVal2)
+    if abs(inputVal2 - headOld) > 4:
+      headOld = inputVal2
+      bez.moveHead(inputVal2)
     sleep(0.1)
 
 except KeyboardInterrupt:
