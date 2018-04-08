@@ -1,13 +1,13 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 # Bezelie Sample Code for Raspberry Pi : アナログ入力のサンプル
-# マニュアルにしたがってラズパイにADコンバータを接続しておいてください。
+# ラズパイにADコンバータとアナログセンサーを接続しておいてください。
 
 # ライブラリの読み込み
 import RPi.GPIO as GPIO
 from time import sleep
 
-# MCP3208からSPI通信で12ビットのデジタル値を取得。0から7の8チャンネル使用可
+# MCP3204からSPI通信で12ビットのデジタル値を取得。4チャンネル使用可
 def readadc(adcnum, clockpin, mosipin, misopin, cspin):
     if adcnum > 7 or adcnum < 0:
         return -1
@@ -46,6 +46,7 @@ SPICLK = 11
 SPIMOSI = 10
 SPIMISO = 9
 SPICS = 8
+
 # SPI通信用の入出力を定義
 GPIO.setup(SPICLK, GPIO.OUT)
 GPIO.setup(SPIMOSI, GPIO.OUT)
