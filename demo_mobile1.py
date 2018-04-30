@@ -25,7 +25,7 @@ stageNow = 0
 stageOld = stageNow
 
 # 変数
-ttsFile = "/home/pi/bezelie/edgar/exec_openJTalk.sh" # 発話シェルスクリプトのファイル名
+ttsFile = "/home/pi/bezelie/dev_edgar/exec_openJTalk.sh" # 発話シェルスクリプトのファイル名
 
 # MCP3208からSPI通信で12ビットのデジタル値を取得。0から7の8チャンネル使用可
 def readadc(adcnum, clockpin, mosipin, misopin, cspin):
@@ -73,6 +73,7 @@ GPIO.setup(SPICS, GPIO.OUT)
 try:
   while True:
     if GPIO.input(25)==GPIO.HIGH:    # GPIO24に3.3Vの電圧がかかっていたら・・$
+      bez.onLed(3)      
       print "スイッチ24が押されています"
       r = randint(1,3)
       if r > 2:
@@ -87,6 +88,7 @@ try:
         # Other English Voices :kal awb_time kal16 awb rms slt
       continue
     if GPIO.input(24)==GPIO.HIGH:    # GPIO24に3.3Vの電圧がかかっていたら・・$
+      bez.onLed(3)      
       print "スイッチ25が押されています"
       r = randint(1,3)
       if r > 2:
@@ -100,6 +102,7 @@ try:
         #subprocess.call('flite -voice "slt" -t "How wonderful it is!"', shell=True) # $
       continue
 
+    bez.offLed(3)      
     inputVal0 = readadc(0, SPICLK, SPIMOSI, SPIMISO, SPICS)
     inputVal0 = inputVal0*180/4096-90
     if inputVal0 > 40:inputVal0=40
