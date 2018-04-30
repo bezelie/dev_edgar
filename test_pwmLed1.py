@@ -68,19 +68,29 @@ class Control(object): # クラスの定義
         except IOError:
             pass
 
+    def onLed(self, channel):
+        channelpos = 0x6 + 4*channel
+        on = 0
+        off = 4095
+        try:
+            bus.write_i2c_block_data(self.address_pca9685, channelpos, [on&0xFF, on>>8, off&0xFF, off>>8])
+        except IOError:
+            pass
+
+    def offLed(self, channel):
+        channelpos = 0x6 + 4*channel
+        on = 0
+        off = 0
+        try:
+            bus.write_i2c_block_data(self.address_pca9685, channelpos, [on&0xFF, on>>8, off&0xFF, off>>8])
+        except IOError:
+            pass
+
 # スクリプトとして実行された場合はセンタリングを行う
 if __name__ == "__main__":
   bez = Control()               # べゼリー操作インスタンスの生成
-  channel = 0
-  channelpos = 0x6 + 4*channel
-  on = 0
-  address_pca9685=0x40
   while True:
-    off = 4095
-    print off
-    bus.write_i2c_block_data(address_pca9685, channelpos, [on&0xFF, on>>8, off&0xFF, off>>8])
+    bez.onLed(3)
     sleep (1)
-    off = 0
-    print off
-    bus.write_i2c_block_data(address_pca9685, channelpos, [on&0xFF, on>>8, off&0xFF, off>>8])
+    bez.offLed(3)
     sleep (1)
