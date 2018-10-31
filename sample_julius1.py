@@ -25,7 +25,7 @@ jDict = json.load(f)
 #mic = jDict['data0'][0]['mic']         # マイク感度。
 mic = "60"
 vol = jDict['data0'][0]['vol']         # スピーカー音量。
-subprocess.call('sudo amixer sset Mic '+mic+' -c 0 -q', shell=True) # マイク感度
+# subprocess.call('sudo amixer sset Mic '+mic+' -c 0 -q', shell=True) # マイク感度
 
 # 変数の初期化
 muteTime = 1        # 音声入力を無視する時間
@@ -64,7 +64,7 @@ if enabled_julius == False:
 def main():
   try:
     print '音声認識開始'
-    subprocess.call('amixer cset numid=1 '+vol+'% -q', shell=True)      # スピーカー音量
+    # subprocess.call('amixer cset numid=1 '+vol+'% -q', shell=True)      # スピーカー音量
     # subprocess.call('sudo amixer -q sset Mic 0 -c 0', shell=True)  # 自分の声を認識してしまわないようにマイクを切る
     subprocess.call("sh "+ttsFile+" こんにちわ", shell=True)
     # subprocess.call('sudo amixer sset Mic '+mic+' -c 0 -q', shell=True) # マイク感度を戻す

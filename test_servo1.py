@@ -10,7 +10,7 @@ import sys
 
 # Setting
 bez = bezelie.Control()               # べゼリー操作インスタンスの生成
-bez.moveCenters()                     # ０番から７番までのサーボをセンタリング
+bez.moveCenter()                     # ０番から７番までのサーボをセンタリング
 sleep(0.5)
 
 # Main Loop

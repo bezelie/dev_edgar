@@ -14,7 +14,7 @@ import json                        # jsonファイルを扱うモジュール
 bus = smbus.SMBus(1)
 
 # 変数
-jsonFile = "/home/pi/bezelie/edgar/data_chat.json"        # 設定ファイル
+jsonFile = "/home/pi/bezelie/dev_edgar/data_chat.json"        # 設定ファイル
 
 class Control(object): # クラスの定義
 
@@ -57,6 +57,7 @@ class Control(object): # クラスの定義
         self.moveHead(self.headTrim)
         self.moveBack(self.backTrim)
         self.moveStage(self.stageTrim)
+        sleep (1)
 
     def initPCA9685(self):
       try:
@@ -134,6 +135,8 @@ class Control(object): # クラスの定義
         self.stop_event = threading.Event()
         if act == 'happy':
             self.thread = threading.Thread(target = self.actHappy)
+        elif act == 'swing':
+            self.thread = threading.Thread(target = self.actSwing)
         elif act == 'nod':
             self.thread = threading.Thread(target = self.actNod)
         elif act == 'why':
@@ -147,6 +150,13 @@ class Control(object): # クラスの定義
         else:
             self.thread = threading.Thread(target = self.actEtc)
         self.thread.start()
+
+    def actSwing(self, time=0.2): # 首振り
+        while not self.stop_event.is_set():
+            self.moveBack(5)
+            self.moveBack(-5)
+            self.moveBack(0)
+            sleep (time)
 
     def actHappy(self, time=0.2): # しあわせ
         while not self.stop_event.is_set():
@@ -228,3 +238,4 @@ if __name__ == "__main__":
   bez.backTrim = int(jDict['data2'][0]['back'])
   bez.stageTrim = int(jDict['data2'][0]['stage'])
   bez.moveCenter()
+  sleep(1)

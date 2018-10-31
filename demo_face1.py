@@ -19,8 +19,8 @@ import cv2                         # Open CVモジュール
 import bezelie                     # べゼリー専用サーボ制御モジュール
 
 csvFile   = "/home/pi/bezelie/chatDialog.csv"          # 対話リスト
-jsonFile  = "/home/pi/bezelie/edgar/data_chat.json"    # 設定ファイル
-ttsFile   = "/home/pi/bezelie/edgar/exec_openJTalk.sh" # 音声合成
+jsonFile  = "/home/pi/bezelie/dev_edgar/data_chat.json"    # 設定ファイル
+ttsFile   = "/home/pi/bezelie/dev_edgar/exec_openJTalk.sh" # 音声合成
 debugFile = "/home/pi/bezelie/debug.txt"               # debug用
 
 # 設定ファイルの読み込み

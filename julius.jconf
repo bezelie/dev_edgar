@@ -4,8 +4,9 @@
 -hlist /home/pi/dictation-kit-v4.4/model/phone_m/logicalTri           #HMMListファイル
 -n 1                                      #n個の文仮説数が見つかるまで検索を行う
 -output 1                                 #見つかったN-best候補のうち、結果として出力する個数
+#-input stdin                                #マイクからの直接入力
 -input mic                                #マイクからの直接入力
--input oss                                #オープンサウンドシステム使用
+#-input alsa                                #オープンサウンドシステム使用
 -charconv euc-jp utf8                     #出力文字コードの変換(内部euc-jp, 出力utf-8)
 -rejectshort 600                          #検出された入力の時間(msec)が閾値以下なら棄却
 -lv 1500                                  #入力の振幅レベルのしきい値(0から32767の範囲。デフォルトは2000)

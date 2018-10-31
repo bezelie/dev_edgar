@@ -19,32 +19,32 @@ def main():
     while True:
       print "happy"
       bez.moveAct('happy')            # しあわせ
-      bez.stop()
       sleep (0.5)
+      bez.stop()
       print "nod"
       bez.moveAct('nod')              # うなづき
-      bez.stop()
       sleep (0.5)
+      bez.stop()
       print "why"
       bez.moveAct('why')              # 首かしげ
-      bez.stop()
       sleep (0.5)
+      bez.stop()
       print "around"
       bez.moveAct('around')           # 見回し
-      bez.stop()
       sleep (0.5)
+      bez.stop()
       print "up"
       bez.moveAct('up')               # 見上げ
-      bez.stop()
       sleep (0.5)
+      bez.stop()
       print "wave"
       bez.moveAct('wave')             # くねくね
-      bez.stop()
       sleep (0.5)
+      bez.stop()
       print "etc"
       bez.moveAct('etc')              # ETC
-      bez.stop()
       sleep (0.5)
+      bez.stop()
   except KeyboardInterrupt:
     print "  終了しました"
 

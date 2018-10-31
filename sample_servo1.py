@@ -18,8 +18,8 @@ def main():
     print "開始します"
     while True:
       bez.moveRnd()                   # ７種のアクションをランダムで発生
-      bez.stop()                      # サーボ停止命令
       sleep (0.5)
+      bez.stop()                      # サーボ停止命令
   except KeyboardInterrupt:
     print "  終了しました"
 
