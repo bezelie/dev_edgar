@@ -15,7 +15,7 @@ def drawText(img, text):
   img_size = numpy.array(img.size)
   txt_size = numpy.array(font.getsize(text))
   pos = (img_size - txt_size) / 2
-  draw.multiline_text((5,0), text, (0, 0, 0), font=font, spacing=15, align='left')
+  draw.multiline_text((5,0), text, (0, 0, 0), font=font, spacing=15, align='right')
 
 img = Image.new("RGB", (600, 200),(256,100,100))
 text = u'ライブラリの読み込ライブラリの\n読みライラリ'

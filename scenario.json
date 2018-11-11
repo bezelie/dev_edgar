@@ -1,0 +1,141 @@
+{
+"scene0":[
+    {
+    "kind":"select",
+    "title":"べゼリーのミニミニ劇場",
+    "word1":"ストーリー",
+    "target1":"scene1",
+    "word2":"べゼリーってなあに？",
+    "target2":"scene2",
+    "word3":"自己紹介",
+    "target3":"scene3",
+    "word4":"どうやって動いてるの？",
+    "target4":"scene4",
+    "word5":"ダンス",
+    "target5":"scene5",
+    "wait":"1.0"
+    }
+],
+"scene1":[
+    {
+    "kind":"select",
+    "title":"ストーリーをえらんでね",
+    "word1":"ピンクのお悩み相談室",
+    "target1":"scene10",
+    "word2":"ブルーのウィルスにご用心",
+    "target2":"scene20",
+    "word3":"レッドの塗料乾燥事件",
+    "target3":"scene30",
+    "word4":"イエローの経理出納帳",
+    "target4":"scene40",
+    "word5":"グリーンの騒音事件",
+    "target5":"scene50",
+    "wait":"1.0"
+    }
+],
+"scene2":[
+    {
+    "kind":"title",
+    "word":"べゼリーってなあに？"
+    },{
+    "kind":"speech",
+    "name":"RED",
+    "word":"べゼリーは小さなロボットだよ",
+    "size":"small",
+    "action":"rollRightLong",
+    "wait":"1.0"
+    },{
+    "kind":"speech",
+    "name":"YELLOW",
+    "word":"スリーディープリンターで\n作られてるのよ",
+    "size":"small",
+    "action":"pitchDownMax",
+    "wait":"1.0"
+    },{
+    "kind":"speech",
+    "name":"BLUE",
+    "word":"みっつのサーボモーターで動くんだ",
+    "size":"small",
+    "action":"rollRightLeft",
+    "wait":"1.0"
+    },{
+    "kind":"speech",
+    "name":"GREEN",
+    "word":"頭にカメラを内蔵できるぜ",
+    "size":"small",
+    "action":"rollRightLeft",
+    "wait":"1.0"
+    },{
+    "kind":"speech",
+    "name":"PINK",
+    "word":"詳しくはホーム\nページを見てね",
+    "size":"middle",
+    "action":"rollRightLeft",
+    "wait":"1.0"
+    },{
+    "kind":"end"
+    }
+],
+"scene10":[
+    {
+    "kind":"title",
+    "word":"ピンクのお悩み相談室"
+    },{
+    "kind":"speech",
+    "name":"PINK",
+    "word":"たいくつだなー",
+    "size":"small",
+    "action":"rollLeftMax",
+    "wait":"1.0"
+    },{
+    "kind":"speech",
+    "name":"BLUE",
+    "word":"そうですね",
+    "size":"middle",
+    "action":"pitchDownMax",
+    "wait":"1.0"
+    },{
+    "kind":"speech",
+    "name":"RED",
+    "word":"ひまだー",
+    "size":"large",
+    "action":"rollRightMax",
+    "wait":"1.0"
+    },{
+    "kind":"end"
+    }
+],
+"scene20":[
+    {
+    "kind":"title",
+    "word":"エピソード２"
+    },{
+    "kind":"speech",
+    "name":"PINK",
+    "word":"たいくつだなー",
+    "size":"small",
+    "action":"rollLeftMax",
+    "wait":"1.0"
+    },{
+    "kind":"speech",
+    "name":"BLUE",
+    "word":"そうですね",
+    "size":"middle",
+    "action":"pitchDownMax",
+    "wait":"1.0"
+    },{
+    "kind":"speech",
+    "name":"RED",
+    "word":"ひまだー",
+    "size":"large",
+    "action":"rollRightMax",
+    "wait":"1.0"
+    },{
+    "kind":"end"
+    }
+],
+"scene30":[
+    {
+    }
+]
+}

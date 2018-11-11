@@ -27,35 +27,30 @@ img.save(filename)
 img = Image.new("RGB", (600, 200),(256,200,200))
 text = u'ライブラリの読み込ライブラリの\n読みライブラリ'
 drawText(img, text)
-# img.show()
 filename = "mes1.png"
 img.save(filename)
 
 img = Image.new("RGB", (600, 200),(100,100,256))
 text = u'ライブラリの読み'
 drawText(img, text)
-# img.show()
 filename = "mes2.png"
 img.save(filename)
 
 img = Image.new("RGB", (600, 200),(256,100,100))
 text = u'ライブラリの読'
 drawText(img, text)
-# img.show()
 filename = "mes3.png"
 img.save(filename)
 
 img = Image.new("RGB", (600, 200),(256,256,200))
 text = u'ライブラリの読み'
 drawText(img, text)
-# img.show()
 filename = "mes4.png"
 img.save(filename)
 
 img = Image.new("RGB", (600, 200),(200,256,200))
 text = u'ライブラリの読'
 drawText(img, text)
-# img.show()
 filename = "mes5.png"
 img.save(filename)
 
