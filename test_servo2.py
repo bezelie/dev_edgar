@@ -18,7 +18,7 @@ def main():
   try:
     print "開始します"
     while True:
-      bez.act(5, "rollRightLeft")
+      bez.act(2, "yawRightMax")
       bez.stop()
       sleep(1)
   except KeyboardInterrupt:

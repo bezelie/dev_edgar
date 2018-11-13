@@ -71,7 +71,7 @@ class Control(object): # クラスの定義
 
   def dispText(self, id, text, size, align):
     if id ==0:
-      img = Image.new("RGB", (1200, 100),(200,200,200))
+      img = Image.new("RGB", (1200, 100),(255,255,255))
       self.drawText(img, text, size, align)
       filename = "mes0.png"
       img.save(filename)
@@ -133,52 +133,52 @@ class Control(object): # クラスの定義
 # Action -----------------------------
   def pitchUpLong(self, id, time=2): # 
         while not self.stop_event.is_set():
-            self.moveHead(id, 10)
+            self.moveHead(id, 5)
             sleep (time)
             self.moveHead(id, 0)
 
   def pitchDownLong(self, id, time=2): # 
         while not self.stop_event.is_set():
-            self.moveHead(id, -10)
+            self.moveHead(id, -15)
             sleep (time)
             self.moveHead(id, 0)
 
-  def pitchUp2(self, id, time=0.5): # 
+  def pitchUp2(self, id, time=0.1): # 
         while not self.stop_event.is_set():
-            self.moveHead(id, 15)
+            self.moveHead(id, 5)
             self.moveHead(id, 0)
-            self.moveHead(id, 15)
+            sleep (time)
+            self.moveHead(id, 5)
             self.moveHead(id, 0)
             sleep (time)
 
   def pitchUpDown(self, id, time=0.5): # 
         while not self.stop_event.is_set():
-            self.moveHead(id, 15)
+            self.moveHead(id, 5)
             self.moveHead(id, -10)
             self.moveHead(id, 0)
             sleep (time)
 
   def pitchUpMax(self, id, time=0.5): # 
         while not self.stop_event.is_set():
-            self.moveHead(id, 15)
-            self.moveHead(id, 0)
+            self.moveHead(id, 5)
             sleep (time)
+            self.moveHead(id, 0)
 
   def pitchDownMax(self, id, time=0.5): # 
         while not self.stop_event.is_set():
             self.moveHead(id, -15)
-            self.moveHead(id, 0)
             sleep (time)
+            self.moveHead(id, 0)
 
   def pitchCenter(self, id, time=0.2): # 
         while not self.stop_event.is_set():
             self.moveHead(id, 0)
-            sleep (time)
 
   def rollRightLeft(self, id, time=0.5): # 
         while not self.stop_event.is_set():
-            self.moveBack(id, 30)
-            self.moveBack(id, -30)
+            self.moveBack(id, 20)
+            self.moveBack(id, -20)
             self.moveBack(id, 0)
             sleep (time)
 
@@ -191,43 +191,40 @@ class Control(object): # クラスの定義
   def rollRightMax(self, id, time=0.5): # 
         while not self.stop_event.is_set():
             self.moveBack(id, 30)
-            self.moveBack(id, 0)
             sleep (time)
+            self.moveBack(id, 0)
 
   def rollLeftMax(self, id, time=0.5): # 
         while not self.stop_event.is_set():
             self.moveBack(id, -30)
-            self.moveBack(id, 0)
             sleep (time)
+            self.moveBack(id, 0)
 
   def rollCenter(self, id, time=0.2): # 
         while not self.stop_event.is_set():
             self.moveStage(id, 0)
-            sleep (time)
 
   def yawRightLeft(self, id, time=0.5): # 
         while not self.stop_event.is_set():
-            self.moveStage(id, 30)
-            self.moveStage(id, -30)
+            self.moveStage(id, 20)
+            self.moveStage(id, -20)
             self.moveStage(id, 0)
-            sleep (time)
 
-  def yawRightMax(self, id, time=0.5): # 
+  def yawRightMax(self, id, time=2): # 
         while not self.stop_event.is_set():
             self.moveStage(id, 40)
-            self.moveStage(id, 0)
             sleep (time)
+            self.moveStage(id, 0)
 
-  def yawLeftMax(self, id, time=0.5): # 
+  def yawLeftMax(self, id, time=2): # 
         while not self.stop_event.is_set():
             self.moveStage(id, -40)
-            self.moveStage(id, 0)
             sleep (time)
+            self.moveStage(id, 0)
 
   def yawCenter(self, id, time=0.2): # 
         while not self.stop_event.is_set():
             self.moveStage(id, 0)
-            sleep (time)
 
 # Initialize -----------------------------
     # 初期化メソッド。インスタンス生成時に自動実行される。

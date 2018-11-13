@@ -42,36 +42,36 @@
     "name":"RED",
     "word":"べゼリーは小さなロボットだよ",
     "size":"small",
-    "action":"rollRightLong",
-    "wait":"1.0"
+    "action":"rollRightLeft",
+    "wait":"0.0"
     },{
     "kind":"speech",
     "name":"YELLOW",
     "word":"スリーディープリンターで\n作られてるのよ",
     "size":"small",
-    "action":"pitchDownMax",
-    "wait":"1.0"
+    "action":"pitchUpMax",
+    "wait":"0.0"
     },{
     "kind":"speech",
     "name":"BLUE",
     "word":"みっつのサーボモーターで動くんだ",
     "size":"small",
-    "action":"rollRightLeft",
-    "wait":"1.0"
+    "action":"yawRightLeft",
+    "wait":"0.0"
     },{
     "kind":"speech",
     "name":"GREEN",
     "word":"頭にカメラを内蔵できるぜ",
     "size":"small",
-    "action":"rollRightLeft",
-    "wait":"1.0"
+    "action":"yawRightMax",
+    "wait":"0.0"
     },{
     "kind":"speech",
     "name":"PINK",
     "word":"詳しくはホーム\nページを見てね",
     "size":"middle",
-    "action":"rollRightLeft",
-    "wait":"1.0"
+    "action":"yawLeftMax",
+    "wait":"0.0"
     },{
     "kind":"end"
     }
@@ -82,25 +82,151 @@
     "word":"ピンクのお悩み相談室"
     },{
     "kind":"speech",
-    "name":"PINK",
-    "word":"たいくつだなー",
+    "name":"RED",
+    "word":"ピンク、どうかした？\n顔面蒼白になってるよ。",
     "size":"small",
-    "action":"rollLeftMax",
-    "wait":"1.0"
+    "action":"yawRightMax",
+    "wait":"0.0"
     },{
     "kind":"speech",
-    "name":"BLUE",
-    "word":"そうですね",
-    "size":"middle",
-    "action":"pitchDownMax",
-    "wait":"1.0"
+    "name":"YELLOW",
+    "word":"みんな白いけどね。",
+    "size":"small",
+    "action":"pitchUpMax",
+    "wait":"0.0"
+    },{
+    "kind":"speech",
+    "name":"PINK",
+    "word":"あ、あのね、さっき\nニュースでやってたんだけど、",
+    "size":"small",
+    "action":"pitchUp2",
+    "wait":"0.0"
+    },{
+    "kind":"speech",
+    "name":"PINK",
+    "word":"人工知能技術が発展すると、\n仕事が無くなるんだって。",
+    "size":"small",
+    "action":"pitchUp2",
+    "wait":"0.0"
     },{
     "kind":"speech",
     "name":"RED",
-    "word":"ひまだー",
+    "word":"な、\nなんだってー！",
     "size":"large",
-    "action":"rollRightMax",
-    "wait":"1.0"
+    "action":"yawRightLeft",
+    "wait":"0.0"
+    },{
+    "kind":"speech",
+    "name":"YELLOW",
+    "word":"た、ただでさえ最近、\n平和すぎて仕事が減ってるのに。",
+    "size":"small",
+    "action":"pitchDownLong",
+    "wait":"0.0"
+    },{
+    "kind":"speech",
+    "name":"PINK",
+    "word":"もし人工知能が\n悪の組織と戦うようになったら、\n私たちどうすれば・・・",
+    "size":"small",
+    "action":"pitchUp2",
+    "wait":"0.0"
+    },{
+    "kind":"speech",
+    "name":"GREEN",
+    "word":"働かなくて済むな。",
+    "size":"small",
+    "action":"rollRightLong",
+    "wait":"0.0"
+    },{
+    "kind":"speech",
+    "name":"BLUE",
+    "word":"思う存分、ゲームができるな。",
+    "size":"small",
+    "action":"rollRightLeft",
+    "wait":"0.0"
+    },{
+    "kind":"speech",
+    "name":"YELLOW",
+    "word":"あんたら\n何いってんの！",
+    "size":"large",
+    "action":"yawRightLeft",
+    "wait":"0.0"
+    },{
+    "kind":"speech",
+    "name":"YELLOW",
+    "word":"収入がなくなったら、\nどうやって生きてくのよ！",
+    "size":"middle",
+    "action":"pitchUpDown",
+    "wait":"0.0"
+    },{
+    "kind":"speech",
+    "name":"BLUE",
+    "word":"ちょっと心配しすぎじゃないのか？",
+    "size":"small",
+    "action":"yawLeftMax",
+    "wait":"0.0"
+    },{
+    "kind":"speech",
+    "name":"RED",
+    "word":"むしろ人工知能って、\n敵になるんじゃないの？",
+    "size":"small",
+    "action":"pitchUpLong",
+    "wait":"0.0"
+    },{
+    "kind":"speech",
+    "name":"RED",
+    "word":"暴走して人間を\n殺し始めるんでしょ。",
+    "size":"small",
+    "action":"pitchDownLong",
+    "wait":"0.0"
+    },{
+    "kind":"speech",
+    "name":"PINK",
+    "word":"えーっ！\nこ、こわい。",
+    "size":"large",
+    "action":"pitchUp2",
+    "wait":"0.0"
+    },{
+    "kind":"speech",
+    "name":"BLUE",
+    "word":"おまえは、アニメの見すぎ。",
+    "size":"small",
+    "action":"yawLeftMax",
+    "wait":"0.0"
+    },{
+    "kind":"speech",
+    "name":"GREEN",
+    "word":"俺らが悪の組織になって\n世界征服すれば？",
+    "size":"small",
+    "action":"pitchUpMax",
+    "wait":"0.0"
+    },{
+    "kind":"speech",
+    "name":"RED",
+    "word":"あのねー、グリーン。\nそれをヒーローが\n言っちゃだめでしょ。",
+    "size":"small",
+    "action":"yawLeftMax",
+    "wait":"0.0"
+    },{
+    "kind":"speech",
+    "name":"YELLOW",
+    "word":"私たち、体が小さいから、\n実は結構やり放題なのよね。",
+    "size":"small",
+    "action":"pitchUpDown",
+    "wait":"0.0"
+    },{
+    "kind":"speech",
+    "name":"RED",
+    "word":"イエローまで！",
+    "size":"large",
+    "action":"yawLeftMax",
+    "wait":"0.0"
+    },{
+    "kind":"speech",
+    "name":"PINK",
+    "word":"あああ。\n誰かお願い、\nこの不安感から私を救って！",
+    "size":"small",
+    "action":"pitchUp2",
+    "wait":"0.0"
     },{
     "kind":"end"
     }

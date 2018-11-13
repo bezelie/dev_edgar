@@ -69,14 +69,15 @@ def main():
         if data[scene][i]['size'] == 'large': size = 80
         text = data[scene][i]['word']
         action = data[scene][i]['action']
-        wait = 1+float(data[scene][i]['wait'])
         align = "left"
         voice = re.sub('\n','',text)
+        wait = int(len(voice)*0.3)+float(data[scene][i]['wait'])
         print voice
-        bez.speech(id, voice)          # Voice
+        print wait
+        bez.speech(id, voice)                # Voice
         sleep (1)
         bez.dispText(id, text, size, align)  # Text
-        bez.act(id, action)           # Action
+        bez.act(id, action)                  # Action
         sleep (wait)
         bez.stop()
         cv2.destroyAllWindows()
@@ -122,7 +123,8 @@ def main():
         subprocess.call("aplay decided.wav", shell=True)
         i = 0
         sleep (1)
-
+      else:
+        print "Not Matched"
   except KeyboardInterrupt:
     print ' 終了しました'
 
