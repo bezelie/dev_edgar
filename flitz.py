@@ -25,7 +25,7 @@ GREEN = 5
 bus = smbus.SMBus(1)
 
 # 変数
-jsonFile = "/home/pi/bezelie/dev_edgar/data_chat.json"        # 設定ファイル
+jsonFile = "/home/pi/bezelie/dev_edgar/trim.json"        # 設定ファイル
 ttsRed = "/home/pi/bezelie/dev_edgar/exec_talkRed.sh" # 発話シェルスクリプトのファイル名
 ttsBlue = "/home/pi/bezelie/dev_edgar/exec_talkBlue.sh" # 発話シェルスクリプトのファイル名
 ttsGreen = "/home/pi/bezelie/dev_edgar/exec_talkGreen.sh" # 発話シェルスクリプトのファイル名
@@ -35,17 +35,17 @@ ttsYellow = "/home/pi/bezelie/dev_edgar/exec_talkYellow.sh" # 発話シェルス
 class Control(object): # クラスの定義
   def moveCenter(self): # 3つのサーボの回転位置をトリム値に合わせる
     #PINK
-    self.moveHead(1, 15)
+    self.moveHead(1, 0)
     self.moveBack(1, 0)
     self.moveStage(1, 0)
     #BLUE
-    self.moveHead(2, 5)
-    self.moveBack(2, 10)
-    self.moveStage(2, 10)
+    self.moveHead(2, 0)
+    self.moveBack(2, 0)
+    self.moveStage(2, 0)
     #RED
     self.moveHead(3, 0)
     self.moveBack(3, 0)
-    self.moveStage(3, 0)
+    self.moveStage(3,0)
     #YELLOW
     self.moveHead(4, 0)
     self.moveBack(4, 0)
@@ -230,10 +230,7 @@ class Control(object): # クラスの定義
     # 初期化メソッド。インスタンス生成時に自動実行される。
   def __init__(self, address_pca9685=0x40, dutyMax=490, dutyMin=110, dutyCenter=300, steps=2):
         f = open (jsonFile,'r')
-        jDict = json.load(f)
-        self.headTrim = int(jDict['data2'][0]['head'])    # トリム値の読み込み
-        self.backTrim = int(jDict['data2'][0]['back'])
-        self.stageTrim = int(jDict['data2'][0]['stage'])
+        self.jDict = json.load(f)
 
         # インスタンス変数に値を代入。selfは自分自身のインスタンス名。
         self.address_pca9685 = address_pca9685
@@ -250,17 +247,17 @@ class Control(object): # クラスの定義
   def moveHead(self, id, degree, speed=1):
         max = 320     # 下方向の限界
         min = 230     # 上方向の限界
-        self.headNow = self.moveServo((id-1)*3+2, degree, self.headTrim, max, min, speed, self.headNow)
+        self.headNow = self.moveServo((id-1)*3+2, degree, int(self.jDict['data'+str(id)][0]['head']), max, min, speed, self.headNow)
 
   def moveBack(self, id, degree, speed=1):
         max = 380     # 反時計回りの限界
         min = 220     # 時計回りの限界
-        self.backNow = self.moveServo((id-1)*3+1, degree, self.backTrim, max, min, speed, self.backNow)
+        self.backNow = self.moveServo((id-1)*3+1, degree, int(self.jDict['data'+str(id)][0]['back']), max, min, speed, self.backNow)
 
   def moveStage(self, id, degree, speed=1):
         max = 390     # 反時計回りの限界
         min = 210     # 時計回りの限界
-        self.stageNow = self.moveServo((id-1)*3, degree, self.stageTrim, max, min, speed, self.stageNow)
+        self.stageNow = self.moveServo((id-1)*3, degree, int(self.jDict['data'+str(id)][0]['stage']), max, min, speed, self.stageNow)
         
   def initPCA9685(self):
       try:
@@ -431,10 +428,5 @@ class Control(object): # クラスの定義
 # スクリプトとして実行された場合はセンタリングを行う
 if __name__ == "__main__":
   bez = Control()               # べゼリー操作インスタンスの生成
-  f = open (jsonFile,'r')
-  jDict = json.load(f)
-  bez.headTrim = int(jDict['data2'][0]['head'])
-  bez.backTrim = int(jDict['data2'][0]['back'])
-  bez.stageTrim = int(jDict['data2'][0]['stage'])
   bez.moveCenter()
   sleep(1)
