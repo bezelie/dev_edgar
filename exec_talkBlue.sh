@@ -11,7 +11,7 @@ sudo echo "$1" | open_jtalk \
 -x $DICDIRE \
 -m $HTSVOICE \
 -ow $VOICEDATA \
--s 45000 \
+-s 50000 \
 -b 0.0 \
 -r 1.5 \
 -fm 0.0 \

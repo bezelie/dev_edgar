@@ -11,7 +11,7 @@ sudo echo "$1" | open_jtalk \
 -x $DICDIRE \
 -m $HTSVOICE \
 -ow $VOICEDATA \
--s 50000 \
+-s 55000 \
 -b 0.0 \
 -r 1.0 \
 -fm 0.0 \
@@ -37,7 +37,7 @@ sudo echo "$1" | open_jtalk \
 #     0にすると平坦なロボット声になる。
 # z   オーディオバッファサイズ 0-(0)-
 
-amixer cset numid=1 85%
+amixer cset numid=1 100%
 #aplay -q -D plughw:2,0 $VOICEDATA
 aplay -D plughw:0,1 $VOICEDATA
 sudo rm -f $VOICEDATA

@@ -71,13 +71,13 @@ class Control(object): # クラスの定義
 
   def dispText(self, id, text, size, align):
     if id ==0:
-      img = Image.new("RGB", (1200, 100),(255,255,255))
+      img = Image.new("RGB", (1220, 100),(255,255,255))
       self.drawText(img, text, size, align)
       filename = "mes0.png"
       img.save(filename)
       img0 = cv2.imread("mes0.png")
       cv2.imshow("MESSAGE",img0)
-      cv2.moveWindow("MESSAGE", 280, 100)
+      cv2.moveWindow("MESSAGE", 320, 50)
       cv2.waitKey(150)
 
     if id ==1:
@@ -87,7 +87,7 @@ class Control(object): # クラスの定義
       img.save(filename)
       img1 = cv2.imread("mes1.png")
       cv2.imshow("PINK",img1)
-      cv2.moveWindow("PINK", 20, 600)
+      cv2.moveWindow("PINK", 20, 450)
       cv2.waitKey(150)
 
     elif id ==2:
@@ -97,7 +97,7 @@ class Control(object): # クラスの定義
       img.save(filename)
       img2 = cv2.imread("mes2.png")
       cv2.imshow("BLUE",img2)
-      cv2.moveWindow("BLUE", 320, 300)
+      cv2.moveWindow("BLUE", 320, 200)
       cv2.waitKey(150)
 
     elif id ==3:
@@ -107,7 +107,7 @@ class Control(object): # クラスの定義
       img.save(filename)
       img3 = cv2.imread("mes3.png")
       cv2.imshow("RED",img3)
-      cv2.moveWindow("RED", 640, 600)
+      cv2.moveWindow("RED", 640, 450)
       cv2.waitKey(150)
 
     elif id ==4:
@@ -117,7 +117,7 @@ class Control(object): # クラスの定義
       img.save(filename)
       img4 = cv2.imread("mes4.png")
       cv2.imshow("YELLOW",img4)
-      cv2.moveWindow("YELLOW", 940, 300)
+      cv2.moveWindow("YELLOW", 940, 200)
       cv2.waitKey(150)
 
     elif id ==5:
@@ -127,21 +127,17 @@ class Control(object): # クラスの定義
       img.save(filename)
       img5 = cv2.imread("mes5.png")
       cv2.imshow("GREEN",img5)
-      cv2.moveWindow("GREEN", 1260, 600)
+      cv2.moveWindow("GREEN", 1260, 450)
       cv2.waitKey(150)
 
 # Action -----------------------------
   def pitchUpLong(self, id, time=2): # 
         while not self.stop_event.is_set():
             self.moveHead(id, 5)
-            sleep (time)
-            self.moveHead(id, 0)
 
   def pitchDownLong(self, id, time=2): # 
         while not self.stop_event.is_set():
             self.moveHead(id, -15)
-            sleep (time)
-            self.moveHead(id, 0)
 
   def pitchUp2(self, id, time=0.1): # 
         while not self.stop_event.is_set():
@@ -152,24 +148,28 @@ class Control(object): # クラスの定義
             self.moveHead(id, 0)
             sleep (time)
 
+  def pitchDown2(self, id, time=0.1): # 
+        while not self.stop_event.is_set():
+            self.moveHead(id, -5)
+            self.moveHead(id, 0)
+            sleep (time)
+            self.moveHead(id, -5)
+            self.moveHead(id, 0)
+            sleep (time)
+
   def pitchUpDown(self, id, time=0.5): # 
         while not self.stop_event.is_set():
             self.moveHead(id, 5)
             self.moveHead(id, -10)
             self.moveHead(id, 0)
-            sleep (time)
 
   def pitchUpMax(self, id, time=0.5): # 
         while not self.stop_event.is_set():
             self.moveHead(id, 5)
-            sleep (time)
-            self.moveHead(id, 0)
 
   def pitchDownMax(self, id, time=0.5): # 
         while not self.stop_event.is_set():
             self.moveHead(id, -15)
-            sleep (time)
-            self.moveHead(id, 0)
 
   def pitchCenter(self, id, time=0.2): # 
         while not self.stop_event.is_set():
@@ -180,13 +180,10 @@ class Control(object): # クラスの定義
             self.moveBack(id, 20)
             self.moveBack(id, -20)
             self.moveBack(id, 0)
-            sleep (time)
 
   def rollRightLong(self, id, time=2): # 
         while not self.stop_event.is_set():
             self.moveBack(id, 30)
-            sleep (time)
-            self.moveBack(id, 0)
 
   def rollRightMax(self, id, time=0.5): # 
         while not self.stop_event.is_set():
@@ -197,8 +194,6 @@ class Control(object): # クラスの定義
   def rollLeftMax(self, id, time=0.5): # 
         while not self.stop_event.is_set():
             self.moveBack(id, -30)
-            sleep (time)
-            self.moveBack(id, 0)
 
   def rollCenter(self, id, time=0.2): # 
         while not self.stop_event.is_set():
@@ -210,17 +205,37 @@ class Control(object): # クラスの定義
             self.moveStage(id, -20)
             self.moveStage(id, 0)
 
+  def yawRight(self, id, time=2): # 
+        while not self.stop_event.is_set():
+            self.moveStage(id, 10)
+
   def yawRightMax(self, id, time=2): # 
         while not self.stop_event.is_set():
-            self.moveStage(id, 40)
+            self.moveStage(id, 30)
+
+  def yawRightPitchDown(self, id, time=0.5): # 
+        while not self.stop_event.is_set():
+            self.moveStage(id, 30)
             sleep (time)
-            self.moveStage(id, 0)
+            self.moveHead(id, -10)
+            sleep (time)
+            self.moveHead(id, 0)
+
+#            self.moveStage(id, 0)
+
+  def yawLeftPitchDown(self, id, time=0.5): # 
+        while not self.stop_event.is_set():
+            self.moveStage(id, -30)
+            sleep (time)
+            self.moveHead(id, -10)
+            sleep (time)
+            self.moveHead(id, 0)
 
   def yawLeftMax(self, id, time=2): # 
         while not self.stop_event.is_set():
-            self.moveStage(id, -40)
-            sleep (time)
-            self.moveStage(id, 0)
+            self.moveStage(id, -30)
+#            sleep (time)
+#            self.moveStage(id, 0)
 
   def yawCenter(self, id, time=0.2): # 
         while not self.stop_event.is_set():
@@ -339,6 +354,8 @@ class Control(object): # クラスの定義
         self.thread = threading.Thread(target = self.pitchDownLong, kwargs={'id':id})
     elif act == 'pitchUp2':
         self.thread = threading.Thread(target = self.pitchUp2, kwargs={'id':id})
+    elif act == 'pitchDown2':
+        self.thread = threading.Thread(target = self.pitchDown2, kwargs={'id':id})
     elif act == 'pitchUpDown':
         self.thread = threading.Thread(target = self.pitchUpDown, kwargs={'id':id})
     elif act == 'pitchUpMax':
@@ -359,8 +376,14 @@ class Control(object): # クラスの定義
         self.thread = threading.Thread(target = self.rollCenter, kwargs={'id':id})
     elif act == 'yawRightLeft':
         self.thread = threading.Thread(target = self.yawRightLeft, kwargs={'id':id})
+    elif act == 'yawRight':
+        self.thread = threading.Thread(target = self.yawRight, kwargs={'id':id})
     elif act == 'yawRightMax':
         self.thread = threading.Thread(target = self.yawRightMax, kwargs={'id':id})
+    elif act == 'yawRightPitchDown':
+        self.thread = threading.Thread(target = self.yawRightPitchDown, kwargs={'id':id})
+    elif act == 'yawLeftPitchDown':
+        self.thread = threading.Thread(target = self.yawLeftPitchDown, kwargs={'id':id})
     elif act == 'yawLeftMax':
         self.thread = threading.Thread(target = self.yawLeftMax, kwargs={'id':id})
     elif act == 'yawCenter':

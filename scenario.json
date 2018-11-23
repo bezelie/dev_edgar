@@ -11,7 +11,7 @@
     "target3":"scene3",
     "word4":"どうやって動いてるの？",
     "target4":"scene4",
-    "word5":"ダンス",
+    "word5":"ごあいさつ",
     "target5":"scene5",
     "wait":"1.0"
     }
@@ -20,9 +20,9 @@
     {
     "kind":"select",
     "title":"ストーリーをえらんでね",
-    "word1":"ピンクのお悩み相談室",
+    "word1":"人工知能が仕事を奪う!？",
     "target1":"scene10",
-    "word2":"ブルーのウィルスにご用心",
+    "word2":"ウィルスにご用心",
     "target2":"scene20",
     "word3":"レッドの塗料乾燥事件",
     "target3":"scene30",
@@ -40,7 +40,7 @@
     },{
     "kind":"speech",
     "name":"RED",
-    "word":"べゼリーは小さなロボットだよ",
+    "word":"べゼリーはちっちゃな\nロボットだよ",
     "size":"small",
     "action":"rollRightLeft",
     "wait":"0.0"
@@ -49,12 +49,12 @@
     "name":"YELLOW",
     "word":"スリーディープリンターで\n作られてるのよ",
     "size":"small",
-    "action":"pitchUpMax",
+    "action":"pitchDown2",
     "wait":"0.0"
     },{
     "kind":"speech",
     "name":"BLUE",
-    "word":"みっつのサーボモーターで動くんだ",
+    "word":"みっつのサーボモーターで\n動くんだ",
     "size":"small",
     "action":"yawRightLeft",
     "wait":"0.0"
@@ -63,14 +63,143 @@
     "name":"GREEN",
     "word":"頭にカメラを内蔵できるぜ",
     "size":"small",
-    "action":"yawRightMax",
+    "action":"yawRightPitchDown",
     "wait":"0.0"
     },{
     "kind":"speech",
     "name":"PINK",
-    "word":"詳しくはホーム\nページを見てね",
+    "word":"詳しくはホームページを\n見てね",
     "size":"middle",
     "action":"yawLeftMax",
+    "wait":"0.0"
+    },{
+    "kind":"end"
+    }
+],
+"scene3":[
+    {
+    "kind":"title",
+    "word":"自己紹介"
+    },{
+    "kind":"speech",
+    "name":"RED",
+    "word":"僕らはべゼリーファイブ",
+    "size":"small",
+    "action":"rollRightLeft",
+    "wait":"0.0"
+    },{
+    "kind":"speech",
+    "name":"BLUE",
+    "word":"スーパーヒーローだぜ",
+    "size":"small",
+    "action":"rollRightMax",
+    "wait":"0.0"
+    },{
+    "kind":"speech",
+    "name":"YELLOW",
+    "word":"悪いやつらと\n戦っているの",
+    "size":"small",
+    "action":"yawRightLeft",
+    "wait":"0.0"
+    },{
+    "kind":"speech",
+    "name":"GREEN",
+    "word":"そうゆう設定なのだ",
+    "size":"small",
+    "action":"pitchDown2",
+    "wait":"0.0"
+    },{
+    "kind":"speech",
+    "name":"PINK",
+    "word":"応援よろしくね",
+    "size":"middle",
+    "action":"yawLeftPitchDown",
+    "wait":"0.0"
+    },{
+    "kind":"end"
+    }
+],
+"scene4":[
+    {
+    "kind":"title",
+    "word":"どうやって動いてるの？"
+    },{
+    "kind":"speech",
+    "name":"RED",
+    "word":"ラズベリーパイで\n動いているよ",
+    "size":"small",
+    "action":"rollRightLeft",
+    "wait":"0.0"
+    },{
+    "kind":"speech",
+    "name":"BLUE",
+    "word":"言語はパイソンだぜ",
+    "size":"small",
+    "action":"yawRightLeft",
+    "wait":"0.0"
+    },{
+    "kind":"speech",
+    "name":"YELLOW",
+    "word":"サーボドライバーも\n使っているの",
+    "size":"small",
+    "action":"pitchDown2",
+    "wait":"0.0"
+    },{
+    "kind":"speech",
+    "name":"GREEN",
+    "word":"音声合成は\nオープンジェイトーク",
+    "size":"small",
+    "action":"rollRightLong",
+    "wait":"0.0"
+    },{
+    "kind":"speech",
+    "name":"PINK",
+    "word":"いつつのスイッチも\nつなげてます",
+    "size":"middle",
+    "action":"yawRightLeft",
+    "wait":"0.0"
+    },{
+    "kind":"end"
+    }
+],
+"scene5":[
+    {
+    "kind":"title",
+    "word":"ごあいさつ"
+    },{
+    "kind":"speech",
+    "name":"RED",
+    "word":"大垣の皆さん\nこんにちは",
+    "size":"small",
+    "action":"pitchDownLong",
+    "wait":"0.0"
+    },{
+    "kind":"speech",
+    "name":"BLUE",
+    "word":"東京方面から\nやってきました",
+    "size":"small",
+    "action":"rollRightMax",
+    "wait":"0.0"
+    },{
+    "kind":"speech",
+    "name":"YELLOW",
+    "word":"実は二年前も\n来たんですよ",
+    "size":"small",
+    "action":"yawRightLeft",
+    "wait":"0.0"
+    },{
+    "kind":"speech",
+    "name":"GREEN",
+    "word":"小林先生には\nお世話になってます",
+    "size":"small",
+    "action":"pitchDown2",
+    "wait":"0.0"
+    },{
+    "kind":"speech",
+    "name":"PINK",
+    "word":"お友達になって\nくれたら嬉しいです",
+    "size":"middle",
+    "action":"rollRightLeft",
     "wait":"0.0"
     },{
     "kind":"end"
@@ -79,34 +208,27 @@
 "scene10":[
     {
     "kind":"title",
-    "word":"ピンクのお悩み相談室"
+    "word":"人工知能が仕事を奪う!？"
+    },{
+    "kind":"speech",
+    "name":"PINK",
+    "word":"あああ",
+    "size":"small",
+    "action":"pitchDownLong",
+    "wait":"0.0"
     },{
     "kind":"speech",
     "name":"RED",
-    "word":"ピンク、どうかした？\n顔面蒼白になってるよ。",
+    "word":"ピンク、どうかした？\n心配なことでもあるの？",
     "size":"small",
     "action":"yawRightMax",
     "wait":"0.0"
     },{
     "kind":"speech",
-    "name":"YELLOW",
-    "word":"みんな白いけどね。",
-    "size":"small",
-    "action":"pitchUpMax",
-    "wait":"0.0"
-    },{
-    "kind":"speech",
     "name":"PINK",
-    "word":"あ、あのね、さっき\nニュースでやってたんだけど、",
+    "word":"エーアイの発展によって\n仕事が無くなるらしいの。",
     "size":"small",
-    "action":"pitchUp2",
-    "wait":"0.0"
-    },{
-    "kind":"speech",
-    "name":"PINK",
-    "word":"人工知能技術が発展すると、\n仕事が無くなるんだって。",
-    "size":"small",
-    "action":"pitchUp2",
+    "action":"pitchDownLong",
     "wait":"0.0"
     },{
     "kind":"speech",
@@ -118,16 +240,9 @@
     },{
     "kind":"speech",
     "name":"YELLOW",
-    "word":"た、ただでさえ最近、\n平和すぎて仕事が減ってるのに。",
+    "word":"た、ただでさえ最近、\n仕事が減ってるのに。",
     "size":"small",
-    "action":"pitchDownLong",
-    "wait":"0.0"
-    },{
-    "kind":"speech",
-    "name":"PINK",
-    "word":"もし人工知能が\n悪の組織と戦うようになったら、\n私たちどうすれば・・・",
-    "size":"small",
-    "action":"pitchUp2",
+    "action":"pitchDown2",
     "wait":"0.0"
     },{
     "kind":"speech",
@@ -139,93 +254,51 @@
     },{
     "kind":"speech",
     "name":"BLUE",
-    "word":"思う存分、ゲームができるな。",
+    "word":"思う存分、\nゲームができるな。",
     "size":"small",
     "action":"rollRightLeft",
     "wait":"0.0"
     },{
     "kind":"speech",
     "name":"YELLOW",
-    "word":"あんたら\n何いってんの！",
-    "size":"large",
+    "word":"それでどうやって\nお金を稼ぐのよ！",
+    "size":"middle",
     "action":"yawRightLeft",
     "wait":"0.0"
     },{
     "kind":"speech",
-    "name":"YELLOW",
-    "word":"収入がなくなったら、\nどうやって生きてくのよ！",
-    "size":"middle",
-    "action":"pitchUpDown",
-    "wait":"0.0"
-    },{
-    "kind":"speech",
-    "name":"BLUE",
-    "word":"ちょっと心配しすぎじゃないのか？",
-    "size":"small",
-    "action":"yawLeftMax",
-    "wait":"0.0"
-    },{
-    "kind":"speech",
-    "name":"RED",
-    "word":"むしろ人工知能って、\n敵になるんじゃないの？",
-    "size":"small",
-    "action":"pitchUpLong",
-    "wait":"0.0"
-    },{
-    "kind":"speech",
-    "name":"RED",
-    "word":"暴走して人間を\n殺し始めるんでしょ。",
-    "size":"small",
-    "action":"pitchDownLong",
-    "wait":"0.0"
-    },{
-    "kind":"speech",
-    "name":"PINK",
-    "word":"えーっ！\nこ、こわい。",
-    "size":"large",
-    "action":"pitchUp2",
-    "wait":"0.0"
-    },{
-    "kind":"speech",
-    "name":"BLUE",
-    "word":"おまえは、アニメの見すぎ。",
-    "size":"small",
-    "action":"yawLeftMax",
-    "wait":"0.0"
-    },{
-    "kind":"speech",
     "name":"GREEN",
-    "word":"俺らが悪の組織になって\n世界征服すれば？",
-    "size":"small",
-    "action":"pitchUpMax",
-    "wait":"0.0"
-    },{
-    "kind":"speech",
-    "name":"RED",
-    "word":"あのねー、グリーン。\nそれをヒーローが\n言っちゃだめでしょ。",
+    "word":"世界征服でもするか？",
     "size":"small",
     "action":"yawLeftMax",
     "wait":"0.0"
     },{
     "kind":"speech",
-    "name":"YELLOW",
-    "word":"私たち、体が小さいから、\n実は結構やり放題なのよね。",
+    "name":"RED",
+    "word":"ねー、僕たち\nヒーローだよねえ。",
     "size":"small",
-    "action":"pitchUpDown",
+    "action":"yawLeftMax",
     "wait":"0.0"
     },{
     "kind":"speech",
-    "name":"RED",
-    "word":"イエローまで！",
-    "size":"large",
+    "name":"BLUE",
+    "word":"そもそも俺たちだって\nエーアイだろ？",
+    "size":"small",
     "action":"yawLeftMax",
     "wait":"0.0"
     },{
     "kind":"speech",
     "name":"PINK",
-    "word":"あああ。\n誰かお願い、\nこの不安感から私を救って！",
+    "word":"そうなの？",
+    "size":"large",
+    "action":"yawLeftMax",
+    "wait":"0.0"
+    },{
+    "kind":"speech",
+    "name":"BLUE",
+    "word":"そうだよ",
     "size":"small",
-    "action":"pitchUp2",
+    "action":"yawRightPitchDown",
     "wait":"0.0"
     },{
     "kind":"end"
@@ -234,28 +307,84 @@
 "scene20":[
     {
     "kind":"title",
-    "word":"エピソード２"
+    "word":"ウィルスにご用心"
+    },{
+    "kind":"speech",
+    "name":"BLUE",
+    "word":"みんなちょっと\n聞いてくれ",
+    "size":"small",
+    "action":"yawRightLeft",
+    "wait":"0.0"
+    },{
+    "kind":"speech",
+    "name":"RED",
+    "word":"どうしたの？",
+    "size":"small",
+    "action":"yawRight",
+    "wait":"0.0"
+    },{
+    "kind":"speech",
+    "name":"BLUE",
+    "word":"ウイルスが流行って\nいるらしい",
+    "size":"small",
+    "action":"yawRightLeft",
+    "wait":"0.0"
+    },{
+    "kind":"speech",
+    "name":"YELLOW",
+    "word":"ダイハードのひと？",
+    "size":"small",
+    "action":"yawRight",
+    "wait":"0.0"
+    },{
+    "kind":"speech",
+    "name":"BLUE",
+    "word":"あれはウイリスだろ。\nしかも、はやってないし",
+    "size":"small",
+    "action":"yawLeftMax",
+    "wait":"0.0"
+    },{
+    "kind":"speech",
+    "name":"GREEN",
+    "word":"コンピューター\nウイルスのことだろ",
+    "size":"small",
+    "action":"yawLeftMax",
+    "wait":"0.0"
+    },{
+    "kind":"speech",
+    "name":"BLUE",
+    "word":"そうだ。感染しないように\n気をつけてくれ",
+    "size":"small",
+    "action":"pitchDown2",
+    "wait":"0.0"
     },{
     "kind":"speech",
     "name":"PINK",
-    "word":"たいくつだなー",
+    "word":"私は消毒液で\n手を洗ってるわ",
     "size":"small",
-    "action":"rollLeftMax",
+    "action":"rollRightLeft",
+    "wait":"0.0"
+    },{
+    "kind":"speech",
+    "name":"YELLOW",
+    "word":"私もちゃんと\nうがいしてるわよ",
+    "size":"small",
+    "action":"rollRightMax",
+    "wait":"0.0"
+    },{
+    "kind":"speech",
+    "name":"RED",
+    "word":"よかった。\nみんな大丈夫そうだね",
+    "size":"small",
+    "action":"yawRightLeft",
     "wait":"1.0"
     },{
     "kind":"speech",
     "name":"BLUE",
-    "word":"そうですね",
-    "size":"middle",
-    "action":"pitchDownMax",
-    "wait":"1.0"
-    },{
-    "kind":"speech",
-    "name":"RED",
-    "word":"ひまだー",
-    "size":"large",
-    "action":"rollRightMax",
-    "wait":"1.0"
+    "word":"あほだ",
+    "size":"small",
+    "action":"pitchDownLong",
+    "wait":"0.0"
     },{
     "kind":"end"
     }

@@ -1,9 +1,9 @@
 #!/bin/bash
 # 音声合成（Open JTalk）起動スクリプト
-HTSVOICE=/usr/share/hts-voice/nitech-jp-atr503-m001/nitech_jp_atr503_m001.htsvoice
+#HTSVOICE=/usr/share/hts-voice/nitech-jp-atr503-m001/nitech_jp_atr503_m001.htsvoice
 #HTSVOICE=/usr/share/hts-voice/htsvoice-tohoku-f01/tohoku-f01-neutral.htsvoice
 # angry, happy, neutral, sad
-# HTSVOICE=/usr/share/hts-voice/mei/mei_happy.htsvoice
+HTSVOICE=/usr/share/hts-voice/mei/mei_normal.htsvoice
 # angry, happy, normal, sad
 DICDIRE=/var/lib/mecab/dic/open-jtalk/naist-jdic/
 VOICEDATA=/tmp/voice.wav

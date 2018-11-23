@@ -1,9 +1,9 @@
 #!/bin/bash
 # 音声合成（Open JTalk）起動スクリプト
 #HTSVOICE=/usr/share/hts-voice/nitech-jp-atr503-m001/nitech_jp_atr503_m001.htsvoice
-HTSVOICE=/usr/share/hts-voice/htsvoice-tohoku-f01/tohoku-f01-happy.htsvoice
+#HTSVOICE=/usr/share/hts-voice/htsvoice-tohoku-f01/tohoku-f01-happy.htsvoice
 # angry, happy, neutral, sad
-# HTSVOICE=/usr/share/hts-voice/mei/mei_happy.htsvoice
+HTSVOICE=/usr/share/hts-voice/mei/mei_normal.htsvoice
 # angry, happy, normal, sad
 DICDIRE=/var/lib/mecab/dic/open-jtalk/naist-jdic/
 VOICEDATA=/tmp/voice.wav
@@ -11,7 +11,7 @@ sudo echo "$1" | open_jtalk \
 -x $DICDIRE \
 -m $HTSVOICE \
 -ow $VOICEDATA \
--s 40000 \
+-s 45000 \
 -b 0.0 \
 -r 1.5 \
 -fm 0.0 \
@@ -38,7 +38,7 @@ sudo echo "$1" | open_jtalk \
 #     0にすると平坦なロボット声になる。
 # z   オーディオバッファサイズ 0-(0)-
 
-amixer cset numid=1 85%
+amixer cset numid=1 100%
 #aplay -q -D plughw:2,0 $VOICEDATA
 aplay -D plughw:0,1 $VOICEDATA
 sudo rm -f $VOICEDATA
