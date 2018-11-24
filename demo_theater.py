@@ -40,14 +40,18 @@ def main():
     i = 0
     while True:
       if data[scene][i]['kind'] == 'title':
+#        sleep (1)
         bez.dispText(0, sce, i)  # Text
-        subprocess.call("aplay shocked.wav", shell=True)
-        cv2.destroyAllWindows()
         sleep (1)
+        subprocess.call("aplay pafu1.wav", shell=True)
+#        sleep (3)
+        cv2.destroyAllWindows()
+#        sleep (1)
         i = i+1
       elif data[scene][i]['kind'] == 'end':
         bez.dispText(0, sce, i)  # Text
-        subprocess.call("aplay end.wav", shell=True)
+        subprocess.call("aplay lauph1.wav", shell=True)
+        sleep (1)
         cv2.destroyAllWindows()
         sleep (1)
         sce = 0
@@ -66,10 +70,9 @@ def main():
         action = data[scene][i]['action']
         # action
         bez.speech(id, sce, i)                # Voice
-#        sleep (1)
         bez.dispText(id, sce, i)  # Text
         bez.act(id, action)                  # Action
-        wait = (len(voice)*0.2)+float(data[scene][i]['wait'])
+        wait = (len(voice)*0.22)+float(data[scene][i]['wait'])
         print wait
         sleep (wait)
         bez.stop()
@@ -84,6 +87,7 @@ def main():
         bez.dispText(RED, sce, 3)  # Text
         bez.dispText(YELLOW, sce, 4)  # Text
         bez.dispText(GREEN, sce, 5)  # Text
+        subprocess.call("aplay question1.wav", shell=True)
 
         while True:                        # 繰り返し処理
           if GPIO.input(17)==GPIO.HIGH:    # 
@@ -116,9 +120,9 @@ def main():
             # print "スイッチは押されてません"
           sleep (0.1)                      # 0.5秒待つ
         cv2.destroyAllWindows()
-        subprocess.call("aplay decided.wav", shell=True)
+        subprocess.call("aplay switch1.wav", shell=True)
         i = 0
-        sleep (1)
+        sleep (2)
       else:
         print "Not Matched"
   except KeyboardInterrupt:

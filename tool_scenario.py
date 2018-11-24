@@ -117,7 +117,7 @@ def main():
         dispText(0, text, size, align, sce, i)  # Text
         i = i+1
       elif data[scene][i]['kind'] == 'end':
-        text = 'The End'
+        text = 'おしまい'
         size = 80
         align = 'center'
         dispText(0, text, size, align, sce, i)  # Text
