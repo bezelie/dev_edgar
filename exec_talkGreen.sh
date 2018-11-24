@@ -39,5 +39,5 @@ sudo echo "$1" | open_jtalk \
 
 amixer cset numid=1 100%
 #aplay -q -D plughw:2,0 $VOICEDATA
-aplay -D plughw:0,1 $VOICEDATA
-sudo rm -f $VOICEDATA
+# aplay -D plughw:0,1 $VOICEDATA
+# sudo rm -f $VOICEDATA

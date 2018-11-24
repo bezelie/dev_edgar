@@ -21,15 +21,15 @@
     "kind":"select",
     "title":"ストーリーをえらんでね",
     "word1":"人工知能が仕事を奪う!？",
-    "target1":"scene10",
+    "target1":"scene6",
     "word2":"ウィルスにご用心",
-    "target2":"scene20",
-    "word3":"レッドの塗料乾燥事件",
-    "target3":"scene30",
+    "target2":"scene7",
+    "word3":"歩きスマホは危険です",
+    "target3":"scene8",
     "word4":"イエローの経理出納帳",
-    "target4":"scene40",
-    "word5":"グリーンの騒音事件",
-    "target5":"scene50",
+    "target4":"scene9",
+    "word5":"レーザーカッターを買おう",
+    "target5":"scene10",
     "wait":"1.0"
     }
 ],
@@ -205,7 +205,7 @@
     "kind":"end"
     }
 ],
-"scene10":[
+"scene6":[
     {
     "kind":"title",
     "word":"人工知能が仕事を奪う!？"
@@ -304,7 +304,7 @@
     "kind":"end"
     }
 ],
-"scene20":[
+"scene7":[
     {
     "kind":"title",
     "word":"ウィルスにご用心"
@@ -389,8 +389,196 @@
     "kind":"end"
     }
 ],
-"scene30":[
+"scene8":[
     {
+    "kind":"title",
+    "word":"歩きスマホは危険です"
+    },{
+    "kind":"speech",
+    "name":"RED",
+    "word":"べゼリーファイブ集合！",
+    "size":"small",
+    "action":"yawRightLeft",
+    "wait":"0.0"
+    },{
+    "kind":"speech",
+    "name":"YELLOW",
+    "word":"もう集まってますけど",
+    "size":"small",
+    "action":"pitchDownMax",
+    "wait":"0.0"
+    },{
+    "kind":"speech",
+    "name":"RED",
+    "word":"どうも最近、\n歩きスマホが危険らしい",
+    "size":"small",
+    "action":"yawRightLeft",
+    "wait":"0.0"
+    },{
+    "kind":"speech",
+    "name":"BLUE",
+    "word":"スマートフォンが\n歩くのか？",
+    "size":"small",
+    "action":"yawLeftMax",
+    "wait":"0.0"
+    },{
+    "kind":"speech",
+    "name":"PINK",
+    "word":"え？",
+    "size":"small",
+    "action":"yawLeftMax",
+    "wait":"0.0"
+    },{
+    "kind":"speech",
+    "name":"GREEN",
+    "word":"スマホの進化は\nすごいな",
+    "size":"small",
+    "action":"yawRightMax",
+    "wait":"0.0"
+    },{
+    "kind":"speech",
+    "name":"PINK",
+    "word":"あのね\n歩きスマホは",
+    "size":"small",
+    "action":"pitchDownMax",
+    "wait":"0.0"
+    },{
+    "kind":"speech",
+    "name":"YELLOW",
+    "word":"いずれ戦うことに\nなるかもね",
+    "size":"small",
+    "action":"pitchDown2",
+    "wait":"0.0"
+    },{
+    "kind":"speech",
+    "name":"RED",
+    "word":"うん。みんなで協力して\n歩きスマホを倒そう！",
+    "size":"small",
+    "action":"yawRightLeft",
+    "wait":"0.0"
+    },{
+    "kind":"speech",
+    "name":"PINK",
+    "word":"ちがうんだけど",
+    "size":"small",
+    "action":"pitchDownLong",
+    "wait":"0.0"
+    },{
+    "kind":"end"
+    }
+],
+"scene9":[
+    {
+    "kind":"title",
+    "word":"ウィルスにご用心"
+    },{
+    "kind":"speech",
+    "name":"BLUE",
+    "word":"みんなちょっと\n聞いてくれ",
+    "size":"small",
+    "action":"yawRightLeft",
+    "wait":"0.0"
+    },{
+    "kind":"end"
+    }
+],
+"scene10":[
+    {
+    "kind":"title",
+    "word":"レーザーカッターを買おう"
+    },{
+    "kind":"speech",
+    "name":"YELLOW",
+    "word":"グリーン。また\n無駄づかいしたでしょ",
+    "size":"small",
+    "action":"yawLeftMax",
+    "wait":"0.0"
+    },{
+    "kind":"speech",
+    "name":"GREEN",
+    "word":"なんのことだ？",
+    "size":"small",
+    "action":"yawLeftMax",
+    "wait":"0.0"
+    },{
+    "kind":"speech",
+    "name":"YELLOW",
+    "word":"レーザーなんとかよ。\nあんた買ったでしょ",
+    "size":"small",
+    "action":"pitchDown2",
+    "wait":"0.0"
+    },{
+    "kind":"speech",
+    "name":"GREEN",
+    "word":"レーザーカッターか？\nあれは必要なものだ。",
+    "size":"small",
+    "action":"rollRightMax",
+    "wait":"0.0"
+    },{
+    "kind":"speech",
+    "name":"RED",
+    "word":"レーザーの\nカッター！？",
+    "size":"small",
+    "action":"yawLeftMax",
+    "wait":"0.0"
+    },{
+    "kind":"speech",
+    "name":"GREEN",
+    "word":"うむ。アクリル板さえ\n切断できるぞ。",
+    "size":"small",
+    "action":"yawCenter",
+    "wait":"0.0"
+    },{
+    "kind":"speech",
+    "name":"PINK",
+    "word":"すごい武器ですね！",
+    "size":"middle",
+    "action":"rollRightLeft",
+    "wait":"0.0"
+    },{
+    "kind":"speech",
+    "name":"YELLOW",
+    "word":"ちょっとそれ\n危険じゃないの？",
+    "size":"small",
+    "action":"yawCenter",
+    "wait":"0.0"
+    },{
+    "kind":"speech",
+    "name":"GREEN",
+    "word":"通常のカッターより\nむしろ安全だ。",
+    "size":"small",
+    "action":"pitchDownMax",
+    "wait":"0.0"
+    },{
+    "kind":"speech",
+    "name":"RED",
+    "word":"戦闘で役に\n立ちそうだね！",
+    "size":"middle",
+    "action":"yawCenter",
+    "wait":"0.0"
+    },{
+    "kind":"speech",
+    "name":"GREEN",
+    "word":"しめしめ",
+    "size":"small",
+    "action":"yawLeftMax",
+    "wait":"0.0"
+    },{
+    "kind":"speech",
+    "name":"YELLOW",
+    "word":"なんか言った？",
+    "size":"middle",
+    "action":"yawLeftMax",
+    "wait":"0.0"
+    },{
+    "kind":"speech",
+    "name":"GREEN",
+    "word":"いや何も",
+    "size":"small",
+    "action":"rollRightLong",
+    "wait":"0.0"
+    },{
+    "kind":"end"
     }
 ]
 }

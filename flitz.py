@@ -170,6 +170,7 @@ class Control(object): # クラスの定義
   def pitchDownMax(self, id, time=0.5): # 
         while not self.stop_event.is_set():
             self.moveHead(id, -15)
+            self.moveHead(id, 0)
 
   def pitchCenter(self, id, time=0.2): # 
         while not self.stop_event.is_set():
