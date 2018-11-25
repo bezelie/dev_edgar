@@ -10,6 +10,7 @@ import RPi.GPIO as GPIO            # GPIO(汎用入出力端子)ライブラリ�
 import re                          # 正規表現モジュール
 
 # CONST
+talkWait = 0.2
 PINK   = 1
 BLUE   = 2
 RED    = 3
@@ -42,9 +43,9 @@ def main():
       if data[scene][i]['kind'] == 'title':
 #        sleep (1)
         bez.dispText(0, sce, i)  # Text
-        sleep (1)
+#        sleep (1)
         subprocess.call("aplay pafu1.wav", shell=True)
-#        sleep (3)
+        sleep (1)
         cv2.destroyAllWindows()
 #        sleep (1)
         i = i+1
@@ -59,7 +60,6 @@ def main():
         i = 0
       elif data[scene][i]['kind'] == 'speech':
         # data input
-        size = 32
         if data[scene][i]['name'] == 'PINK': id = 1
         if data[scene][i]['name'] == 'BLUE': id = 2
         if data[scene][i]['name'] == 'RED': id = 3
@@ -67,12 +67,12 @@ def main():
         if data[scene][i]['name'] == 'GREEN': id = 5
         text = data[scene][i]['word']
         voice = re.sub('\n','',text)
+        if text <> "":
+          bez.speech(id, sce, i)                # Voice
+          bez.dispText(id, sce, i)  # Text
         action = data[scene][i]['action']
-        # action
-        bez.speech(id, sce, i)                # Voice
-        bez.dispText(id, sce, i)  # Text
         bez.act(id, action)                  # Action
-        wait = (len(voice)*0.22)+float(data[scene][i]['wait'])
+        wait = (len(voice)*talkWait)+float(data[scene][i]['wait'])
         print wait
         sleep (wait)
         bez.stop()

@@ -168,38 +168,101 @@
     "word":"ごあいさつ"
     },{
     "kind":"speech",
-    "name":"RED",
-    "word":"僕たちは\nべゼリーファイブ！",
+    "name":"PINK",
+    "word":"",
     "size":"middle",
-    "action":"pitchUpMax",
-    "wait":"0.0"
-    },{
-    "kind":"speech",
-    "name":"YELLOW",
-    "word":"大垣ミニメイカー\nフェアに出展するわよ",
-    "size":"small",
-    "action":"rollRightLeft",
+    "action":"pitchDownMax",
     "wait":"0.0"
     },{
     "kind":"speech",
     "name":"BLUE",
-    "word":"５台のロボットが\nコントを演じるぜ",
+    "word":"",
+    "size":"middle",
+    "action":"pitchDownMax",
+    "wait":"0.0"
+    },{
+    "kind":"speech",
+    "name":"RED",
+    "word":"",
+    "size":"middle",
+    "action":"pitchDownMax",
+    "wait":"0.0"
+    },{
+    "kind":"speech",
+    "name":"YELLOW",
+    "word":"",
+    "size":"middle",
+    "action":"pitchDownMax",
+    "wait":"0.0"
+    },{
+    "kind":"speech",
+    "name":"GREEN",
+    "word":"",
+    "size":"middle",
+    "action":"pitchDownMax",
+    "wait":"0.0"
+    },{
+    "kind":"speech",
+    "name":"RED",
+    "word":"大垣の皆さん\nこんにちは",
+    "size":"small",
+    "action":"pitchDownMax",
+    "wait":"0.0"
+    },{
+    "kind":"speech",
+    "name":"BLUE",
+    "word":"東京方面から\nやってきました",
+    "size":"small",
+    "action":"rollRightMax",
+    "wait":"0.0"
+    },{
+    "kind":"speech",
+    "name":"YELLOW",
+    "word":"実は二年前も\n来たんですよ",
     "size":"small",
     "action":"yawRightLeft",
     "wait":"0.0"
     },{
     "kind":"speech",
     "name":"GREEN",
-    "word":"題して、スーツケース\nシアター！",
+    "word":"ほとんど進歩\nしてないけどな",
     "size":"small",
-    "action":"yawRightMax",
+    "action":"yawLeftMax",
     "wait":"0.0"
     },{
     "kind":"speech",
     "name":"PINK",
-    "word":"ご来場を\nお待ちしてます！",
+    "word":"お友達になって\nくれたら嬉しいです",
     "size":"middle",
-    "action":"pitchDown2",
+    "action":"rollRightLeft",
+    "wait":"0.0"
+    },{
+    "kind":"speech",
+    "name":"BLUE",
+    "word":"",
+    "size":"middle",
+    "action":"pitchDownLong",
+    "wait":"0.0"
+    },{
+    "kind":"speech",
+    "name":"RED",
+    "word":"",
+    "size":"middle",
+    "action":"pitchDownLong",
+    "wait":"0.0"
+    },{
+    "kind":"speech",
+    "name":"YELLOW",
+    "word":"",
+    "size":"middle",
+    "action":"pitchDownLong",
+    "wait":"0.0"
+    },{
+    "kind":"speech",
+    "name":"GREEN",
+    "word":"",
+    "size":"middle",
+    "action":"yawCenter",
     "wait":"0.0"
     },{
     "kind":"end"
