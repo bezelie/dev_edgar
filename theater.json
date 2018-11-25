@@ -3,7 +3,7 @@
     {
     "kind":"select",
     "title":"べゼリーのスーツケース劇場",
-    "word1":"ストーリー",
+    "word1":"コント",
     "target1":"scene1",
     "word2":"べゼリーってなあに？",
     "target2":"scene2",
@@ -19,17 +19,17 @@
 "scene1":[
     {
     "kind":"select",
-    "title":"ストーリーをえらんでね",
+    "title":"べゼリーだよ。全員集合！",
     "word1":"人工知能が仕事を奪う!？",
     "target1":"scene6",
-    "word2":"ウィルスにご用心",
+    "word2":"ウイルスにご用心",
     "target2":"scene7",
     "word3":"歩きスマホは危険です",
     "target3":"scene8",
-    "word4":"イエローの経理出納帳",
+    "word4":"レーザーカッターを買おう",
     "target4":"scene9",
-    "word5":"レーザーカッターを買おう",
-    "target5":"scene10",
+    "word5":"もどる",
+    "target5":"scene0",
     "wait":"1.0"
     }
 ],
@@ -40,36 +40,36 @@
     },{
     "kind":"speech",
     "name":"RED",
-    "word":"べゼリーはちっちゃな\nロボットだよ",
+    "word":"べゼリーは小さな\nロボットだよ",
     "size":"small",
     "action":"rollRightLeft",
     "wait":"0.0"
     },{
     "kind":"speech",
     "name":"YELLOW",
-    "word":"スリーディープリンターで\n作られてるのよ",
+    "word":"スリーＤプリンタで\n作られてるのよ",
     "size":"small",
     "action":"pitchDown2",
     "wait":"0.0"
     },{
     "kind":"speech",
     "name":"BLUE",
-    "word":"みっつのサーボモーターで\n動くんだ",
+    "word":"３つのサーボモーターで\n動くんだ",
     "size":"small",
     "action":"yawRightLeft",
     "wait":"0.0"
     },{
     "kind":"speech",
     "name":"GREEN",
-    "word":"頭にカメラを内蔵できるぜ",
+    "word":"カエルの軍曹とは\n関係ないぜ",
     "size":"small",
     "action":"yawRightPitchDown",
     "wait":"0.0"
     },{
     "kind":"speech",
     "name":"PINK",
-    "word":"詳しくはホームページを\n見てね",
-    "size":"middle",
+    "word":"ＳＮＳで\n拡散してね！",
+    "size":"small",
     "action":"yawLeftMax",
     "wait":"0.0"
     },{
@@ -104,14 +104,14 @@
     },{
     "kind":"speech",
     "name":"GREEN",
-    "word":"そうゆう設定なのだ",
+    "word":"つまり\nそうゆう設定なのだ",
     "size":"small",
     "action":"pitchDown2",
     "wait":"0.0"
     },{
     "kind":"speech",
     "name":"PINK",
-    "word":"応援よろしくね",
+    "word":"応援よろしくね！",
     "size":"middle",
     "action":"yawLeftPitchDown",
     "wait":"0.0"
@@ -133,7 +133,7 @@
     },{
     "kind":"speech",
     "name":"BLUE",
-    "word":"言語はパイソンだぜ",
+    "word":"プログラム言語は\nパイソンだぜ",
     "size":"small",
     "action":"yawRightLeft",
     "wait":"0.0"
@@ -147,14 +147,14 @@
     },{
     "kind":"speech",
     "name":"GREEN",
-    "word":"音声合成は\nオープンジェイトーク",
+    "word":"サーボが\n丸見えだけどな",
     "size":"small",
     "action":"rollRightLong",
     "wait":"0.0"
     },{
     "kind":"speech",
     "name":"PINK",
-    "word":"いつつのスイッチも\nつなげてます",
+    "word":"詳しくはホームページを\n見てね！",
     "size":"middle",
     "action":"yawRightLeft",
     "wait":"0.0"
@@ -169,37 +169,37 @@
     },{
     "kind":"speech",
     "name":"RED",
-    "word":"大垣の皆さん\nこんにちは",
-    "size":"small",
-    "action":"pitchDownLong",
-    "wait":"0.0"
-    },{
-    "kind":"speech",
-    "name":"BLUE",
-    "word":"東京方面から\nやってきました",
-    "size":"small",
-    "action":"rollRightMax",
+    "word":"僕たちは\nべゼリーファイブ！",
+    "size":"middle",
+    "action":"pitchUpMax",
     "wait":"0.0"
     },{
     "kind":"speech",
     "name":"YELLOW",
-    "word":"実は二年前も\n来たんですよ",
+    "word":"大垣ミニメイカー\nフェアに出展するわよ",
+    "size":"small",
+    "action":"rollRightLeft",
+    "wait":"0.0"
+    },{
+    "kind":"speech",
+    "name":"BLUE",
+    "word":"５台のロボットが\nコントを演じるぜ",
     "size":"small",
     "action":"yawRightLeft",
     "wait":"0.0"
     },{
     "kind":"speech",
     "name":"GREEN",
-    "word":"小林先生には\nお世話になってます",
+    "word":"題して、スーツケース\nシアター！",
     "size":"small",
-    "action":"pitchDown2",
+    "action":"yawRightMax",
     "wait":"0.0"
     },{
     "kind":"speech",
     "name":"PINK",
-    "word":"お友達になって\nくれたら嬉しいです",
+    "word":"ご来場を\nお待ちしてます！",
     "size":"middle",
-    "action":"rollRightLeft",
+    "action":"pitchDown2",
     "wait":"0.0"
     },{
     "kind":"end"
@@ -211,13 +211,6 @@
     "word":"人工知能が仕事を奪う!？"
     },{
     "kind":"speech",
-    "name":"PINK",
-    "word":"あああ",
-    "size":"small",
-    "action":"pitchDownLong",
-    "wait":"0.0"
-    },{
-    "kind":"speech",
     "name":"RED",
     "word":"ピンク、どうかした？\n心配なことでもあるの？",
     "size":"small",
@@ -226,7 +219,7 @@
     },{
     "kind":"speech",
     "name":"PINK",
-    "word":"エーアイの発展によって\n仕事が無くなるらしいの。",
+    "word":"人工知能に仕事が\n奪われるらしいの。",
     "size":"small",
     "action":"pitchDownLong",
     "wait":"0.0"
@@ -240,7 +233,7 @@
     },{
     "kind":"speech",
     "name":"YELLOW",
-    "word":"た、ただでさえ最近、\n仕事が減ってるのに。",
+    "word":"ただでさえ最近、\n仕事が減ってるのに。",
     "size":"small",
     "action":"pitchDown2",
     "wait":"0.0"
@@ -275,14 +268,14 @@
     },{
     "kind":"speech",
     "name":"RED",
-    "word":"ねー、僕たち\nヒーローだよねえ。",
+    "word":"それをヒーローが言っちゃ\nいけないでしょ。",
     "size":"small",
     "action":"yawLeftMax",
     "wait":"0.0"
     },{
     "kind":"speech",
     "name":"BLUE",
-    "word":"そもそも俺たちだって\nエーアイだろ？",
+    "word":"そもそも俺たちだって\n人工知能だろ？",
     "size":"small",
     "action":"yawLeftMax",
     "wait":"0.0"
@@ -307,7 +300,7 @@
 "scene7":[
     {
     "kind":"title",
-    "word":"ウィルスにご用心"
+    "word":"ウイルスにご用心"
     },{
     "kind":"speech",
     "name":"BLUE",
@@ -325,7 +318,7 @@
     },{
     "kind":"speech",
     "name":"BLUE",
-    "word":"ウイルスが流行って\nいるらしい",
+    "word":"ウイルスがはやって\nいるらしい",
     "size":"small",
     "action":"yawRightLeft",
     "wait":"0.0"
@@ -339,7 +332,7 @@
     },{
     "kind":"speech",
     "name":"BLUE",
-    "word":"あれはウイリスだろ。\nしかも、はやってないし",
+    "word":"あれはウイリス。\nしかも、はやってないし",
     "size":"small",
     "action":"yawLeftMax",
     "wait":"0.0"
@@ -396,8 +389,8 @@
     },{
     "kind":"speech",
     "name":"RED",
-    "word":"べゼリーファイブ集合！",
-    "size":"small",
+    "word":"べゼリーファイブ\n集合！",
+    "size":"middle",
     "action":"yawRightLeft",
     "wait":"0.0"
     },{
@@ -410,14 +403,14 @@
     },{
     "kind":"speech",
     "name":"RED",
-    "word":"どうも最近、\n歩きスマホが危険らしい",
+    "word":"最近、\n歩きスマホが危険らしい",
     "size":"small",
     "action":"yawRightLeft",
     "wait":"0.0"
     },{
     "kind":"speech",
     "name":"BLUE",
-    "word":"スマートフォンが\n歩くのか？",
+    "word":"スマホが\n歩くのか？",
     "size":"small",
     "action":"yawLeftMax",
     "wait":"0.0"
@@ -438,28 +431,28 @@
     },{
     "kind":"speech",
     "name":"PINK",
-    "word":"あのね\n歩きスマホは",
+    "word":"歩きスマホは",
     "size":"small",
     "action":"pitchDownMax",
     "wait":"0.0"
     },{
     "kind":"speech",
     "name":"YELLOW",
-    "word":"いずれ戦うことに\nなるかもね",
+    "word":"戦うことに\nなるかもね",
     "size":"small",
     "action":"pitchDown2",
     "wait":"0.0"
     },{
     "kind":"speech",
     "name":"RED",
-    "word":"うん。みんなで協力して\n歩きスマホを倒そう！",
-    "size":"small",
+    "word":"歩きスマホを倒そう！",
+    "size":"large",
     "action":"yawRightLeft",
     "wait":"0.0"
     },{
     "kind":"speech",
     "name":"PINK",
-    "word":"ちがうんだけど",
+    "word":"あのうー",
     "size":"small",
     "action":"pitchDownLong",
     "wait":"0.0"
@@ -468,21 +461,6 @@
     }
 ],
 "scene9":[
-    {
-    "kind":"title",
-    "word":"ウィルスにご用心"
-    },{
-    "kind":"speech",
-    "name":"BLUE",
-    "word":"みんなちょっと\n聞いてくれ",
-    "size":"small",
-    "action":"yawRightLeft",
-    "wait":"0.0"
-    },{
-    "kind":"end"
-    }
-],
-"scene10":[
     {
     "kind":"title",
     "word":"レーザーカッターを買おう"
@@ -524,7 +502,7 @@
     },{
     "kind":"speech",
     "name":"GREEN",
-    "word":"うむ。アクリル板さえ\n切断できるぞ。",
+    "word":"アクリル板さえ\n切断できるぞ。",
     "size":"small",
     "action":"yawCenter",
     "wait":"0.0"
@@ -538,14 +516,14 @@
     },{
     "kind":"speech",
     "name":"YELLOW",
-    "word":"ちょっとそれ\n危険じゃないの？",
+    "word":"危険じゃないの？",
     "size":"small",
     "action":"yawCenter",
     "wait":"0.0"
     },{
     "kind":"speech",
     "name":"GREEN",
-    "word":"通常のカッターより\nむしろ安全だ。",
+    "word":"通常のカッターより\n安全だ。",
     "size":"small",
     "action":"pitchDownMax",
     "wait":"0.0"

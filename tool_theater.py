@@ -17,9 +17,10 @@ BLUE   = 2
 RED    = 3
 YELLOW = 4
 GREEN  = 5
+scenarioNum = 9
 
 # 変数
-scenarioFile = "/home/pi/bezelie/dev_edgar/scenario.json"        # 設定ファイル
+scenarioFile = "/home/pi/bezelie/dev_edgar/theater.json"        # 設定ファイル
 ttsRed = "/home/pi/bezelie/dev_edgar/exec_talkRed.sh" # 発話シェルスクリプトのファイル名
 ttsBlue = "/home/pi/bezelie/dev_edgar/exec_talkBlue.sh" # 発話シェルスクリプトのファイル名
 ttsGreen = "/home/pi/bezelie/dev_edgar/exec_talkGreen.sh" # 発話シェルスクリプトのファイル名
@@ -107,7 +108,7 @@ def main():
     i = 0
     sce = 0
     scene = 'scene0'
-    while sce < 11:
+    while sce < scenarioNum + 1:
       print "scene="+scene
       print "talk ="+str(i)
       if data[scene][i]['kind'] == 'title':
@@ -117,7 +118,7 @@ def main():
         dispText(0, text, size, align, sce, i)  # Text
         i = i+1
       elif data[scene][i]['kind'] == 'end':
-        text = 'おしまい'
+        text = u'おしまい'
         size = 80
         align = 'center'
         dispText(0, text, size, align, sce, i)  # Text

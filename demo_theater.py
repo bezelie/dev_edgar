@@ -17,7 +17,7 @@ YELLOW = 4
 GREEN  = 5
 
 # 変数
-scenarioFile = "/home/pi/bezelie/dev_edgar/scenario.json"        # 設定ファイル
+scenarioFile = "/home/pi/bezelie/dev_edgar/theater.json"        # 設定ファイル
 
 # Setting
 GPIO.setmode(GPIO.BCM)                 # GPIOをGPIO番号で指定できるように設定
@@ -119,10 +119,10 @@ def main():
             pass
             # print "スイッチは押されてません"
           sleep (0.1)                      # 0.5秒待つ
-        cv2.destroyAllWindows()
         subprocess.call("aplay switch1.wav", shell=True)
+        cv2.destroyAllWindows()
         i = 0
-        sleep (2)
+        sleep (1)
       else:
         print "Not Matched"
   except KeyboardInterrupt:
