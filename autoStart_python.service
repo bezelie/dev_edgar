@@ -1,14 +1,12 @@
 [Unit]
 Description=starting python
-After=autoStart_julius.service
+After=local-fs.target
 ConditionPathExists=/opt/bezelie/bin
 
 [Service]
 ExecStart=/opt/bezelie/bin/boot_python.sh
 Type=simple
 Restart=no
-User=pi
-Group=pi
 
 [Install]
 WantedBy=multi-user.target
