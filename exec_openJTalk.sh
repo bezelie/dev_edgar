@@ -37,7 +37,7 @@ sudo echo "$1" | open_jtalk \
 #     0にすると平坦なロボット声になる。
 # z   オーディオバッファサイズ 0-(0)-
 
-
+aplay $VOICEDATA
 #aplay -q -D plughw:2,0 $VOICEDATA
-aplay -D plughw:0,1 $VOICEDATA
-sudo rm -f $VOICEDATA
+#aplay -D plughw:0,1 $VOICEDATA
+#sudo rm -f $VOICEDATA

@@ -19,8 +19,8 @@ import cv2                         # Open CVモジュール
 import math                        # 絶対値の計算に必要
 import bezelie                     # べゼリー専用サーボ制御モジュール
 
-csvFile   = "/home/pi/bezelie/chatDialog.csv"              # セリフリスト
-jsonFile  = "/home/pi/bezelie/dev_edgar/data_chat.json"    # 設定ファイル
+csvFile   = "chatDialog.csv"              # セリフリスト
+jsonFile  = "/home/pi/bezelie/dev_edgar/data_face.json"    # 設定ファイル
 ttsFile   = "/home/pi/bezelie/dev_edgar/exec_openJTalk.sh" # 音声合成実行ファイル
 debugFile = "/home/pi/bezelie/debug.txt"                   # debug用ファイル
 
@@ -134,7 +134,7 @@ def main():
     prev_input_y = 0         # 
     with picamera.PiCamera() as camera:                         # Open Pi-Camera as camera
       with picamera.array.PiRGBArray(camera) as stream:         # Open Video Stream from Pi-Camera as stream
-        camera.resolution = (320, 240)                          # Display Resolution
+        camera.resolution = (480, 360)                          # Display Resolution
         camera.hflip = True                                     # Vertical Flip 
         camera.vflip = True                                     # Horizontal Flip
         while True:                                               # infinity loop
@@ -144,8 +144,8 @@ def main():
             facerect = cascade.detectMultiScale(gray,             # Find face from gray
               scaleFactor=1.9,                                    # 1.1 - 1.9 :the bigger the quicker & less acurate 
               minNeighbors=3,                                     # 3 - 6 : the smaller the more easy to detect
-              minSize=(40,80),                                    # Minimam face size 
-              maxSize=(180,240))                                  # Maximam face size
+              minSize=(120,120),                                    # Minimam face size 
+              maxSize=(320,360))                                  # Maximam face size
             if len(facerect) > 0:                                 # If some faces were detected...
               debug_message('detected')
               for rect in facerect:
@@ -158,7 +158,7 @@ def main():
                 detected = "true"
                 bez.moveAct('swing')
                 debug_message('the first detection')
-                sleep (0.5)
+                sleep (0.1)
                 bez.stop()
               else:
                 debug_message('detected again')
@@ -198,13 +198,14 @@ def main():
                 bez.stop()
             else:                   # If no faces were detected.
               debug_message('could not detected')
+              bez.moveBack(0)
               count += 1
               if count > 10:
                 detected = "false"
                 count = 0
-                prev_input_y = randint(10,30)          # 乱数を発生させる
+                prev_input_y = -1*randint(0,5)          # 乱数を発生させる
                 bez.moveHead(prev_input_y)
-                angle = randint(1,20)                  # 乱数を発生させる
+                angle = randint(1,10)                  # 乱数を発生させる
                 if prev_input_x > 0:
                   sign = -1
                 else:
