@@ -44,14 +44,14 @@ def main():
 #        sleep (1)
         bez.dispText(0, sce, i)  # Text
 #        sleep (1)
-        subprocess.call("aplay pafu1.wav", shell=True)
+        subprocess.call("aplay /home/pi/bezelie/dev_edgar/pafu1.wav", shell=True)
         sleep (1)
         cv2.destroyAllWindows()
 #        sleep (1)
         i = i+1
       elif data[scene][i]['kind'] == 'end':
         bez.dispText(0, sce, i)  # Text
-        subprocess.call("aplay lauph1.wav", shell=True)
+        subprocess.call("aplay /home/pi/bezelie/dev_edgar/lauph1.wav", shell=True)
         sleep (1)
         cv2.destroyAllWindows()
         sleep (1)
@@ -87,7 +87,7 @@ def main():
         bez.dispText(RED, sce, 3)  # Text
         bez.dispText(YELLOW, sce, 4)  # Text
         bez.dispText(GREEN, sce, 5)  # Text
-        subprocess.call("aplay question1.wav", shell=True)
+        subprocess.call("aplay /home/pi/bezelie/dev_edgar/question1.wav", shell=True)
 
         while True:                        # 繰り返し処理
           if GPIO.input(17)==GPIO.HIGH:    # 
@@ -119,7 +119,7 @@ def main():
             pass
             # print "スイッチは押されてません"
           sleep (0.1)                      # 0.5秒待つ
-        subprocess.call("aplay switch1.wav", shell=True)
+        subprocess.call("aplay /home/pi/bezelie/dev_edgar/switch1.wav", shell=True)
         cv2.destroyAllWindows()
         i = 0
         sleep (1)

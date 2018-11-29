@@ -59,7 +59,7 @@ class Control(object): # クラスの定義
 # Message ----------------------------
 
   def dispText(self, id, sce, i):
-    imageFile = "scenario/"+str(sce)+"-"+str(i)+".png"
+    imageFile = "/home/pi/bezelie/dev_edgar/scenario/"+str(sce)+"-"+str(i)+".png"
     if id ==0:
       img0 = cv2.imread(imageFile)
       cv2.imshow("MESSAGE",img0)
@@ -361,7 +361,7 @@ class Control(object): # クラスの定義
     self.thread.start()
 
   def speechTalk(self, sce, i):
-    subprocess.call("aplay -D plughw:0,1 scenario/"+str(sce)+"-"+str(i)+".wav", shell=True)
+    subprocess.call("aplay -D plughw:0,1 /home/pi/bezelie/dev_edgar/scenario/"+str(sce)+"-"+str(i)+".wav", shell=True)
 
 # ---------------------------
 
