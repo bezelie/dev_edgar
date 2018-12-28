@@ -3,14 +3,14 @@
     {
     "kind":"select",
     "title":"べゼリーのスーツケース劇場",
-    "word1":"人工知能が仕事を奪う!？",
-    "target1":"scene6",
-    "word2":"ウイルスにご用心",
-    "target2":"scene7",
-    "word3":"歩きスマホは危険です",
-    "target3":"scene8",
-    "word4":"レーザーカッターを買おう",
-    "target4":"scene9",
+    "word1":"コント",
+    "target1":"scene1",
+    "word2":"べゼリーってなあに？",
+    "target2":"scene2",
+    "word3":"自己紹介",
+    "target3":"scene3",
+    "word4":"どうやって動いてるの？",
+    "target4":"scene4",
     "word5":"ごあいさつ",
     "target5":"scene5",
     "wait":"1.0"
@@ -204,35 +204,35 @@
     },{
     "kind":"speech",
     "name":"RED",
-    "word":"僕たちは\nべゼリーファイブ！",
+    "word":"大垣の皆さん\nこんにちは",
     "size":"small",
     "action":"pitchDownMax",
     "wait":"0.0"
     },{
     "kind":"speech",
     "name":"BLUE",
-    "word":"５台のロボットが\nコントを演じるぜ",
+    "word":"東京方面から\nやってきました",
     "size":"small",
     "action":"rollRightMax",
     "wait":"0.0"
     },{
     "kind":"speech",
     "name":"YELLOW",
-    "word":"題して、スーツケース\nシアター！",
+    "word":"実は二年前も\n来たんですよ",
     "size":"small",
     "action":"yawRightLeft",
     "wait":"0.0"
     },{
     "kind":"speech",
     "name":"GREEN",
-    "word":"期待は\nしすぎるなよ",
+    "word":"ほとんど進歩\nしてないけどな",
     "size":"small",
     "action":"yawLeftMax",
     "wait":"0.0"
     },{
     "kind":"speech",
     "name":"PINK",
-    "word":"お好きなボタンを\n押してみてください",
+    "word":"お友達になって\nくれたら嬉しいです",
     "size":"middle",
     "action":"rollRightLeft",
     "wait":"0.0"
@@ -348,7 +348,7 @@
     "word":"そうなの？",
     "size":"large",
     "action":"yawLeftMax",
-    "wait":"0.5"
+    "wait":"0.0"
     },{
     "kind":"speech",
     "name":"BLUE",
@@ -438,7 +438,7 @@
     "kind":"speech",
     "name":"BLUE",
     "word":"あほだ",
-    "size":"large",
+    "size":"small",
     "action":"pitchDownLong",
     "wait":"0.0"
     },{
@@ -483,7 +483,7 @@
     "word":"え？",
     "size":"small",
     "action":"yawLeftMax",
-    "wait":"0.5"
+    "wait":"0.0"
     },{
     "kind":"speech",
     "name":"GREEN",
@@ -508,7 +508,7 @@
     },{
     "kind":"speech",
     "name":"RED",
-    "word":"歩きスマホを\n倒そう！",
+    "word":"歩きスマホを倒そう！",
     "size":"large",
     "action":"yawRightLeft",
     "wait":"0.0"
@@ -603,7 +603,7 @@
     "word":"しめしめ",
     "size":"small",
     "action":"yawLeftMax",
-    "wait":"0.5"
+    "wait":"0.0"
     },{
     "kind":"speech",
     "name":"YELLOW",

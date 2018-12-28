@@ -10,6 +10,7 @@ import RPi.GPIO as GPIO            # GPIO(汎用入出力端子)ライブラリ�
 import re                          # 正規表現モジュール
 
 # CONST
+demoMode = "on"
 talkWait = 0.2
 PINK   = 1
 BLUE   = 2
@@ -80,6 +81,7 @@ def main():
         i = i+1
 
       elif data[scene][i]['kind'] == 'select':
+        counter = 0
         bez.moveCenter()                     # サーボをセンタリング
         bez.dispText(0, sce, 0)  # Text
         bez.dispText(PINK, sce, 1)  # Text
@@ -116,9 +118,15 @@ def main():
             print "GREENスイッチが押されています"
             break
           else:                            # 
-            pass
             # print "スイッチは押されてません"
-          sleep (0.1)                      # 0.5秒待つ
+            sleep (0.1)                      # 0.5秒待つ
+            counter = counter + 1
+            if counter > 100:
+              scene = data[scene][i]['target5']
+              sce = int(re.sub('scene','',scene))
+              break
+
+        counter = 0
         subprocess.call("aplay /home/pi/bezelie/dev_edgar/switch1.wav", shell=True)
         cv2.destroyAllWindows()
         i = 0
