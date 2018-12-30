@@ -8,13 +8,15 @@ from time import sleep                # ウェイト処理
 import subprocess                     # 外部プロセスを実行するモジュール
 
 # 変数
-ttsFile = "/home/pi/bezelie/dev_edgar/exec_openJTalk.sh" # 発話シェルスクリプトのファイル名
+#ttsFile = "/home/pi/bezelie/dev_edgar/exec_talkBezelie.sh" # 発話シェルスクリプトのファイル名
+ttsFile = "/home/pi/bezelie/dev_edgar/exec_talkEng.sh" # 発話シェルスクリプトのファイル名
 
 # メインループ
 def main():
   try:
     while (True):
-      subprocess.call("sh "+ttsFile+" "+"こんにちわ", shell=True)
+#      subprocess.call("sh "+ttsFile+" "+"こんにちわ", shell=True)
+      subprocess.call("sh "+ttsFile+" "+"Hello World", shell=True)
 #      subprocess.call('flite -voice "kal16" -t "Hello World!"', shell=True) # English
        # Other English Voices :kal awb_time kal16 awb rms slt
       sleep(0.5)
