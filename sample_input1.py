@@ -9,14 +9,14 @@ import RPi.GPIO as GPIO                # GPIO(汎用入出力端子)ライブラ
 
 # 初期設定
 GPIO.setmode(GPIO.BCM)                 # GPIOをGPIO番号で指定できるように設定
-GPIO.setup(24, GPIO.IN)                # GPIOの24ピンを入力モードに設定
+GPIO.setup(4, GPIO.IN)                # GPIOの24ピンを入力モードに設定
 
 # 関数
 def main():
   try:
     print "開始します"
     while True:                        # 繰り返し処理
-      if GPIO.input(24)==GPIO.HIGH:    # GPIO24に3.3Vの電圧がかかっていたら・・・
+      if GPIO.input(4)==GPIO.HIGH:    # GPIO4に3.3Vの電圧がかかっていたら・・・
         print "スイッチが押されています"
       else:                            # それ以外の場合は・・・
         print "スイッチは押されてません"

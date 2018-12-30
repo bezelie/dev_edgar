@@ -15,17 +15,17 @@ sudo cp config/hostapd_changed /etc/default/hostapd
 sudo cp config/dhcpd_changed.conf /etc/dhcp/dhcpd.conf
 sudo cp config/isc-dhcp-server_changed /etc/default/isc-dhcp-server
 # systemd自動起動を設定する
-sudo cp boot_faceMode.sh /opt/bezelie/bin/boot_python.sh
-sudo cp boot_julius.sh /opt/bezelie/bin/
-sudo cp boot_node.sh /opt/bezelie/bin/
+sudo cp boot_rangeCamera.sh /opt/bezelie/bin/boot_python.sh
+#sudo cp boot_julius.sh /opt/bezelie/bin/
+#sudo cp boot_node.sh /opt/bezelie/bin/
 sudo cp boot_dhcp.sh /opt/bezelie/bin/
 sudo cp autoStart_python.service /etc/systemd/system/
-sudo cp autoStart_julius.service /etc/systemd/system/
-sudo cp autoStart_node.service /etc/systemd/system/
+#sudo cp autoStart_julius.service /etc/systemd/system/
+#sudo cp autoStart_node.service /etc/systemd/system/
 sudo cp autoStart_dhcp.service /etc/systemd/system/
 sudo systemctl daemon-reload
 sudo systemctl enable autoStart_python.service
-sudo systemctl enable autoStart_julius.service
-sudo systemctl enable autoStart_node.service
+#sudo systemctl enable autoStart_julius.service
+#sudo systemctl enable autoStart_node.service
 sudo systemctl enable autoStart_dhcp.service
 sudo reboot
