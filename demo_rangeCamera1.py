@@ -21,9 +21,9 @@ bez.moveCenter()                      # サーボをセンタリング
 sleep(0.5)
 
 # Settin Up
-switch_pin = 4      # GPIO 4
-trigger_pin = 27    # GPIO 27
-echo_pin = 22       # GPIO 22
+switch_pin = 4      #
+trigger_pin = 5    # 
+echo_pin = 6       #
 actionDistance = 10 # centi mater
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(trigger_pin, GPIO.OUT)

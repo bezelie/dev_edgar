@@ -5,8 +5,8 @@ import time
 # import bezelie
 
 # Definition
-trigger_pin = 27    # GPIO 18
-echo_pin = 22       # GPIO 23
+trigger_pin = 5    # GPIO 18
+echo_pin = 6       # GPIO 23
 actionDistance = 10 # centi mater
 
 # Set Up
