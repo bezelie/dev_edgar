@@ -24,7 +24,7 @@ sleep(0.5)
 switch_pin = 4      #
 trigger_pin = 5    # 
 echo_pin = 6       #
-actionDistance = 10 # centi mater
+actionDistance = 50 # centi mater
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(trigger_pin, GPIO.OUT)
 GPIO.setup(echo_pin, GPIO.IN)
@@ -69,10 +69,12 @@ def get_distance():
 def sensorCheck():
     global runNo
     global photoNo
-    if get_distance() < actionDistance:
+    distance = get_distance()
+    print distance
+    if distance < actionDistance:
       bez.moveCenter()
       #subprocess.call("sh "+ttsFile+" "+"こんにちわ", shell=True)
-      subprocess.call("sh "+ttsFile+" "+"Smile", shell=True)
+      subprocess.call("sh "+ttsFile+" "+"Nice,to,meet,you", shell=True)
 #      camera.stop_preview()
       camera.capture('/home/pi/Pictures/'+ str(runNo) +"-"+ str(photoNo) +'.jpg')
       photoNo += 1
@@ -96,8 +98,10 @@ try:
       if GPIO.input(switch_pin)==GPIO.HIGH:
         if switch == "on":
           switch = "off"
+          subprocess.call("sh "+ttsFile+" "+"Sleep,mode", shell=True)
         else:
           switch = "on"
+          subprocess.call("sh "+ttsFile+" "+"Active,mode", shell=True)
         sleep (1)
       else:
         if switch == "on":
@@ -151,5 +155,4 @@ try:
 
 except KeyboardInterrupt:
   print " Interrupted by Keyboard"
-
-GPIO.cleanup()
+  GPIO.cleanup()
