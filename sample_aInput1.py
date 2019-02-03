@@ -58,7 +58,7 @@ def main():
   try:
     print "開始します"
     while True:
-      inputVal0 = readadc(1, SPICLK, SPIMOSI, SPIMISO, SPICS)
+      inputVal0 = readadc(2, SPICLK, SPIMOSI, SPIMISO, SPICS)
       print(inputVal0)
       sleep(0.2)
 

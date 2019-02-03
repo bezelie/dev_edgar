@@ -3,6 +3,6 @@
 VOICEDATA=/tmp/voice.wav
 sudo flite -voice "slt" -o $VOICEDATA -t $1
 
-aplay -q -D plughw:2,0 $VOICEDATA
+aplay -q -D plughw:0,0 $VOICEDATA
 #aplay -D plughw:0,1 $VOICEDATA
 #sudo rm -f $VOICEDATA

@@ -28,7 +28,7 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setup(trigger_pin, GPIO.OUT)
 GPIO.setup(echo_pin, GPIO.IN)
 
-csvFile   = "faceDialog.csv"              # セリフリスト
+csvFile   = "rangeDialog.csv"              # セリフリスト
 jsonFile  = "/home/pi/bezelie/dev_edgar/data_chat.json"    # 設定ファイル
 ttsFile   = "/home/pi/bezelie/dev_edgar/exec_openJTalk.sh" # 音声合成実行ファイル
 debugFile = "/home/pi/bezelie/debug.txt"                   # debug用ファイル

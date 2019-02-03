@@ -13,8 +13,8 @@ import bezelie
 csvFile = "bezeTalk.csv"
 
 # Definition
-trigger_pin = 5    # GPIO 18
-echo_pin = 6       # GPIO 23
+trigger_pin = 17    # GPIO 17
+echo_pin = 27       # GPIO 27
 short = 10
 long = 30
 

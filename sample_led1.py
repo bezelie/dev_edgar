@@ -8,7 +8,7 @@ from time import sleep                 # sleep(ウェイト処理)ライブラ�
 import RPi.GPIO as GPIO                # GPIO(汎用入出力端子)ライブラリの読み込み
 
 # 変数
-ledRed = 16       # as Red
+ledRed = 26       # as Red
 ledBlue = 20      # as Blue
 ledGreen = 21     # as Green
 interval = 1      # 色変え間隔
